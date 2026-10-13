@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "predev": "node tools/prepare-map-worker.mjs",
-    "dev": "next dev",
+    "dev": "next dev -H 127.0.0.1",
     "prebuild": "node tools/prepare-map-worker.mjs",
     "build": "next build",
     "start": "next start",
@@ -15,14 +15,13 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
-    "@vercel/analytics": "^2.0.1",
     "framer-motion": "^12.38.0",
     "google-libphonenumber": "^3.2.44",
     "hls.js": "^1.6.16",
     "lightweight-charts": "^5.2.0",
     "lucide-react": "^1.14.0",
     "maplibre-gl": "6.7.0",
-    "next": "16.3.4",
+    "next": "16.4.0",
     "onnxruntime-web": "1.30.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
@@ -30,7 +29,7 @@
     "react-map-gl": "^8.1.1",
     "rss-parser": "^3.13.0",
     "satellite.js": "^7.0.0",
-    "sharp": "^0.35.4",
+    "sharp": "^0.35.5",
     "ws": "^8.21.0"
   },
   "devDependencies": {
@@ -42,7 +41,7 @@
     "@types/web-bluetooth": "^0.0.21",
     "@types/ws": "^8.18.1",
     "eslint": "^9",
-    "eslint-config-next": "16.3.4",
+    "eslint-config-next": "16.4.0",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^2.1.9"

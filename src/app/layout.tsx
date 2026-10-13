@@ -197,7 +197,8 @@ export default function RootLayout({
         />
 
       </head>
-      <body className="antialiased">
+      {/* ponytail: extensions (Grammarly etc.) add attributes to <body>; ignore only that one level. */}
+      <body className="antialiased" suppressHydrationWarning>
         <ErrorBoundary name="OSIRIS Core">
           {children}
         </ErrorBoundary>
