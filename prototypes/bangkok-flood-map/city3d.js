@@ -5,15 +5,15 @@ import { bindPopups } from './layers2d.js';
 
 export const LAYERS3D = [
   { key:'buildings', label:'Buildings', ids:['bld3d'], legend:[
-    { shape:'swatch', color:'#3a4558', label:'low-rise (no OSM height: assumed 6-24 m); shown from zoom 14' },
-    { shape:'swatch', color:'#c3cddb', label:'tall (lighter = taller, drawn at most 130 m)' }] },
-  { key:'roads', label:'Flooded roads', ids:['roads','roads-water','roads-glow','roads-halo','roads-ribbon'], legend:[
-    { shape:'line', color:'#38bdf8', label:'cyan water sheet under every blocked or risky road' }, { shape:'line', color:'#ef4444', label:'blocked (raised glowing ribbon above the street)' }, { shape:'line', color:'#fb923c', label:'risky (raised ribbon)' }, { shape:'line', color:'#facc15', label:'caution (lower ribbon)' }] },
+    { shape:'swatch', color:'#2b3650', label:'low-rise (no OSM height: assumed 6-24 m); shown from zoom 14' },
+    { shape:'swatch', color:'#8297c8', label:'tall (lighter = taller, drawn at most 130 m)' }] },
+  { key:'roads', label:'Flooded roads', ids:['roads','roads-water','roads-glow','roads-halo','roads-ribbon','roads-flow'], legend:[
+    { shape:'line', color:'#2f7fe0', label:'blue water glow under every blocked or risky road' }, { shape:'line', color:'#ef4444', label:'blocked (neon line, moving dashes, raised ribbon)' }, { shape:'line', color:'#fb923c', label:'risky (neon line, raised ribbon)' }, { shape:'line', color:'#facc15', label:'caution (thin faint line)' }] },
   { key:'danger', label:'Danger hexes', ids:['danger3d','danger3d-line'], count: d => dangerGrid(d, null).features.filter(f => f.properties.level >= 2).length, legend:[
-    { shape:'swatch', color:'#ef4444', label:'danger: blocked roads (outlined cell)' }, { shape:'swatch', color:'#fb923c', label:'warning: risky roads, reports' }, { shape:'swatch', color:'#38bdf8', label:'watch (thin outline only)' }] },
-  { key:'reports', label:'Depth columns', ids:['reports','reports-cap','reports-ring','reports-label','reports-cl','reports-cl-n'], count: d => d.reports.features.length, legend:[
-    { shape:'swatch', color:'#fde047', label:'ankle (under 35 cm)' }, { shape:'swatch', color:'#fb923c', label:'knee (35-70 cm)' },
-    { shape:'swatch', color:'#ef4444', label:'waist (70-120 cm)' }, { shape:'swatch', color:'#a31245', label:'over head (120 cm+); taller = deeper' },
+    { shape:'swatch', color:'#b3263a', label:'danger: blocked roads (outlined cell, slow pulse)' }, { shape:'swatch', color:'#f2a93b', label:'warning: risky roads, reports' }, { shape:'swatch', color:'#2f7fe0', label:'watch (faint outline only)' }] },
+  { key:'reports', label:'Depth columns', ids:['reports','reports-cap','reports-ring','reports-glow','reports-label','reports-cl','reports-cl-n'], count: d => d.reports.features.length, legend:[
+    { shape:'swatch', color:'#4fc3ff', label:'ankle (under 35 cm)' }, { shape:'swatch', color:'#f2a93b', label:'knee (35-70 cm)' },
+    { shape:'swatch', color:'#e5304a', label:'waist (70-120 cm)' }, { shape:'swatch', color:'#ff3d81', label:'over head (120 cm+); taller = deeper. Pulsing ring = report spot' },
     { shape:'swatch', color:'#ffffff', label:'white cap: road closed. Circles with numbers: grouped reports (zoom in)' }] },
   { key:'districts', label:'District signals', ids:['dz3d'], legend:[
     { shape:'swatch', color:'#f43f5e', label:'khet block: redder and taller = more reports and blocked/risky roads (fades out by zoom 13.8 as buildings take over)' }] },
@@ -53,7 +53,7 @@ function hotspot(d) {
   return best ? [DENSE[0] + .85 * (best[0] - DENSE[0]), DENSE[1] + .85 * (best[1] - DENSE[1])] : DENSE;
 }
 let ORBIT_CENTER = DENSE;
-export const camera3d = d => ({ center: (ORBIT_CENTER = hotspot(d)), zoom: 14.1, pitch: 52, bearing: -28 });
+export const camera3d = d => ({ center: (ORBIT_CENTER = hotspot(d)), zoom: 14.1, pitch: 60, bearing: -28 });
 
 const m2 = (y, m) => [m / 111320 / Math.cos(y * Math.PI / 180), m / 111320];
 const rect = (x, y, mx, my) => { const [dx, dy] = m2(y, mx); void my; return [[x-dx,y-dy],[x+dx,y-dy],[x+dx,y+dy],[x-dx,y+dy],[x-dx,y-dy]]; };
@@ -63,7 +63,7 @@ const FC = features => ({ type:'FeatureCollection', features });
 function columns(reports) {
   return FC(reports.features.map(f => {
     const [x, y] = f.geometry.coordinates, depth = Math.min(f.properties.depth || 0, 150), base = 45 + depth * 3.5;
-    return { type:'Feature', properties:{ ...f.properties, depth, base, top: base + 18 }, geometry:{ type:'Polygon', coordinates:[rect(x, y, 55)] } };
+    return { type:'Feature', properties:{ ...f.properties, depth, base, top: base + 10 }, geometry:{ type:'Polygon', coordinates:[rect(x, y, 16)] } };
   }));
 }
 // every report with a depth or a closure gets a label candidate; the symbol layer culls collisions, deepest first
@@ -75,7 +75,7 @@ function ribbons(roads) {
   const out = [];
   for (const f of roads.features) {
     const p = f.properties; if (p.sev < 2) continue;
-    const half = p.sev === 4 ? 16 : p.sev === 3 ? 12 : 8, lines = f.geometry.type === 'LineString' ? [f.geometry.coordinates] : f.geometry.coordinates;
+    const half = p.sev === 4 ? 6 : p.sev === 3 ? 4 : 3, lines = f.geometry.type === 'LineString' ? [f.geometry.coordinates] : f.geometry.coordinates;
     for (const line of lines) for (let i = 1; i < line.length; i++) {
       const [x0, y0] = line[i-1], [x1, y1] = line[i], [kx, ky] = m2(y0, 1);
       const ex = (x1 - x0) / kx, ey = (y1 - y0) / ky, len = Math.hypot(ex, ey); if (len < .5) continue;
@@ -98,26 +98,31 @@ const ZI = (...s) => ['interpolate',['linear'],['zoom'], ...s];
 // heights that stay readable when zoomed out: ×5 at zoom 12, ×1 from zoom 14
 const ZH = e => ZI(12, ['*', e, 5], 14, e);
 
-const BAND = ['case', ['get','closed'], '#ff1744', ['step', ['get','depth'], '#fde047', 35, '#fb923c', 70, '#ef4444', 120, '#a31245']];
-const BAND_CAP = ['case', ['get','closed'], '#ffffff', ['step', ['get','depth'], '#fff7b0', 35, '#ffd1a1', 70, '#ffb3b3', 120, '#ff7aa8']];
+const BAND = ['case', ['get','closed'], '#ff1744', ['step', ['get','depth'], '#4fc3ff', 35, '#f2a93b', 70, '#e5304a', 120, '#ff3d81']];
+const BAND_CAP = ['case', ['get','closed'], '#ffffff', ['step', ['get','depth'], '#d8f3ff', 35, '#ffe6b8', 70, '#ffc2ca', 120, '#ffc4dc']];
 
 export function addLayers3D(map, d) {
-  map.setLight({ anchor:'viewport', color:'#dfe8ff', intensity:0.5, position:[1.4, 215, 45] });
-  map.setSky({ 'sky-color':'#16283f', 'horizon-color':'#7a93b5', 'fog-color':'#1c2b42',
-    'sky-horizon-blend':0.5, 'horizon-fog-blend':0.9, 'fog-ground-blend':0.55 });
+  // night-city look: low cool key light so tower sides fall into shadow, near-black fog that swallows the horizon
+  map.setLight({ anchor:'viewport', color:'#b4c6e6', intensity:0.6, position:[1.2, 210, 40] });
+  map.setSky({ 'sky-color':'#0b1020', 'horizon-color':'#1b2a4a', 'fog-color':'#07090d',
+    'sky-horizon-blend':0.12, 'horizon-fog-blend':0.6, 'fog-ground-blend':0.6 });
+  hud(map.getContainer());
   try { map.setPadding?.({ left:PANEL(), right:0, top:0, bottom:0 }); } catch { /* optional */ }
 
   // neutral ground so building height and distance read; tilted road names are noise, keep motorway/trunk/primary only
-  if (map.getLayer('background')) map.setPaintProperty('background', 'background-color', '#1a2436');
+  if (map.getLayer('background')) map.setPaintProperty('background', 'background-color', '#07090d');
+  for (const id of ['landuse_residential', 'landcover_wood', 'landuse_park']) if (map.getLayer(id)) map.setPaintProperty(id, 'fill-color', '#0b0e13');
+  if (map.getLayer('water')) map.setPaintProperty('water', 'fill-color', '#0a1a33');
+  if (map.getLayer('waterway')) map.setPaintProperty('waterway', 'line-color', '#12345e');
   for (const l of map.getStyle().layers) {
     if (l.type === 'symbol' && l['source-layer'] === 'transportation_name' && !/motorway|trunk|primary/.test(l.id)) map.setLayoutProperty(l.id, 'visibility', 'none');
   }
 
   // base streets: thin dark slate, lighter casing only on major roads so the flood colours pop
   const lw = (a, b, c) => ZI(11, a, 14, b, 17, c);
-  const roadStyle = { highway_minor:['#232d44', lw(.2, .6, 4)], highway_path:['#1f2a3f', lw(.1, .3, 1.5)],
-    highway_major_casing:['#3c4a68', lw(.9, 2.6, 11)], highway_major_inner:['#26324b', lw(.4, 1.3, 8)],
-    highway_motorway_casing:['#4a5a7c', lw(1.3, 3.6, 13)], highway_motorway_inner:['#2c3a57', lw(.7, 2.2, 10)] };
+  const roadStyle = { highway_minor:['#161b24', lw(.2, .6, 4)], highway_path:['#12161d', lw(.1, .3, 1.5)],
+    highway_major_casing:['#232933', lw(.9, 2.6, 11)], highway_major_inner:['#1a1f28', lw(.4, 1.3, 8)],
+    highway_motorway_casing:['#2a303a', lw(1.3, 3.6, 13)], highway_motorway_inner:['#1d232d', lw(.7, 2.2, 10)] };
   for (const [id, [c, wd]] of Object.entries(roadStyle)) if (map.getLayer(id)) { map.setPaintProperty(id, 'line-color', c); map.setPaintProperty(id, 'line-width', wd); map.setPaintProperty(id, 'line-opacity', 1); }
   for (const id of ['highway_major_subtle', 'highway_motorway_subtle']) if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', 'none');
 
@@ -125,10 +130,10 @@ export function addLayers3D(map, d) {
   const cur = d.frames.findLast(f => !f.nowcast);
   if (cur) {
     map.addSource('radar', { type:'raster', tiles:[cur.url], tileSize:256, maxzoom:7 });
-    map.addLayer({ id:'radar', type:'raster', source:'radar', paint:{ 'raster-opacity':0.6, 'raster-fade-duration':0 } }, firstSymbol);
+    map.addLayer({ id:'radar', type:'raster', source:'radar', paint:{ 'raster-opacity':0.45, 'raster-fade-duration':0 } }, firstSymbol);
   }
   map.addLayer({ id:'parks3d', type:'fill', source:'openmaptiles', 'source-layer':'park', minzoom:11,
-    paint:{ 'fill-color':'#1d5a46', 'fill-opacity':0.8 } }, firstSymbol);
+    paint:{ 'fill-color':'#0f2a22', 'fill-opacity':0.9 } }, firstSymbol);
   if (map.getLayer('building')) map.setLayoutProperty('building', 'visibility', 'none');
 
   map.addSource('dz3d', { type:'geojson', data:empty });
@@ -141,28 +146,32 @@ export function addLayers3D(map, d) {
   map.addSource('danger3d', { type:'geojson', data:dangerGrid(d, null) });
   const lvl = ['get','level'];
   map.addLayer({ id:'danger3d', type:'fill', source:'danger3d', filter:['>=',lvl,2],
-    paint:{ 'fill-color':['match',lvl, 3,'#ef4444', '#fb923c'], 'fill-opacity':ZI(11, .22, 14, .14, 16, .08) } }, firstSymbol);
+    paint:{ 'fill-color':['match',lvl, 3,'#b3263a', '#7a4a12'], 'fill-opacity':ZI(11, .2, 14, .12, 16, .06) } }, firstSymbol);
   map.addLayer({ id:'danger3d-line', type:'line', source:'danger3d',
-    paint:{ 'line-color':['match',lvl, 3,'#ff6b6b', 2,'#ffb066', '#38bdf8'], 'line-width':['match',lvl, 3,2.2, 2,1.6, .8],
-      'line-opacity':['match',lvl, 3,.95, 2,.8, .35] } }, firstSymbol);
+    paint:{ 'line-color':['match',lvl, 3,'#ff5a6e', 2,'#f2a93b', '#2f7fe0'], 'line-width':['match',lvl, 3,1.4, 2,1, .6], 'line-blur':.6,
+      'line-opacity':['match',lvl, 3,.7, 2,.45, .12] } }, firstSymbol);
 
   // OpenFreeMap has building data only in z14 tiles (a tileSize-256 second source is rejected by MapLibre), so the default camera sits at zoom 14.3.
   map.addLayer({ id:'bld3d', type:'fill-extrusion', source:'openmaptiles', 'source-layer':'building', minzoom:13.9,
     paint:{ 'fill-extrusion-height':HC, 'fill-extrusion-base':['min',['coalesce',['get','render_min_height'],0],HC],
-      'fill-extrusion-color':['interpolate',['linear'],HC, 6,'#2c3647', 25,'#3a4558', 60,'#6b7789', 130,'#c3cddb'],
-      'fill-extrusion-opacity':0.95, 'fill-extrusion-vertical-gradient':true } });
+      'fill-extrusion-color':['interpolate',['linear'],HC, 6,'#1f2838', 25,'#2b3650', 60,'#425277', 130,'#8297c8'],
+      'fill-extrusion-opacity':0.92, 'fill-extrusion-vertical-gradient':true } });
 
   // flooded roads: wide ground glow (halo, glow, core) + raised ribbons for blocked/risky/caution
   map.addSource('roads', { type:'geojson', data:d.roads });
-  const hot = ['>=',['get','sev'],2], w = (a, b, c) => ZI(10, a, 14, b, 17, c);
-  map.addLayer({ id:'roads-water', type:'line', source:'roads', filter:hot, layout:{ 'line-cap':'round', 'line-join':'round' },
-    paint:{ 'line-color':'#38bdf8', 'line-width':w(18, 60, 120), 'line-blur':w(6, 14, 30), 'line-opacity':0.4 } });
-  map.addLayer({ id:'roads-halo', type:'line', source:'roads', filter:hot, layout:{ 'line-cap':'round', 'line-join':'round' },
-    paint:{ 'line-color':COLOR, 'line-width':w(16, 52, 100), 'line-blur':w(8, 22, 45), 'line-opacity':0.75 } });
-  map.addLayer({ id:'roads-glow', type:'line', source:'roads', filter:hot, layout:{ 'line-cap':'round', 'line-join':'round' },
-    paint:{ 'line-color':COLOR, 'line-width':w(7, 20, 38), 'line-blur':w(3, 7, 14), 'line-opacity':0.95 } });
-  map.addLayer({ id:'roads', type:'line', source:'roads', layout:{ 'line-cap':'round', 'line-join':'round' },
-    paint:{ 'line-color':COLOR, 'line-width':w(4, 12, 20), 'line-opacity':['case',['==',['get','sev'],1],0.2,1] } });
+  // neon roads: blue water glow, narrow coloured bloom, white-hot core; caution stays a thin faint line so yellow does not flood the view
+  const hot = ['>=',['get','sev'],3], w = (a, b, c) => ZI(10, a, 14, b, 17, c), cap = { 'line-cap':'round', 'line-join':'round' };
+  map.addLayer({ id:'roads-water', type:'line', source:'roads', filter:hot, layout:cap,
+    paint:{ 'line-color':'#2f7fe0', 'line-width':w(8, 30, 60), 'line-blur':w(5, 16, 30), 'line-opacity':0.4 } });
+  map.addLayer({ id:'roads-halo', type:'line', source:'roads', filter:hot, layout:cap,
+    paint:{ 'line-color':COLOR, 'line-width':w(5, 16, 32), 'line-blur':w(4, 9, 18), 'line-opacity':0.75 } });
+  map.addLayer({ id:'roads-glow', type:'line', source:'roads', filter:hot, layout:cap,
+    paint:{ 'line-color':COLOR, 'line-width':w(2.5, 6, 12), 'line-blur':1.2, 'line-opacity':0.95 } });
+  map.addLayer({ id:'roads', type:'line', source:'roads', layout:cap,
+    paint:{ 'line-color':['case', hot, ['match',['get','sedan'],'blocked','#ffe1e1','#fff0dc'], COLOR], 'line-width':ZI(10, ['case', hot, .8, .6], 14, ['case', hot, 1.6, 1.4], 17, 3),
+      'line-opacity':['match',['get','sev'], 1,.15, 2,.45, 1] } });
+  map.addLayer({ id:'roads-flow', type:'line', source:'roads', filter:['==',['get','sev'],4], layout:{ 'line-join':'round' },
+    paint:{ 'line-color':'#ffffff', 'line-width':w(1, 2.4, 4.5), 'line-opacity':0.9, 'line-dasharray':[0, 4, 3] } });
   map.addSource('ribbons', { type:'geojson', data:ribbons(d.roads) });
   map.addLayer({ id:'roads-ribbon', type:'fill-extrusion', source:'ribbons',
     paint:{ 'fill-extrusion-height':ZH(['+',['get','lift'],6]), 'fill-extrusion-base':ZH(['get','lift']), 'fill-extrusion-opacity':0.95, 'fill-extrusion-vertical-gradient':false,
@@ -173,39 +182,41 @@ export function addLayers3D(map, d) {
   map.addSource('report-pts', { type:'geojson', data:{ type:'FeatureCollection', features:d.reports.features },
     cluster:true, clusterRadius:50, clusterMaxZoom:12, clusterProperties:{ maxd:['max',['get','depth']], anyClosed:['max',['case',['get','closed'],1,0]] } });
   map.addSource('report-labels', { type:'geojson', data:labelPts(d.reports) });
-  const ringCol = ['case',['get','closed'],'#ffffff',['step',['get','depth'],'#fde047',35,'#fb923c',70,'#ef4444',120,'#ff3d81']];
+  const ringCol = ['case',['get','closed'],'#ffffff',['step',['get','depth'],'#4fc3ff',35,'#f2a93b',70,'#e5304a',120,'#ff3d81']];
   map.addLayer({ id:'reports-cl', type:'circle', source:'report-pts', filter:['has','point_count'], maxzoom:13,
     paint:{ 'circle-radius':['step',['get','point_count'], 14, 10, 19, 40, 25], 'circle-opacity':.85, 'circle-stroke-width':2.5, 'circle-stroke-color':'#ffffff',
-      'circle-color':['case',['>',['get','anyClosed'],0],'#ff1744',['step',['get','maxd'],'#fde047',35,'#fb923c',70,'#ef4444',120,'#a31245']] } });
+      'circle-color':['case',['>',['get','anyClosed'],0],'#ff1744',['step',['get','maxd'],'#4fc3ff',35,'#f2a93b',70,'#e5304a',120,'#ff3d81']] } });
   map.addLayer({ id:'reports-cl-n', type:'symbol', source:'report-pts', filter:['has','point_count'], maxzoom:13,
     layout:{ 'text-field':['get','point_count_abbreviated'], 'text-font':['Noto Sans Bold'], 'text-size':12, 'text-allow-overlap':true },
     paint:{ 'text-color':'#111827' } });
   map.addLayer({ id:'reports-ring', type:'circle', source:'report-pts', filter:['!',['has','point_count']], minzoom:12.5,
     paint:{ 'circle-pitch-alignment':'map', 'circle-radius':ZI(12, 6, 14, 18, 17, 70), 'circle-color':'rgba(0,0,0,0)',
-      'circle-stroke-width':ZI(12, 1.5, 16, 4), 'circle-stroke-color':ringCol, 'circle-blur':.3, 'circle-stroke-opacity':.95 } });
+      'circle-stroke-width':ZI(12, 1.5, 16, 3), 'circle-stroke-color':ringCol, 'circle-blur':.3, 'circle-stroke-opacity':.95 } });
+  map.addLayer({ id:'reports-glow', type:'circle', source:'report-pts', filter:['!',['has','point_count']], minzoom:12.5,
+    paint:{ 'circle-pitch-alignment':'map', 'circle-radius':ZI(12, 4, 14, 10, 17, 36), 'circle-color':ringCol, 'circle-blur':1, 'circle-opacity':.55 } });
   map.addLayer({ id:'reports', type:'fill-extrusion', source:'reports', minzoom:12.5,
     paint:{ 'fill-extrusion-height':ZH(['get','base']), 'fill-extrusion-base':0, 'fill-extrusion-color':BAND, 'fill-extrusion-opacity':0.95 } });
   map.addLayer({ id:'reports-cap', type:'fill-extrusion', source:'reports', minzoom:12.5,
     paint:{ 'fill-extrusion-height':ZH(['get','top']), 'fill-extrusion-base':ZH(['get','base']), 'fill-extrusion-color':BAND_CAP,
       'fill-extrusion-opacity':1, 'fill-extrusion-vertical-gradient':false } });
   map.addLayer({ id:'reports-label', type:'symbol', source:'report-labels', minzoom:12.5,
-    layout:{ 'text-field':['get','label'], 'text-font':['Noto Sans Bold'], 'text-size':ZI(12, 11, 16, 15), 'text-variable-anchor':['bottom','top','left','right'], 'text-radial-offset':2.2, 'text-max-width':14,
+    layout:{ 'text-field':['get','label'], 'text-font':['Noto Sans Bold'], 'text-size':ZI(12, 10, 16, 13), 'text-transform':'uppercase', 'text-letter-spacing':.08, 'text-variable-anchor':['bottom','top','left','right'], 'text-radial-offset':2.2, 'text-max-width':14,
       'symbol-sort-key':['get','rank'], 'text-padding':6, 'text-allow-overlap':false, 'text-pitch-alignment':'viewport' },
-    paint:{ 'text-color':'#ffffff', 'text-halo-color':['case',['get','closed'],'#b30026','#101826'], 'text-halo-width':2.2 } });
+    paint:{ 'text-color':'#ffffff', 'text-halo-color':['case',['get','closed'],'#b30026','rgba(7,9,13,.9)'], 'text-halo-width':1.8 } });
 
   // transit as spatial anchors: OSM rail/metro lines from the vector tiles (+ optional route snapshot), station dots with names
   const rail = ['in',['get','class'],['literal',['rail','transit']]];
   map.addSource('transit3d', { type:'geojson', data:empty });
   const tcol = ['case',['!=',['coalesce',['get','color'],''],''],['get','color'],['match',['get','kind'],'metro','#38bdf8','monorail','#e879f9','#4ade80']];
   map.addLayer({ id:'transit3d-osm', type:'line', source:'openmaptiles', 'source-layer':'transportation', filter:rail, minzoom:10, layout:{ 'line-cap':'round' },
-    paint:{ 'line-color':['match',['get','subclass'],'rail','#c4b5fd','#38bdf8'], 'line-width':ZI(10, 1.5, 14, 4, 17, 9), 'line-opacity':.9 } });
+    paint:{ 'line-color':['match',['get','subclass'],'rail','#6d5fa8','#3b7be0'], 'line-width':ZI(10, 1, 14, 2, 17, 5), 'line-opacity':.8 } });
   map.addLayer({ id:'transit3d', type:'line', source:'transit3d', minzoom:10, layout:{ 'line-cap':'round' },
-    paint:{ 'line-color':tcol, 'line-width':ZI(10, 2, 14, 5, 17, 10), 'line-opacity':.95 } });
+    paint:{ 'line-color':tcol, 'line-width':ZI(10, 1.5, 14, 2.5, 17, 6), 'line-blur':.4, 'line-opacity':.9 } });
   map.addLayer({ id:'stations3d', type:'circle', source:'openmaptiles', 'source-layer':'poi', filter:['all',['==',['get','class'],'railway'],['==',['get','subclass'],'station']], minzoom:11.5,
     paint:{ 'circle-radius':ZI(12, 3, 16, 7), 'circle-color':'#ffffff', 'circle-stroke-color':'#38bdf8', 'circle-stroke-width':2, 'circle-pitch-alignment':'map' } });
   map.addLayer({ id:'stations3d-label', type:'symbol', source:'openmaptiles', 'source-layer':'poi', filter:['all',['==',['get','class'],'railway'],['==',['get','subclass'],'station']], minzoom:12.5,
-    layout:{ 'text-field':['coalesce',['get','name:latin'],['get','name']], 'text-font':['Noto Sans Bold'], 'text-size':ZI(12, 10, 16, 13), 'text-offset':[0, -1.1], 'text-anchor':'bottom', 'text-optional':true },
-    paint:{ 'text-color':'#e0f2fe', 'text-halo-color':'#0a1424', 'text-halo-width':2 } });
+    layout:{ 'text-field':['coalesce',['get','name:latin'],['get','name']], 'text-font':['Noto Sans Bold'], 'text-size':ZI(12, 9, 16, 12), 'text-offset':[0, -1.1], 'text-anchor':'bottom', 'text-optional':true, 'text-transform':'uppercase', 'text-letter-spacing':.1 },
+    paint:{ 'text-color':'#cfe6ff', 'text-halo-color':'rgba(7,9,13,.9)', 'text-halo-width':1.5 } });
   loadTransitLines().then(fc => { if (fc && map.getSource('transit3d')) map.getSource('transit3d').setData(fc); }).catch(() => {});
 
   // OSM POIs: short pillars + a ground glyph; data arrives async via the shared Overpass queue
@@ -227,9 +238,39 @@ export function addLayers3D(map, d) {
   stationChips(map, d);
   loadDistricts(d).then(z => { if (z && map.getSource('dz3d')) map.getSource('dz3d').setData(z.polys); });
   bindPopups(map);
+  animate(map);
 }
 
-// Orbit about a fixed centre at ~2.5 deg/s (bearing-only easeTo keeps the centre). Pauses on pointer, wheel, touch or key input, resumes after 10 s idle.
+// Vignette + faint dot grid over the canvas; pointer-events off so the map still gets every input.
+function hud(el) {
+  const v = document.createElement('div');
+  v.style.cssText = 'position:absolute;inset:0;pointer-events:none;z-index:1;background:radial-gradient(ellipse at 55% 45%,transparent 55%,rgba(0,0,0,.55) 100%),radial-gradient(rgba(255,255,255,.035) 1px,transparent 1px) 0 0/4px 4px';
+  el.appendChild(v);
+}
+
+// One rAF loop: buildings rise on first load (1.2 s), report glows pulse, blocked roads get flowing dashes, danger hexes breathe.
+// ponytail: setPaintProperty per frame; move to a custom WebGL layer if this ever costs frames on phones.
+const DASH = [[0,4,3],[.5,4,2.5],[1,4,2],[1.5,4,1.5],[2,4,1],[2.5,4,.5],[3,4,0],[0,.5,3,3.5],[0,1,3,3],[0,1.5,3,2.5],[0,2,3,2],[0,2.5,3,1.5],[0,3,3,1],[0,3.5,3,.5]];
+function animate(map) {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const t0 = performance.now(); let step = -1, risen = false;
+  const rise = k => { const h = ['*', HC, k]; map.setPaintProperty('bld3d', 'fill-extrusion-height', h); map.setPaintProperty('bld3d', 'fill-extrusion-base', ['min',['coalesce',['get','render_min_height'],0], h]); };
+  const frame = now => {
+    if (!map.getLayer('bld3d')) return;
+    const t = (now - t0) / 1000;
+    if (!risen) { const k = Math.min(1, t / 1.2); rise(1 - (1 - k) ** 3); risen = k >= 1; }
+    const p = (t % 1.6) / 1.6;
+    map.setPaintProperty('reports-glow', 'circle-radius', ZI(12, 4 + 6 * p, 14, 10 + 22 * p, 17, 36 + 60 * p));
+    map.setPaintProperty('reports-glow', 'circle-opacity', .55 * (1 - p));
+    const s = Math.floor(t * 12) % DASH.length;
+    if (s !== step) { step = s; map.setPaintProperty('roads-flow', 'line-dasharray', DASH[s]); }
+    map.setPaintProperty('danger3d', 'fill-opacity', ZI(11, .2 + .06 * Math.sin(t * 2.1), 14, .12 + .05 * Math.sin(t * 2.1), 16, .06));
+    requestAnimationFrame(frame);
+  };
+  requestAnimationFrame(frame);
+}
+
+// Orbit about a fixed centre at 1.5 deg/s (per-frame setBearing: smooth, no easeTo stutter). Pauses on pointer, wheel, touch or key input, resumes after 10 s idle.
 // A small play/pause button sits bottom right; pausing from it is sticky until pressed again.
 // Stations with deep water or a blocked road within 300 m: recomputed when the map goes idle (never per frame), from the rendered OSM station points.
 function stationChips(map, d) {
@@ -256,7 +297,9 @@ function stationChips(map, d) {
 
 export function startOrbit(map) {
   let on = true, held = false, timer = null;
-  const spin = () => { if (on && !held) map.easeTo({ bearing: map.getBearing() + 10, duration: 4000, easing: t => t, essential: true }); };
+  let last = 0;
+  const tick = now => { if (on && !held && last && !map.isMoving()) map.setBearing(map.getBearing() + 1.5 * Math.min(now - last, 100) / 1000); last = now; requestAnimationFrame(tick); };
+  const spin = () => { last = 0; };
   const btn = document.createElement('button');
   btn.type = 'button'; btn.className = 'orbit-toggle'; btn.textContent = 'Orbit: on'; btn.setAttribute('aria-pressed', 'true');
   btn.style.cssText = 'position:absolute;right:12px;bottom:42px;z-index:5;padding:6px 12px;border-radius:999px;border:1px solid #3b4a68;background:#0f1a2c;color:#e5edf9;font:600 12px system-ui,sans-serif;cursor:pointer';
@@ -268,6 +311,5 @@ export function startOrbit(map) {
     btn.textContent = held ? 'Orbit: paused' : 'Orbit: on'; btn.setAttribute('aria-pressed', String(!held));
   });
   ['pointerdown','touchstart','wheel','keydown'].forEach(ev => map.getCanvas().addEventListener(ev, halt, { passive:true }));
-  map.on('moveend', spin);
-  spin();
+  requestAnimationFrame(tick);
 }
