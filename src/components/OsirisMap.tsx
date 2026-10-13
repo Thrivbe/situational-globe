@@ -19,6 +19,8 @@ import CctvPreviews, { type PreviewCamera } from '@/components/CctvPreviews';
 import MapControls from '@/components/MapControls';
 import LiveNewsPreviews, { type PreviewFeed } from '@/components/LiveNewsPreviews';
 import { attachTerrain, type TerrainStatus } from '@/lib/map-terrain';
+import { attachFlood, type FloodHandle } from '@/lib/flood/attachFlood';
+import { getFloodFlyToCenter } from '@/lib/flood/data';
 
 import { applyMapProjection } from '@/lib/map-projection';
 
@@ -213,6 +215,8 @@ function OsirisMap({ data, activeLayers, onEntityClick, onMouseCoords, onRightCl
   const onOiHoverRef = useRef(onOiHover);
   const onOiFollowRef = useRef(onOiFollow);
   const oiGlobeRef = useRef<OiGlobe | null>(null);
+  const floodRef = useRef<FloodHandle | null>(null);
+  const floodProjectionRef = useRef(projection);
   useEffect(() => {
     onOiGlobeRef.current = onOiGlobe;
     onOiSelectRef.current = onOiSelect;
@@ -2738,6 +2742,32 @@ function OsirisMap({ data, activeLayers, onEntityClick, onMouseCoords, onRightCl
       globe.destroy();
     };
   }, [mapReady]);
+
+  // Bangkok flood feasibility spike — isolated sources/layers with the same
+  // attach/destroy lifetime as OI. Projection changes swap its layer set below.
+  useEffect(() => {
+    if (!mapReady || !mapRef.current || !activeLayers.flood_bkk) return;
+    const map = mapRef.current;
+    const flood = attachFlood(map, { mode: floodProjectionRef.current === 'mercator' ? '2d' : '3d' });
+    floodRef.current = flood;
+    const debug = process.env.NODE_ENV !== 'production' ? {
+      map,
+      handle: () => floodRef.current,
+      flyToDistrict: () => map.flyTo({ center: getFloodFlyToCenter(), zoom: 14.1, pitch: 60, bearing: -28, duration: 0 }),
+    } : null;
+    if (debug) (window as typeof window & { __floodDebug?: typeof debug }).__floodDebug = debug;
+    return () => {
+      if (floodRef.current === flood) floodRef.current = null;
+      const devWindow = window as typeof window & { __floodDebug?: typeof debug };
+      if (debug && devWindow.__floodDebug === debug) delete devWindow.__floodDebug;
+      flood.destroy();
+    };
+  }, [mapReady, activeLayers.flood_bkk]);
+
+  useEffect(() => {
+    floodProjectionRef.current = projection;
+    floodRef.current?.setMode(projection === 'mercator' ? '2d' : '3d');
+  }, [projection]);
 
   // OI Assist's marks: attached once the map is up, fed whatever the assistant marks.
   const highlighterRef = useRef<Highlighter | null>(null);

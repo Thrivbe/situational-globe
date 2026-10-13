@@ -479,6 +479,7 @@ export default function Dashboard() {
     earthquakes: true,
     fires: false,
     weather: false,
+    flood_bkk: false,
     radiation: false,
     infrastructure: false,
     global_incidents: true,

@@ -31,7 +31,7 @@ interface LayerPanelProps {
 interface LayerDef {
   key: string;
   label: string;
-  dataKey: string;
+  dataKey?: string;
   description?: string;
   /** Reads a bucket out of data.category_counts instead of a top-level array. */
   catKey?: string;
@@ -109,6 +109,14 @@ const LAYER_GROUPS: LayerGroupDef[] = [
       { key: 'earthquakes', label: 'Earthquakes', dataKey: 'earthquakes' },
       { key: 'fires', label: 'Active Fires', dataKey: 'fires' },
       { key: 'weather', label: 'Severe Weather', dataKey: 'weather_events' },
+    ],
+  },
+  {
+    label: 'SITUATION',
+    fullLabel: 'SITUATIONS',
+    icon: Radio,
+    layers: [
+      { key: 'flood_bkk', label: 'Bangkok flood' },
     ],
   },
   {
@@ -250,7 +258,7 @@ function LayerPanel({ data, activeLayers, setActiveLayers, isMobile, theme = 'co
     layers: g.layers.filter(l => !l.requires || capabilities[l.requires]),
   })).filter(g => g.layers.length > 0);
 
-  const getCount = (dk: string, catKey?: string): number | null => {
+  const getCount = (dk?: string, catKey?: string): number | null => {
     if (!dk) return null;
     if (catKey && data.category_counts) {
       return data.category_counts[catKey] || 0;

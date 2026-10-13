@@ -1,0 +1,280 @@
+{
+  "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2 Max, Unspecified Version)",
+  "hidden": {
+    "mode": "3d",
+    "layers": 12,
+    "sources": 10,
+    "animRunning": false,
+    "paintUpdates": 280,
+    "fetches": {
+      "roads": "ok",
+      "reports": "ok",
+      "radar": "ok",
+      "forecast": "ok",
+      "districts": "ok",
+      "hospitals": "ok",
+      "shelters": "ok",
+      "pumping": "ok",
+      "transit": "ok"
+    },
+    "overpassCalls": 0
+  },
+  "results": [
+    {
+      "name": "S0-osiris-globe-flood-off",
+      "fps": 119.6,
+      "p50": 8.3,
+      "p95": 8.9,
+      "p99": 9.2,
+      "longFrames50ms": 0,
+      "cpuBusyPct": 5.2,
+      "scriptPct": 2.9,
+      "heapMB": 79.9,
+      "netDuring": {
+        "127.0.0.1:3000": "1 req 1 kB"
+      },
+      "flood": null
+    },
+    {
+      "name": "S1-globe-flood-on-far",
+      "zoom": 8,
+      "fps": 120.1,
+      "p50": 8.3,
+      "p95": 8.7,
+      "p99": 9.2,
+      "longFrames50ms": 0,
+      "cpuBusyPct": 3,
+      "scriptPct": 0.2,
+      "heapMB": 58.8,
+      "netDuring": {},
+      "flood": {
+        "mode": "3d",
+        "layers": 12,
+        "sources": 10,
+        "animRunning": false,
+        "paintUpdates": 0,
+        "fetches": {
+          "roads": "ok",
+          "reports": "ok",
+          "radar": "ok",
+          "forecast": "ok",
+          "districts": "ok",
+          "hospitals": "ok",
+          "shelters": "ok",
+          "pumping": "ok",
+          "transit": "ok"
+        },
+        "overpassCalls": 0
+      }
+    },
+    {
+      "name": "S2-bkk-3d-10hz",
+      "zoom": 14.1,
+      "fps": 114.1,
+      "p50": 8.3,
+      "p95": 9.1,
+      "p99": 22.3,
+      "longFrames50ms": 1,
+      "cpuBusyPct": 71.2,
+      "scriptPct": 65.5,
+      "heapMB": 82.5,
+      "netDuring": {
+        "earthquake.usgs.gov": "1 req 6 kB",
+        "api.coingecko.com": "1 req 1 kB"
+      },
+      "flood": {
+        "mode": "3d",
+        "layers": 12,
+        "sources": 10,
+        "animRunning": true,
+        "paintUpdates": 293,
+        "fetches": {
+          "roads": "ok",
+          "reports": "ok",
+          "radar": "ok",
+          "forecast": "ok",
+          "districts": "ok",
+          "hospitals": "ok",
+          "shelters": "ok",
+          "pumping": "ok",
+          "transit": "ok"
+        },
+        "overpassCalls": 0
+      }
+    },
+    {
+      "name": "S3-bkk-3d-raf",
+      "zoom": 14.1,
+      "fps": 115.3,
+      "p50": 8.3,
+      "p95": 9,
+      "p99": 17.1,
+      "longFrames50ms": 2,
+      "cpuBusyPct": 90,
+      "scriptPct": 83.7,
+      "heapMB": 89.3,
+      "netDuring": {},
+      "flood": {
+        "mode": "3d",
+        "layers": 12,
+        "sources": 10,
+        "animRunning": true,
+        "paintUpdates": 3196,
+        "fetches": {
+          "roads": "ok",
+          "reports": "ok",
+          "radar": "ok",
+          "forecast": "ok",
+          "districts": "ok",
+          "hospitals": "ok",
+          "shelters": "ok",
+          "pumping": "ok",
+          "transit": "ok"
+        },
+        "overpassCalls": 0
+      }
+    },
+    {
+      "name": "S4-bkk-3d-anim-off",
+      "zoom": 14.1,
+      "fps": 120.3,
+      "p50": 8.3,
+      "p95": 8.9,
+      "p99": 9.3,
+      "longFrames50ms": 0,
+      "cpuBusyPct": 2,
+      "scriptPct": 0.2,
+      "heapMB": 156.5,
+      "netDuring": {},
+      "flood": {
+        "mode": "3d",
+        "layers": 12,
+        "sources": 10,
+        "animRunning": false,
+        "paintUpdates": 3210,
+        "fetches": {
+          "roads": "ok",
+          "reports": "ok",
+          "radar": "ok",
+          "forecast": "ok",
+          "districts": "ok",
+          "hospitals": "ok",
+          "shelters": "ok",
+          "pumping": "ok",
+          "transit": "ok"
+        },
+        "overpassCalls": 0
+      }
+    },
+    {
+      "name": "S5-bkk-3d-flood-off",
+      "fps": 120.1,
+      "p50": 8.3,
+      "p95": 8.9,
+      "p99": 9.2,
+      "longFrames50ms": 0,
+      "cpuBusyPct": 2.2,
+      "scriptPct": 0.2,
+      "heapMB": 161.5,
+      "netDuring": {},
+      "flood": null
+    },
+    {
+      "name": "S6-bkk-3d-flood-on-again",
+      "zoom": 14.1,
+      "fps": 93.9,
+      "p50": 8.4,
+      "p95": 16.8,
+      "p99": 17.7,
+      "longFrames50ms": 2,
+      "cpuBusyPct": 98.4,
+      "scriptPct": 93.1,
+      "heapMB": 163.1,
+      "netDuring": {},
+      "flood": {
+        "mode": "3d",
+        "layers": 12,
+        "sources": 10,
+        "animRunning": true,
+        "paintUpdates": 278,
+        "fetches": {
+          "roads": "ok",
+          "reports": "ok",
+          "radar": "ok",
+          "forecast": "ok",
+          "districts": "ok",
+          "hospitals": "ok",
+          "shelters": "ok",
+          "pumping": "ok",
+          "transit": "ok"
+        },
+        "overpassCalls": 0
+      }
+    },
+    {
+      "name": "S7-bkk-2d",
+      "zoom": 12.5,
+      "fps": 109.1,
+      "p50": 8.3,
+      "p95": 15.2,
+      "p99": 25.4,
+      "longFrames50ms": 2,
+      "cpuBusyPct": 5.9,
+      "scriptPct": 0.4,
+      "heapMB": 176.1,
+      "netDuring": {},
+      "flood": {
+        "mode": "2d",
+        "layers": 11,
+        "sources": 8,
+        "animRunning": false,
+        "paintUpdates": 280,
+        "fetches": {
+          "roads": "ok",
+          "reports": "ok",
+          "radar": "ok",
+          "forecast": "ok",
+          "districts": "ok",
+          "hospitals": "ok",
+          "shelters": "ok",
+          "pumping": "ok",
+          "transit": "ok"
+        },
+        "overpassCalls": 0
+      }
+    },
+    {
+      "name": "S8-pan-3d-orbit",
+      "zoom": 14.1,
+      "fps": 47.8,
+      "p50": 16.5,
+      "p95": 50.7,
+      "p99": 127,
+      "longFrames50ms": 22,
+      "cpuBusyPct": 86.6,
+      "scriptPct": 77.9,
+      "heapMB": 140.2,
+      "netDuring": {},
+      "flood": {
+        "mode": "3d",
+        "layers": 12,
+        "sources": 10,
+        "animRunning": true,
+        "paintUpdates": 471,
+        "fetches": {
+          "roads": "ok",
+          "reports": "ok",
+          "radar": "ok",
+          "forecast": "ok",
+          "districts": "ok",
+          "hospitals": "ok",
+          "shelters": "ok",
+          "pumping": "ok",
+          "transit": "ok"
+        },
+        "overpassCalls": 0
+      }
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,205 @@
+{
+  "results": [
+    {
+      "name": "P1-pan-3d-flood-on-anim-off",
+      "zoom": 14.1,
+      "fps": 27.9,
+      "p50": 16.7,
+      "p95": 108.3,
+      "p99": 175.7,
+      "longFrames50ms": 55,
+      "cpuBusyPct": 100.2,
+      "scriptPct": 94.3,
+      "heapMB": 103.6,
+      "netDuring": {
+        "127.0.0.1:3000": "1 req 10 kB",
+        "camera1.iticfoundation.org": "2 req 50 kB"
+      },
+      "flood": {
+        "mode": "3d",
+        "layers": 12,
+        "sources": 10,
+        "animRunning": false,
+        "paintUpdates": 0,
+        "fetches": {
+          "roads": "ok",
+          "reports": "ok",
+          "radar": "ok",
+          "forecast": "failed",
+          "districts": "ok",
+          "hospitals": "ok",
+          "shelters": "ok",
+          "pumping": "ok",
+          "transit": "ok"
+        },
+        "overpassCalls": 0
+      }
+    },
+    {
+      "name": "P2-static-3d-anim-10hz",
+      "zoom": 14.1,
+      "fps": 80.1,
+      "p50": 8.4,
+      "p95": 21.4,
+      "p99": 73.8,
+      "longFrames50ms": 14,
+      "cpuBusyPct": 90.3,
+      "scriptPct": 82.5,
+      "heapMB": 121.6,
+      "netDuring": {},
+      "flood": {
+        "mode": "3d",
+        "layers": 12,
+        "sources": 10,
+        "animRunning": true,
+        "paintUpdates": 226,
+        "fetches": {
+          "roads": "ok",
+          "reports": "ok",
+          "radar": "ok",
+          "forecast": "failed",
+          "districts": "ok",
+          "hospitals": "ok",
+          "shelters": "ok",
+          "pumping": "ok",
+          "transit": "ok"
+        },
+        "overpassCalls": 0
+      }
+    },
+    {
+      "name": "P3-pan-3d-flood-off",
+      "fps": 79.6,
+      "p50": 8.4,
+      "p95": 41.6,
+      "p99": 49.9,
+      "longFrames50ms": 1,
+      "cpuBusyPct": 97.9,
+      "scriptPct": 91.8,
+      "heapMB": 98.9,
+      "netDuring": {
+        "camera1.iticfoundation.org": "1 req 1 kB"
+      },
+      "flood": null
+    },
+    {
+      "name": "T1-4x-pan-3d-flood-off",
+      "fps": 11.5,
+      "p50": 107.2,
+      "p95": 142.5,
+      "p99": 184.9,
+      "longFrames50ms": 65,
+      "cpuBusyPct": 101.9,
+      "scriptPct": 96.5,
+      "heapMB": 178.9,
+      "netDuring": {
+        "earthquake.usgs.gov": "1 req 6 kB",
+        "api.coingecko.com": "1 req 1 kB",
+        "camera1.iticfoundation.org": "2 req 55 kB"
+      },
+      "flood": null
+    },
+    {
+      "name": "T2-4x-pan-3d-flood-on-anim-off",
+      "zoom": 14.1,
+      "fps": 11.5,
+      "p50": 107.5,
+      "p95": 132.4,
+      "p99": 133.5,
+      "longFrames50ms": 67,
+      "cpuBusyPct": 101.2,
+      "scriptPct": 97.2,
+      "heapMB": 143.1,
+      "netDuring": {},
+      "flood": {
+        "mode": "3d",
+        "layers": 12,
+        "sources": 10,
+        "animRunning": false,
+        "paintUpdates": 0,
+        "fetches": {
+          "roads": "ok",
+          "reports": "ok",
+          "radar": "ok",
+          "forecast": "failed",
+          "districts": "ok",
+          "hospitals": "ok",
+          "shelters": "ok",
+          "pumping": "ok",
+          "transit": "ok"
+        },
+        "overpassCalls": 0
+      }
+    },
+    {
+      "name": "T3-4x-static-3d-anim-10hz",
+      "zoom": 14.1,
+      "fps": 42,
+      "p50": 25,
+      "p95": 33.4,
+      "p99": 34.2,
+      "longFrames50ms": 0,
+      "cpuBusyPct": 99.8,
+      "scriptPct": 94.9,
+      "heapMB": 167.7,
+      "netDuring": {},
+      "flood": {
+        "mode": "3d",
+        "layers": 12,
+        "sources": 10,
+        "animRunning": true,
+        "paintUpdates": 224,
+        "fetches": {
+          "roads": "ok",
+          "reports": "ok",
+          "radar": "ok",
+          "forecast": "failed",
+          "districts": "ok",
+          "hospitals": "ok",
+          "shelters": "ok",
+          "pumping": "ok",
+          "transit": "ok"
+        },
+        "overpassCalls": 0
+      }
+    },
+    {
+      "name": "T4-4x-static-3d-anim-off",
+      "zoom": 14.1,
+      "fps": 120,
+      "p50": 8.3,
+      "p95": 9.6,
+      "p99": 10.1,
+      "longFrames50ms": 0,
+      "cpuBusyPct": 2.6,
+      "scriptPct": 0.5,
+      "heapMB": 165.3,
+      "netDuring": {
+        "earthquake.usgs.gov": "1 req 6 kB",
+        "api.coingecko.com": "1 req 1 kB"
+      },
+      "flood": {
+        "mode": "3d",
+        "layers": 12,
+        "sources": 10,
+        "animRunning": false,
+        "paintUpdates": 226,
+        "fetches": {
+          "roads": "ok",
+          "reports": "ok",
+          "radar": "ok",
+          "forecast": "failed",
+          "districts": "ok",
+          "hospitals": "ok",
+          "shelters": "ok",
+          "pumping": "ok",
+          "transit": "ok"
+        },
+        "overpassCalls": 0
+      }
+    }
+  ],
+  "errors": [
+    "console: Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+  ]
+}
