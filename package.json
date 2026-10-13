@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "predev": "node tools/prepare-map-worker.mjs",
-    "dev": "next dev",
+    "dev": "next dev -H 127.0.0.1",
     "prebuild": "node tools/prepare-map-worker.mjs",
     "build": "next build",
     "start": "next start",
