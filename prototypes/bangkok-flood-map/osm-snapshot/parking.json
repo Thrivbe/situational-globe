@@ -1,0 +1,3035 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.4 2390de5a",
+  "osm3s": {
+    "timestamp_osm_base": "2026-10-12T23:46:19Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "node",
+  "id": 373097197,
+  "lat": 13.7432012,
+  "lon": 100.5329272,
+  "tags": {
+    "amenity": "parking",
+    "fee": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "node",
+  "id": 1692913019,
+  "lat": 13.7895914,
+  "lon": 100.5886195,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "name": "อาคารจอดรถ a Space",
+    "name:en": "a Space Car Park Building",
+    "name:th": "อาคารจอดรถ a Space",
+    "operator": "a Space",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "node",
+  "id": 1696984973,
+  "lat": 13.7476296,
+  "lon": 100.5354905,
+  "tags": {
+    "amenity": "parking",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "node",
+  "id": 1700049284,
+  "lat": 13.7446044,
+  "lon": 100.5296567,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "fee": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "node",
+  "id": 1703931074,
+  "lat": 13.7359317,
+  "lon": 100.5253241,
+  "tags": {
+    "access": "permissive",
+    "amenity": "parking",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "node",
+  "id": 1858882413,
+  "lat": 13.9901899,
+  "lon": 100.6176076,
+  "tags": {
+    "amenity": "parking",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "node",
+  "id": 2461430260,
+  "lat": 13.9030786,
+  "lon": 100.5278816,
+  "tags": {
+    "access": "destination",
+    "amenity": "parking",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "node",
+  "id": 3251639097,
+  "lat": 13.7207027,
+  "lon": 100.5843357,
+  "tags": {
+    "amenity": "parking",
+    "capacity": "100",
+    "fee": "yes",
+    "name": "อาคารจอดรถเมเจอร์เอกมัย",
+    "name:en": "Major Ekkamai Car-park",
+    "operator": "Major Cineplex",
+    "park_ride": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "node",
+  "id": 3790086373,
+  "lat": 13.7561203,
+  "lon": 100.4806937,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "level": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 3877799809,
+  "lat": 13.7377879,
+  "lon": 100.5578985,
+  "tags": {
+    "amenity": "parking",
+    "maxheight": "1.9",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 3931717761,
+  "lat": 13.7186742,
+  "lon": 100.5246183,
+  "tags": {
+    "amenity": "parking",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "node",
+  "id": 4200333436,
+  "lat": 13.6503630,
+  "lon": 100.4956321,
+  "tags": {
+    "amenity": "parking",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "node",
+  "id": 4459520434,
+  "lat": 13.7375748,
+  "lon": 100.5125085,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "node",
+  "id": 4459549546,
+  "lat": 13.7404585,
+  "lon": 100.5097957,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 4474753737,
+  "lat": 13.7309447,
+  "lon": 100.5755888,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "node",
+  "id": 5522020169,
+  "lat": 13.6782272,
+  "lon": 100.7227416,
+  "tags": {
+    "amenity": "parking",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "node",
+  "id": 5936304504,
+  "lat": 13.7420033,
+  "lon": 100.5443841,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 6183446349,
+  "lat": 13.7188237,
+  "lon": 100.5691905,
+  "tags": {
+    "access": "yes",
+    "amenity": "parking",
+    "fee": "no",
+    "parking": "multi-storey",
+    "supervised": "yes",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 6848982906,
+  "lat": 13.7481325,
+  "lon": 100.5271621,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "node",
+  "id": 6848982913,
+  "lat": 13.7480244,
+  "lon": 100.5271393,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "node",
+  "id": 7148372804,
+  "lat": 13.7101306,
+  "lon": 100.5432155,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 8226292662,
+  "lat": 13.7531395,
+  "lon": 100.4892787,
+  "tags": {
+    "amenity": "parking",
+    "highway": "elevator",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 8269797616,
+  "lat": 13.7271615,
+  "lon": 100.5099391,
+  "tags": {
+    "access": "yes",
+    "amenity": "parking",
+    "fee": "yes",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 10082185674,
+  "lat": 13.7365241,
+  "lon": 100.5439813,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 10206797049,
+  "lat": 13.7453538,
+  "lon": 100.5335737,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 10905225021,
+  "lat": 13.7325769,
+  "lon": 100.5314720,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 11022448804,
+  "lat": 13.7214542,
+  "lon": 100.5572159,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 11022657649,
+  "lat": 13.7220321,
+  "lon": 100.5568910,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 11159437012,
+  "lat": 13.7286059,
+  "lon": 100.5264607,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 11167354589,
+  "lat": 13.6997192,
+  "lon": 100.5295640,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 11167458012,
+  "lat": 13.6988185,
+  "lon": 100.5326712,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 11175026432,
+  "lat": 13.7283573,
+  "lon": 100.5232407,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 11224299412,
+  "lat": 13.7260474,
+  "lon": 100.5083016,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 11246116591,
+  "lat": 13.7252438,
+  "lon": 100.5190493,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 11283184545,
+  "lat": 13.7168140,
+  "lon": 100.5341930,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 11283223148,
+  "lat": 13.7166142,
+  "lon": 100.5337505,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 11285765586,
+  "lat": 13.7209542,
+  "lon": 100.5452532,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 11304893871,
+  "lat": 13.7355286,
+  "lon": 100.5402656,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 11304893944,
+  "lat": 13.7353545,
+  "lon": 100.5402798,
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 11304893978,
+  "lat": 13.7347667,
+  "lon": 100.5401523,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 11335399420,
+  "lat": 13.7387437,
+  "lon": 100.5424395,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 11335399421,
+  "lat": 13.7389669,
+  "lon": 100.5424702,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 12384914397,
+  "lat": 13.7177512,
+  "lon": 100.5479032,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 13063019679,
+  "lat": 13.7343402,
+  "lon": 100.5599688,
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 14258680075,
+  "lat": 13.7492277,
+  "lon": 100.5117811,
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "way",
+  "id": 33070807,
+  "center": {
+    "lat": 13.7467095,
+    "lon": 100.5328720
+  },
+  "tags": {
+    "addr:district": "ปทุมวัน",
+    "addr:postcode": "10330",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "ปทุมวัน",
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 33070981,
+  "center": {
+    "lat": 13.7328927,
+    "lon": 100.5311094
+  },
+  "tags": {
+    "addr:district": "ปทุมวัน",
+    "addr:postcode": "10330",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "ปทุมวัน",
+    "amenity": "parking",
+    "building:part": "yes",
+    "fee": "yes",
+    "height": "30",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 94324290,
+  "center": {
+    "lat": 13.8435053,
+    "lon": 100.5695612
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "name": "อาคารจอดรถงามวงศ์วาน 2",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 94324292,
+  "center": {
+    "lat": 13.8429125,
+    "lon": 100.5706326
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "name": "อาคารจอดรถงามวงศ์วาน 1",
+    "parking": "multi-storey",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 94923770,
+  "center": {
+    "lat": 13.8669118,
+    "lon": 100.4955023
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey",
+    "source": "Bing"
+  }
+},
+{
+  "type": "way",
+  "id": 134003280,
+  "center": {
+    "lat": 13.7610988,
+    "lon": 100.4986492
+  },
+  "tags": {
+    "addr:district": "พระนคร",
+    "addr:postcode": "10200",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "ตลาดยอด",
+    "amenity": "parking",
+    "building": "parking",
+    "building:levels": "6",
+    "fee": "yes",
+    "layer": "1",
+    "name": "อาคารที่จอดรถสาธารณะ",
+    "name:en": "BMA Public Parking",
+    "name:th": "อาคารที่จอดรถสาธารณะ",
+    "opening_hours": "06:00-02:30",
+    "operator": "กรุงเทพมหานคร",
+    "operator:wikidata": "Q4855218",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 151883613,
+  "center": {
+    "lat": 13.9025568,
+    "lon": 100.5285285
+  },
+  "tags": {
+    "access": "destination",
+    "amenity": "parking",
+    "building": "yes",
+    "building:levels": "11",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 155971312,
+  "center": {
+    "lat": 13.7104146,
+    "lon": 100.7525311
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 156763649,
+  "center": {
+    "lat": 13.8068477,
+    "lon": 100.5741729
+  },
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "building": "parking",
+    "capacity": "2200",
+    "fee": "no",
+    "maxstay": "15 minutes",
+    "name": "จอดแล้วจร ลาดพร้าว",
+    "name:en": "Park & Ride Lad Phrao",
+    "name:th": "จอดแล้วจร ลาดพร้าว",
+    "park_ride": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 157486898,
+  "center": {
+    "lat": 13.7439063,
+    "lon": 100.5348214
+  },
+  "tags": {
+    "addr:district": "ปทุมวัน",
+    "addr:housename": "อาคารสยามกิตติ์",
+    "addr:housenumber": "448",
+    "addr:postcode": "10330",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:street": "ถนนพระรามที่ 1",
+    "addr:subdistrict": "ปทุมวัน",
+    "amenity": "parking",
+    "building": "parking",
+    "building:levels": "10",
+    "fee": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 157522271,
+  "center": {
+    "lat": 13.7340306,
+    "lon": 100.5355771
+  },
+  "tags": {
+    "addr:district": "ปทุมวัน",
+    "addr:postcode": "10330",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "ปทุมวัน",
+    "amenity": "parking",
+    "building": "yes",
+    "name": "อาคารจอดรถ 3",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 157668548,
+  "center": {
+    "lat": 13.8171362,
+    "lon": 100.5604259
+  },
+  "tags": {
+    "access": "destination",
+    "amenity": "parking",
+    "building": "yes",
+    "check_date:opening_hours": "2023-01-02",
+    "name": "ลานจอดรถ",
+    "name:en": "Parking",
+    "name:th": "ลาดจอดรถ",
+    "opening_hours:signed": "no",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 158138513,
+  "center": {
+    "lat": 13.7390968,
+    "lon": 100.5344169
+  },
+  "tags": {
+    "access": "permissive",
+    "addr:district": "ปทุมวัน",
+    "addr:postcode": "10330",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "ปทุมวัน",
+    "amenity": "parking",
+    "building": "university",
+    "name": "อาคารจอดรถ 2",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 167534420,
+  "center": {
+    "lat": 13.7706157,
+    "lon": 100.5326033
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "parking",
+    "image": "https://images.mapillary.com/JG3k7_lapvKlLMMaS-zqvw/thumb-2048.jpg",
+    "mapillary": "206567201108398",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 168739109,
+  "center": {
+    "lat": 13.8820695,
+    "lon": 100.5640357
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "name": "อาคารจอดรถ BC",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 175564112,
+  "center": {
+    "lat": 13.6435686,
+    "lon": 100.6805944
+  },
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "building": "parking",
+    "construction": "yes",
+    "fee": "yes",
+    "operator": "MEGA Bangna",
+    "operator:type": "business",
+    "parking": "multi-storey",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 191906918,
+  "center": {
+    "lat": 13.8884946,
+    "lon": 100.5665798
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "name": "อาคารจอดรถ A",
+    "name:th": "อาคารจอดรถ A",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 191906919,
+  "center": {
+    "lat": 13.8839728,
+    "lon": 100.5718362
+  },
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 191960082,
+  "center": {
+    "lat": 13.8826615,
+    "lon": 100.5750383
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 194900813,
+  "center": {
+    "lat": 13.9313346,
+    "lon": 100.6083147
+  },
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 196950795,
+  "center": {
+    "lat": 13.8287046,
+    "lon": 100.5670399
+  },
+  "tags": {
+    "amenity": "parking",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 198423067,
+  "center": {
+    "lat": 13.7241285,
+    "lon": 100.5149064
+  },
+  "tags": {
+    "addr:district": "บางรัก",
+    "addr:postcode": "10500",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "บางรัก",
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 199955317,
+  "center": {
+    "lat": 13.8285762,
+    "lon": 100.5676404
+  },
+  "tags": {
+    "amenity": "parking",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 200147362,
+  "center": {
+    "lat": 13.9164515,
+    "lon": 100.6005254
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "layer": "-1",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 218006425,
+  "center": {
+    "lat": 13.9881533,
+    "lon": 100.6176095
+  },
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "way",
+  "id": 218006432,
+  "center": {
+    "lat": 13.9891566,
+    "lon": 100.6164596
+  },
+  "tags": {
+    "access": "yes",
+    "amenity": "parking",
+    "fee": "yes",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "way",
+  "id": 231413672,
+  "center": {
+    "lat": 13.7290296,
+    "lon": 100.5312061
+  },
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "building:levels": "5",
+    "fee": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 244115006,
+  "center": {
+    "lat": 13.7455451,
+    "lon": 100.5451539
+  },
+  "tags": {
+    "amenity": "parking",
+    "building:levels": "7",
+    "fee": "yes",
+    "parking": "multi-storey",
+    "supervised": "yes",
+    "surface": "concrete"
+  }
+},
+{
+  "type": "way",
+  "id": 258779059,
+  "center": {
+    "lat": 13.8513414,
+    "lon": 100.5643908
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "name": "อาคารจอดรถวิภาวดี",
+    "parking": "multi-storey",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 261222193,
+  "center": {
+    "lat": 13.8661705,
+    "lon": 100.4951892
+  },
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "building": "yes",
+    "capacity": "565",
+    "fee": "yes",
+    "name": "อาคารจอดแล้วจรสถานีแยกนนทบุรี 1",
+    "name:th": "อาคารจอดแล้วจรสถานีแยกนนทบุรี 1",
+    "park_ride": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 262320354,
+  "center": {
+    "lat": 13.8540747,
+    "lon": 100.5703007
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "name": "อาคารจอดรถบางเขน",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 289494920,
+  "center": {
+    "lat": 13.7185603,
+    "lon": 100.5245865
+  },
+  "tags": {
+    "amenity": "parking",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 305102118,
+  "center": {
+    "lat": 13.7416318,
+    "lon": 100.5070652
+  },
+  "tags": {
+    "addr:district": "สัมพันธวงศ์",
+    "addr:postcode": "10100",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "จักรวรรดิ",
+    "amenity": "parking",
+    "building": "yes",
+    "fee": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 330244569,
+  "center": {
+    "lat": 13.7445674,
+    "lon": 100.5548199
+  },
+  "tags": {
+    "addr:district": "วัฒนา",
+    "addr:postcode": "10110",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "คลองเตยเหนือ",
+    "amenity": "parking",
+    "building": "yes",
+    "building:levels": "9",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 330253794,
+  "center": {
+    "lat": 13.7243955,
+    "lon": 100.5662120
+  },
+  "tags": {
+    "access": "customers",
+    "addr:district": "คลองเตย",
+    "addr:postcode": "10110",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "คลองตัน",
+    "amenity": "parking",
+    "building": "yes",
+    "building:levels": "9",
+    "description": "Sukhumvit Park Parking Garage",
+    "fee": "no",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 332224222,
+  "center": {
+    "lat": 13.7295779,
+    "lon": 100.5291962
+  },
+  "tags": {
+    "access": "customers",
+    "addr:district": "บางรัก",
+    "addr:postcode": "10500",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "สี่พระยา",
+    "amenity": "parking",
+    "building": "yes",
+    "building:levels": "12",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 332660385,
+  "center": {
+    "lat": 13.7452876,
+    "lon": 100.5436050
+  },
+  "tags": {
+    "addr:district": "ปทุมวัน",
+    "addr:postcode": "10330",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "ลุมพินี",
+    "amenity": "parking",
+    "building": "parking",
+    "building:levels": "6",
+    "parking": "multi-storey",
+    "roof:levels": "2",
+    "roof:shape": "flat"
+  }
+},
+{
+  "type": "way",
+  "id": 333223601,
+  "center": {
+    "lat": 13.7459472,
+    "lon": 100.5091606
+  },
+  "tags": {
+    "addr:district": "ป้อมปราบศัตรูพ่าย",
+    "addr:postcode": "10100",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "ป้อมปราบ",
+    "amenity": "parking",
+    "building": "parking",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 333227714,
+  "center": {
+    "lat": 13.7533993,
+    "lon": 100.4849520
+  },
+  "tags": {
+    "addr:district": "บางกอกน้อย",
+    "addr:postcode": "10700",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "ศิริราช",
+    "alt_name": "อาคารจอดรถวัดระฆัง",
+    "alt_name:en": "Wat Rakhang Parking Building",
+    "alt_name:th": "อาคารจอดรถวัดระฆัง",
+    "amenity": "parking",
+    "building": "yes",
+    "name": "อาคารปฏิบัติธรรมพฺรหฺมรํสี",
+    "name:th": "อาคารปฏิบัติธรรมพฺรหฺมรํสี",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 346419706,
+  "center": {
+    "lat": 13.7664985,
+    "lon": 100.5337079
+  },
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "building": "yes",
+    "fee": "yes",
+    "name": "อาคารจอดรถ",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 347919496,
+  "center": {
+    "lat": 13.7243818,
+    "lon": 100.5199652
+  },
+  "tags": {
+    "addr:district": "บางรัก",
+    "addr:postcode": "10500",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "สุริยวงศ์",
+    "amenity": "parking",
+    "building": "yes",
+    "building:levels": "12",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 364299623,
+  "center": {
+    "lat": 13.7545633,
+    "lon": 100.4891775
+  },
+  "tags": {
+    "access": "customers",
+    "addr:district": "พระนคร",
+    "addr:postcode": "10200",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "พระบรมมหาราชวัง",
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 366768851,
+  "center": {
+    "lat": 13.6479822,
+    "lon": 100.6789313
+  },
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "fee": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 378153794,
+  "center": {
+    "lat": 13.6503826,
+    "lon": 100.4956320
+  },
+  "tags": {
+    "addr:district": "ทุ่งครุ",
+    "addr:postcode": "10140",
+    "addr:province": "กรุงเทพมหานคร",
+    "amenity": "parking",
+    "building": "parking",
+    "building:levels": "14",
+    "name": "Parking Building",
+    "name:th": "ตึกจอดรถ14ชั้น",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 389809345,
+  "center": {
+    "lat": 13.7080585,
+    "lon": 100.7519556
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 390013452,
+  "center": {
+    "lat": 13.7586492,
+    "lon": 100.5664745
+  },
+  "tags": {
+    "access": "yes",
+    "amenity": "parking",
+    "building": "yes",
+    "fee": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 402128400,
+  "center": {
+    "lat": 13.8151003,
+    "lon": 100.5747766
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 404295670,
+  "center": {
+    "lat": 13.7102072,
+    "lon": 100.7589348
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 406533659,
+  "center": {
+    "lat": 13.9104789,
+    "lon": 100.5397883
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "parking",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 443457051,
+  "center": {
+    "lat": 13.9117838,
+    "lon": 100.5502932
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "parking",
+    "capacity": "2000",
+    "name": "Indoor Parking 3 (P3)",
+    "parking": "multi-storey",
+    "ref": "P3"
+  }
+},
+{
+  "type": "way",
+  "id": 444803816,
+  "center": {
+    "lat": 13.7340948,
+    "lon": 100.5335640
+  },
+  "tags": {
+    "addr:district": "ปทุมวัน",
+    "addr:postcode": "10330",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "ปทุมวัน",
+    "amenity": "parking",
+    "building": "yes",
+    "name": "อาคารจอดรถ 3",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 516662143,
+  "center": {
+    "lat": 13.7097265,
+    "lon": 100.5940557
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "parking",
+    "building:levels": "7",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 538736363,
+  "center": {
+    "lat": 13.6952396,
+    "lon": 100.6491173
+  },
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "fee": "no",
+    "parking": "multi-storey",
+    "supervised": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 539470627,
+  "center": {
+    "lat": 13.7310034,
+    "lon": 100.5287865
+  },
+  "tags": {
+    "addr:district": "บางรัก",
+    "addr:postcode": "10500",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "สี่พระยา",
+    "amenity": "parking",
+    "building": "yes",
+    "building:levels": "6",
+    "name": "อาคารจอดรถ",
+    "name:en": "Parking Bldg.",
+    "name:th": "อาคารจอดรถ",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 539591665,
+  "center": {
+    "lat": 13.7307973,
+    "lon": 100.5319271
+  },
+  "tags": {
+    "access": "customers",
+    "addr:district": "บางรัก",
+    "addr:postcode": "10500",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "สี่พระยา",
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 539594689,
+  "center": {
+    "lat": 13.7311893,
+    "lon": 100.5243880
+  },
+  "tags": {
+    "access": "private",
+    "addr:district": "บางรัก",
+    "addr:postcode": "10500",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "สี่พระยา",
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 545377298,
+  "center": {
+    "lat": 13.9663412,
+    "lon": 100.5859359
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "name": "ตึก 10 อาคารลานจอดรถ",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 545391169,
+  "center": {
+    "lat": 13.8488304,
+    "lon": 100.5768647
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "stilt_house",
+    "name": "อาคารจอดรถ",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 545621920,
+  "center": {
+    "lat": 13.7112397,
+    "lon": 100.5810170
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "parking",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 546023188,
+  "center": {
+    "lat": 13.8269407,
+    "lon": 100.6790284
+  },
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "building": "yes",
+    "fee": "no",
+    "name": "Parking A",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 546023189,
+  "center": {
+    "lat": 13.8254776,
+    "lon": 100.6799177
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "fee": "no",
+    "name": "Parking D",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 546023193,
+  "center": {
+    "lat": 13.8271837,
+    "lon": 100.6774302
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "fee": "no",
+    "name": "Parking E",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 550977595,
+  "center": {
+    "lat": 13.8824953,
+    "lon": 100.5057144
+  },
+  "tags": {
+    "access": "permissive",
+    "amenity": "parking",
+    "capacity": "500",
+    "fee": "no",
+    "operator": "The Government Lottery Office (Sanambin Nam)",
+    "parking": "multi-storey",
+    "surface": "concrete"
+  }
+},
+{
+  "type": "way",
+  "id": 561163687,
+  "center": {
+    "lat": 13.7489554,
+    "lon": 100.5283782
+  },
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "parking": "underground"
+  }
+},
+{
+  "type": "way",
+  "id": 563380862,
+  "center": {
+    "lat": 13.6896366,
+    "lon": 100.6482692
+  },
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "fee": "no",
+    "layer": "-1",
+    "parking": "underground",
+    "supervised": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 589572068,
+  "center": {
+    "lat": 13.8497483,
+    "lon": 100.5783606
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "construction",
+    "name": "อาคารจอดรถ 9 ชั้น",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 662275043,
+  "center": {
+    "lat": 13.7265364,
+    "lon": 100.6432763
+  },
+  "tags": {
+    "access": "yes",
+    "amenity": "parking",
+    "building": "yes",
+    "check_date:opening_hours": "2022-08-31",
+    "fee": "yes",
+    "name": "Building P",
+    "opening_hours:signed": "no",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 666320834,
+  "center": {
+    "lat": 13.7438251,
+    "lon": 100.5258985
+  },
+  "tags": {
+    "addr:district": "ปทุมวัน",
+    "addr:postcode": "10330",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "วังใหม่",
+    "amenity": "parking",
+    "building": "parking",
+    "operator": "อาคารจอดรถ 4",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 689465757,
+  "center": {
+    "lat": 13.7110189,
+    "lon": 100.6082265
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "parking",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 693876726,
+  "center": {
+    "lat": 13.7273391,
+    "lon": 100.5151360
+  },
+  "tags": {
+    "addr:district": "บางรัก",
+    "addr:postcode": "10500",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "บางรัก",
+    "amenity": "parking",
+    "barrier": "fence",
+    "building": "yes",
+    "operator": "Thai Post",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 709140816,
+  "center": {
+    "lat": 13.9316539,
+    "lon": 100.6454600
+  },
+  "tags": {
+    "access": "yes",
+    "amenity": "parking",
+    "building": "yes",
+    "building:levels": "6",
+    "covered": "yes",
+    "fee": "yes",
+    "name": "อาคารจอดแล้วจร สถานีคูคต",
+    "name:en": "Khu Khot Station Park and Ride Building",
+    "opening_hours": "05:00-01:00",
+    "operator": "การรถไฟฟ้าขนส่งมวลชนแห่งประเทศไทย",
+    "operator:type": "public",
+    "park_ride": "yes",
+    "parking": "multi-storey",
+    "payment:app": "yes",
+    "surface": "concrete"
+  }
+},
+{
+  "type": "way",
+  "id": 710685485,
+  "center": {
+    "lat": 13.9257896,
+    "lon": 100.6252144
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "name": "อาคารจอดแล้วจร สถานีแยก คปอ.",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 741666734,
+  "center": {
+    "lat": 13.7113880,
+    "lon": 100.4109203
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "parking",
+    "capacity": "653",
+    "fee": "yes",
+    "name": "อาคารจอดแล้วจร 1",
+    "name:en": "Park and Ride 1",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 741666735,
+  "center": {
+    "lat": 13.7102585,
+    "lon": 100.4109504
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "parking",
+    "capacity": "348",
+    "fee": "yes",
+    "name": "อาคารจอดแล้วจร 2",
+    "name:en": "Park and Ride 2",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 776659933,
+  "center": {
+    "lat": 13.7486548,
+    "lon": 100.5567263
+  },
+  "tags": {
+    "addr:district": "ราชเทวี",
+    "addr:postcode": "10400",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "มักกะสัน",
+    "amenity": "parking",
+    "building": "yes",
+    "building:levels": "11",
+    "height": "30",
+    "name": "อาคารจอดรถ (อาคารธนภูมิ)",
+    "name:en": "Parking Building (Thanapoom Tower)",
+    "name:th": "อาคารจอดรถ (อาคารธนภูมิ)",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 780662657,
+  "center": {
+    "lat": 13.9124530,
+    "lon": 100.5521520
+  },
+  "tags": {
+    "amenity": "parking",
+    "building:part": "parking",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 838440882,
+  "center": {
+    "lat": 13.7344864,
+    "lon": 100.5280377
+  },
+  "tags": {
+    "access": "yes",
+    "amenity": "parking",
+    "building:part": "parking",
+    "fee": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 856013273,
+  "center": {
+    "lat": 13.7395905,
+    "lon": 100.5227808
+  },
+  "tags": {
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "way",
+  "id": 863297166,
+  "center": {
+    "lat": 13.7622047,
+    "lon": 100.5283237
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 886588461,
+  "center": {
+    "lat": 13.7450931,
+    "lon": 100.5453694
+  },
+  "tags": {
+    "addr:district": "ปทุมวัน",
+    "addr:postcode": "10330",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "ลุมพินี",
+    "amenity": "parking",
+    "building": "parking",
+    "fee": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 899491781,
+  "center": {
+    "lat": 13.7556883,
+    "lon": 100.5086882
+  },
+  "tags": {
+    "addr:district": "ป้อมปราบศัตรูพ่าย",
+    "addr:postcode": "10100",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "บ้านบาตร",
+    "amenity": "parking",
+    "building": "parking",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 941994903,
+  "center": {
+    "lat": 13.9247854,
+    "lon": 100.6052592
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 945696077,
+  "center": {
+    "lat": 13.6669076,
+    "lon": 100.6511616
+  },
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "building": "parking",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 951947553,
+  "center": {
+    "lat": 13.6673319,
+    "lon": 100.6455368
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "parking",
+    "layer": "1",
+    "name": "อาคารจอดแล้วจร ศรีเอี่ยม",
+    "name:en": "Park and Ride Sri Iam",
+    "name:th": "อาคารจอดแล้วจร ศรีเอี่ยม",
+    "park_ride": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1009343717,
+  "center": {
+    "lat": 14.0217930,
+    "lon": 100.5236559
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "parking",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1021040848,
+  "center": {
+    "lat": 13.7352158,
+    "lon": 100.5145740
+  },
+  "tags": {
+    "addr:district": "สัมพันธวงศ์",
+    "addr:housenumber": "8/9",
+    "addr:postcode": "10100",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:street": "ซอยเจริญกรุง 29",
+    "addr:subdistrict": "ตลาดน้อย",
+    "amenity": "parking",
+    "building": "yes",
+    "building:levels": "8",
+    "name": "ที่จอดรถตั้งจั้วหลี",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1106266866,
+  "center": {
+    "lat": 13.6876187,
+    "lon": 100.6481917
+  },
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "fee": "yes",
+    "operator": "Paradise Park",
+    "parking": "multi-storey",
+    "smoking": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 1126010574,
+  "center": {
+    "lat": 13.8258992,
+    "lon": 100.6578376
+  },
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "building": "yes",
+    "fee": "no",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1131109041,
+  "center": {
+    "lat": 13.6861427,
+    "lon": 100.6686543
+  },
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "layer": "-1",
+    "parking": "underground"
+  }
+},
+{
+  "type": "way",
+  "id": 1185523516,
+  "center": {
+    "lat": 13.7275599,
+    "lon": 100.5291203
+  },
+  "tags": {
+    "addr:district": "บางรัก",
+    "addr:postcode": "10500",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "สุริยวงศ์",
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1185523517,
+  "center": {
+    "lat": 13.7272655,
+    "lon": 100.5295295
+  },
+  "tags": {
+    "addr:district": "บางรัก",
+    "addr:postcode": "10500",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "สุริยวงศ์",
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1189540304,
+  "center": {
+    "lat": 13.7811375,
+    "lon": 100.5384986
+  },
+  "tags": {
+    "access": "private",
+    "addr:district": "พญาไท",
+    "addr:postcode": "10400",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "พญาไท",
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1199777933,
+  "center": {
+    "lat": 13.7316398,
+    "lon": 100.5302880
+  },
+  "tags": {
+    "access": "customers",
+    "addr:district": "บางรัก",
+    "addr:postcode": "10500",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "สี่พระยา",
+    "amenity": "parking",
+    "building": "yes",
+    "fee": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1200817699,
+  "center": {
+    "lat": 13.7317893,
+    "lon": 100.5272916
+  },
+  "tags": {
+    "access": "private",
+    "addr:district": "บางรัก",
+    "addr:postcode": "10500",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "สี่พระยา",
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1208610292,
+  "center": {
+    "lat": 13.7252887,
+    "lon": 100.5236458
+  },
+  "tags": {
+    "access": "customers",
+    "addr:district": "บางรัก",
+    "addr:postcode": "10500",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "สุริยวงศ์",
+    "amenity": "parking",
+    "building": "yes",
+    "building:levels": "7",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1212038584,
+  "center": {
+    "lat": 13.7291829,
+    "lon": 100.5228376
+  },
+  "tags": {
+    "addr:district": "บางรัก",
+    "addr:postcode": "10500",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "สี่พระยา",
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1217839357,
+  "center": {
+    "lat": 13.7181466,
+    "lon": 100.5401607
+  },
+  "tags": {
+    "access": "private",
+    "addr:district": "สาทร",
+    "addr:postcode": "10120",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "ทุ่งมหาเมฆ",
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1219315430,
+  "center": {
+    "lat": 13.7201342,
+    "lon": 100.5395601
+  },
+  "tags": {
+    "access": "private",
+    "addr:district": "สาทร",
+    "addr:postcode": "10120",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "ทุ่งมหาเมฆ",
+    "amenity": "parking",
+    "building": "yes",
+    "building:levels": "6",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1220175018,
+  "center": {
+    "lat": 13.7716049,
+    "lon": 100.5308575
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "layer": "1",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1222203248,
+  "center": {
+    "lat": 13.7427777,
+    "lon": 100.5450051
+  },
+  "tags": {
+    "addr:district": "ปทุมวัน",
+    "addr:postcode": "10330",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "ลุมพินี",
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1225431410,
+  "center": {
+    "lat": 13.8075210,
+    "lon": 100.7318860
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "name": "อาคารจอดแล้วจร มีนบุรี",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1225848246,
+  "center": {
+    "lat": 13.7449301,
+    "lon": 100.5239227
+  },
+  "tags": {
+    "addr:district": "ปทุมวัน",
+    "addr:postcode": "10330",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "วังใหม่",
+    "amenity": "parking",
+    "building": "yes",
+    "name": "อาคารจอดรถ Mint Tower",
+    "name:en": "Mint Parking Tower",
+    "name:th": "อาคารจอดรถ Mint Tower",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1228628450,
+  "center": {
+    "lat": 13.7221080,
+    "lon": 100.5188139
+  },
+  "tags": {
+    "access": "customers",
+    "addr:district": "บางรัก",
+    "addr:district:en": "Bang Rak",
+    "addr:district:th": "บางรัก",
+    "addr:postcode": "10500",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "สีลม",
+    "amenity": "parking",
+    "building": "yes",
+    "building:levels": "2",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1230236742,
+  "center": {
+    "lat": 13.7250167,
+    "lon": 100.5365796
+  },
+  "tags": {
+    "addr:district": "บางรัก",
+    "addr:district:en": "Bang Rak",
+    "addr:district:th": "บางรัก",
+    "addr:postcode": "10500",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "สีลม",
+    "amenity": "parking",
+    "building": "yes",
+    "building:levels": "6",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1236763763,
+  "center": {
+    "lat": 13.7259809,
+    "lon": 100.5291531
+  },
+  "tags": {
+    "access": "private",
+    "addr:district": "บางรัก",
+    "addr:district:en": "Bang Rak",
+    "addr:district:th": "บางรัก",
+    "addr:postcode": "10500",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "สีลม",
+    "amenity": "parking",
+    "building": "yes",
+    "building:levels": "7",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1237449501,
+  "center": {
+    "lat": 13.7367534,
+    "lon": 100.5630637
+  },
+  "tags": {
+    "access": "private",
+    "addr:district": "วัฒนา",
+    "addr:postcode": "10110",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "คลองเตยเหนือ",
+    "amenity": "parking",
+    "building": "yes",
+    "name": "Parking Edge Sukhumvit 23",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1243160500,
+  "center": {
+    "lat": 13.7010589,
+    "lon": 100.5303986
+  },
+  "tags": {
+    "access": "customers",
+    "addr:district": "บางคอแหลม",
+    "addr:postcode": "10120",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "บางโคล่",
+    "amenity": "parking",
+    "building": "yes",
+    "building:levels": "2",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1244638267,
+  "center": {
+    "lat": 13.8991312,
+    "lon": 100.5008766
+  },
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "building": "yes",
+    "name": "ที่จอดรถ ศูนย์การแพทย์ปัญญานันทภิกขุ ชลประทาน",
+    "operator": "ศูนย์การแพทย์ปัญญานันทภิกขุ ชลประทาน",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1267718282,
+  "center": {
+    "lat": 13.7475915,
+    "lon": 100.4994587
+  },
+  "tags": {
+    "access": "private",
+    "addr:district": "พระนคร",
+    "addr:postcode": "10200",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "วังบูรพาภิรมย์",
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1287952214,
+  "center": {
+    "lat": 13.7567554,
+    "lon": 100.4961268
+  },
+  "tags": {
+    "addr:district": "พระนคร",
+    "addr:postcode": "10200",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "บวรนิเวศ",
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1299830881,
+  "center": {
+    "lat": 13.6334415,
+    "lon": 100.6196212
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1301522720,
+  "center": {
+    "lat": 13.8881669,
+    "lon": 100.5678810
+  },
+  "tags": {
+    "alt_name:en": "Depot Building",
+    "amenity": "parking",
+    "building": "yes",
+    "name": "อาคารจอดรถ D",
+    "name:th": "อาคารจอดรถ D",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1305008492,
+  "center": {
+    "lat": 13.7315727,
+    "lon": 100.5161284
+  },
+  "tags": {
+    "addr:district": "บางรัก",
+    "addr:postcode": "10500",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "มหาพฤฒาราม",
+    "amenity": "parking",
+    "building": "yes",
+    "building:levels": "8",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1312197050,
+  "center": {
+    "lat": 13.6945851,
+    "lon": 100.7504393
+  },
+  "tags": {
+    "addr:district": "บางพลี",
+    "addr:postcode": "10540",
+    "addr:province": "สมุทรปราการ",
+    "amenity": "parking",
+    "building": "yes",
+    "building:levels": "6",
+    "capacity": "1994",
+    "country": "Thailand",
+    "name": "อาคารจอดรถ โซน 3",
+    "name:en": "Car Park Zone 3",
+    "name:th": "อาคารจอดรถ โซน 3",
+    "opening_hours": "24/7",
+    "parking": "multi-storey",
+    "payment:cash": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 1312197053,
+  "center": {
+    "lat": 13.6941055,
+    "lon": 100.7521975
+  },
+  "tags": {
+    "addr:district": "บางพลี",
+    "addr:postcode": "10540",
+    "addr:province": "สมุทรปราการ",
+    "amenity": "parking",
+    "building": "yes",
+    "building:levels": "6",
+    "country": "Thailand",
+    "name": "อาคารจอดรถ โซน 2",
+    "name:en": "Car Park Zone 2",
+    "name:th": "อาคารจอดรถ โซน 2",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1312387346,
+  "center": {
+    "lat": 13.7123957,
+    "lon": 100.5517464
+  },
+  "tags": {
+    "access": "private",
+    "addr:district": "ยานนาวา",
+    "addr:postcode": "10120",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "ช่องนนทรี",
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1318098261,
+  "center": {
+    "lat": 13.7813462,
+    "lon": 100.5071037
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "layer": "1",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1328879215,
+  "center": {
+    "lat": 13.7583042,
+    "lon": 100.5604559
+  },
+  "tags": {
+    "addr:district": "ดินแดง",
+    "addr:postcode": "10400",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "ดินแดง",
+    "amenity": "parking",
+    "building": "yes",
+    "building:levels": "9",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1328879232,
+  "center": {
+    "lat": 13.7570631,
+    "lon": 100.5597674
+  },
+  "tags": {
+    "addr:district": "ดินแดง",
+    "addr:postcode": "10400",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "ดินแดง",
+    "amenity": "parking",
+    "building": "yes",
+    "building:levels": "9",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1328879247,
+  "center": {
+    "lat": 13.7570253,
+    "lon": 100.5609659
+  },
+  "tags": {
+    "addr:district": "ดินแดง",
+    "addr:postcode": "10400",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "ดินแดง",
+    "amenity": "parking",
+    "building": "yes",
+    "building:levels": "9",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1332644610,
+  "center": {
+    "lat": 13.7661304,
+    "lon": 100.5811822
+  },
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1336879505,
+  "center": {
+    "lat": 13.7252731,
+    "lon": 100.5507060
+  },
+  "tags": {
+    "access": "private",
+    "addr:district": "ปทุมวัน",
+    "addr:postcode": "10330",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "ลุมพินี",
+    "amenity": "parking",
+    "building": "yes",
+    "building:levels": "4",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1339925694,
+  "center": {
+    "lat": 13.7451640,
+    "lon": 100.5030900
+  },
+  "tags": {
+    "addr:district": "พระนคร",
+    "addr:postcode": "10200",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "วังบูรพาภิรมย์",
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1349713957,
+  "center": {
+    "lat": 13.7364913,
+    "lon": 100.5577147
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1352577201,
+  "center": {
+    "lat": 13.6744255,
+    "lon": 100.5445655
+  },
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "building": "yes",
+    "building:levels": "5",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1368798550,
+  "center": {
+    "lat": 13.6715136,
+    "lon": 100.6821425
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "building:levels": "6",
+    "capacity": "200",
+    "charge": "30 THB",
+    "charge:conditional": "no @ (customers AND stay < 1 hours)",
+    "check_date": "2025-02-01",
+    "covered": "yes",
+    "fee": "yes",
+    "name": "Car Park",
+    "parking": "multi-storey",
+    "payment:cash": "yes",
+    "payment:coins": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 1369119659,
+  "center": {
+    "lat": 13.6374563,
+    "lon": 100.6754245
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "operator": "Concordian International School",
+    "operator:type": "school",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1369911651,
+  "center": {
+    "lat": 13.6958137,
+    "lon": 100.6491903
+  },
+  "tags": {
+    "amenity": "parking",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1370522221,
+  "center": {
+    "lat": 13.7826939,
+    "lon": 100.5510266
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "building:levels": "7",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1373010321,
+  "center": {
+    "lat": 13.7973041,
+    "lon": 100.5351004
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1374648064,
+  "center": {
+    "lat": 13.7854876,
+    "lon": 100.5413080
+  },
+  "tags": {
+    "addr:district": "พญาไท",
+    "addr:postcode": "10400",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "พญาไท",
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1385059039,
+  "center": {
+    "lat": 13.7402758,
+    "lon": 100.5088608
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "parking",
+    "building:levels": "7",
+    "name": "อาคารจอดรถ วัดชัยภูมิการาม",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1396593738,
+  "center": {
+    "lat": 13.8665319,
+    "lon": 100.6084602
+  },
+  "tags": {
+    "amenity": "parking",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1408417822,
+  "center": {
+    "lat": 13.6754406,
+    "lon": 100.5930543
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1421990283,
+  "center": {
+    "lat": 13.7446114,
+    "lon": 100.5509341
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1427975528,
+  "center": {
+    "lat": 13.7562462,
+    "lon": 100.4838837
+  },
+  "tags": {
+    "addr:district": "บางกอกน้อย",
+    "addr:postcode": "10700",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "ศิริราช",
+    "amenity": "parking",
+    "building": "yes",
+    "name": "อาคารจอดรถ 1 (อุบัติเหตุ)",
+    "name:en": "Car Park 1 (Trauma Building)",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1428232758,
+  "center": {
+    "lat": 13.7556126,
+    "lon": 100.5626885
+  },
+  "tags": {
+    "access": "private",
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1443553056,
+  "center": {
+    "lat": 13.6657963,
+    "lon": 100.4357829
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1458643129,
+  "center": {
+    "lat": 13.9891154,
+    "lon": 100.6180696
+  },
+  "tags": {
+    "amenity": "parking",
+    "buildingpart": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1458643130,
+  "center": {
+    "lat": 13.9867464,
+    "lon": 100.6187312
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1460748173,
+  "center": {
+    "lat": 13.9620386,
+    "lon": 100.6272697
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1466273036,
+  "center": {
+    "lat": 13.8822921,
+    "lon": 100.5691551
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "building:levels": "8",
+    "name": "อาคารจอดรถและกีฬา",
+    "name:th": "อาคารจอดรถและกีฬา",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1472992620,
+  "center": {
+    "lat": 13.8273337,
+    "lon": 100.6808379
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "name": "Parking C",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1493003769,
+  "center": {
+    "lat": 13.8291430,
+    "lon": 100.6265388
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1498672256,
+  "center": {
+    "lat": 13.8753199,
+    "lon": 100.4205243
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1498952728,
+  "center": {
+    "lat": 13.7084641,
+    "lon": 100.5924270
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "parking",
+    "building:levels": "8",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1506651322,
+  "center": {
+    "lat": 13.7539555,
+    "lon": 100.4992937
+  },
+  "tags": {
+    "access": "customers",
+    "addr:district": "พระนคร",
+    "addr:postcode": "10200",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:street": "ตรอกมหรรฌพ",
+    "addr:subdistrict": "เสาชิงช้า",
+    "amenity": "parking",
+    "building": "commercial",
+    "charge": "40 THB",
+    "fee": "yes",
+    "parking": "multi-storey",
+    "payment:cash": "yes",
+    "payment:coins": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 1527834021,
+  "center": {
+    "lat": 13.7539817,
+    "lon": 100.4977732
+  },
+  "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "building": "yes",
+    "building:levels": "7",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1532727115,
+  "center": {
+    "lat": 13.8150732,
+    "lon": 100.5751085
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1535728178,
+  "center": {
+    "lat": 13.7154856,
+    "lon": 100.5183450
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "building:levels": "6",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/a/ab/Bangkok-Sathon_-_White_Jade_Tai_Hong_Gong_Shrine_-_ศาลเจ้าไต้ฮงกงหยกขาว_-_%282026_Jul%29_-_IMG_42.jpg",
+    "operator": "มูลนิธิป่อเต็กตึ๊ง",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1548367105,
+  "center": {
+    "lat": 13.8063752,
+    "lon": 100.5372821
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1560753792,
+  "center": {
+    "lat": 13.7504664,
+    "lon": 100.5099997
+  },
+  "tags": {
+    "access": "yes",
+    "addr:district": "ป้อมปราบศัตรูพ่าย",
+    "addr:housenumber": "200",
+    "addr:postcode": "10100",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:street": "ถนนเฉลิมเขต 1",
+    "addr:subdistrict": "วัดเทพศิรินทร์",
+    "amenity": "parking",
+    "building": "yes",
+    "building:levels": "12",
+    "fee": "yes",
+    "name": "อาคารจอดรถสวนมะลิ",
+    "name:en": "Suan Mali Multi-storey Car Park",
+    "name:th": "อาคารจอดรถสวนมะลิ",
+    "operator": "กรุงเทพมหานคร",
+    "operator:type": "public",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "way",
+  "id": 1564785534,
+  "center": {
+    "lat": 13.6786249,
+    "lon": 100.5274694
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "residential",
+    "layer": "-1",
+    "parking": "multi-storey"
+  }
+},
+{
+  "type": "relation",
+  "id": 19471135,
+  "center": {
+    "lat": 13.8052401,
+    "lon": 100.5628547
+  },
+  "tags": {
+    "amenity": "parking",
+    "building": "yes",
+    "parking": "multi-storey",
+    "type": "multipolygon"
+  }
+}
+
+  ]
+}

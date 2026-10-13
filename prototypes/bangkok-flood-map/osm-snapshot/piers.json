@@ -1,0 +1,3954 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.4 2390de5a",
+  "osm3s": {
+    "timestamp_osm_base": "2026-10-12T23:45:20Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "node",
+  "id": 88122604,
+  "lat": 13.7525602,
+  "lon": 100.4882707,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าช้าง",
+    "name:en": "Tha Chang N9",
+    "name:fr": "Tha Chang",
+    "name:th": "ท่าช้าง",
+    "operator": "CPX-G,CPX-OCPX-T",
+    "public_transport": "stop_position",
+    "ref": "N9"
+  }
+},
+{
+  "type": "node",
+  "id": 247799583,
+  "lat": 13.5950876,
+  "lon": 100.5957490,
+  "tags": {
+    "addr:country": "ไทย",
+    "addr:district": "เมืองสมุทรปราการ",
+    "addr:province": "สมุทรปราการ",
+    "addr:province:en": "Samutprakan",
+    "addr:subdistrict": "ปากน้ำ",
+    "amenity": "ferry_terminal",
+    "country": "Thailand",
+    "ferry": "yes",
+    "name": "ท่าเรือวิบูลย์ศรี",
+    "name:en": "Wibun Si Pier",
+    "name:th": "ท่าเรือวิบูลย์ศรี",
+    "province": "Samutprakan",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 249403520,
+  "lat": 13.7459776,
+  "lon": 100.4900083,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "description": "왓 아룬 가는 나루; cross rhe river",
+    "ferry": "yes",
+    "image": "https://images.mapillary.com/cRJJWo0oy6N2sKqgA7nWRA/thumb-2048.jpg",
+    "mapillary": "325115346413718",
+    "name": "ท่าเตียน",
+    "name:en": "Tha Tien",
+    "name:he": "טאן טיאן",
+    "name:ko": "타 띠엔",
+    "name:ru": "Тиан",
+    "name:th": "ท่าเตียน",
+    "operator": "CPX-B, CPX-O, CPX-T",
+    "province": "กรุงเทพมหานคร",
+    "public_transport": "stop_position",
+    "ref": "N8"
+  }
+},
+{
+  "type": "node",
+  "id": 269347981,
+  "lat": 13.7629920,
+  "lon": 100.4906911,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "พระปิ่นเกล้า",
+    "name:en": "Phra Pinklao Bridge N12",
+    "name:th": "พระปิ่นเกล้า",
+    "public_transport": "stop_position",
+    "ref": "N12"
+  }
+},
+{
+  "type": "node",
+  "id": 269747367,
+  "lat": 13.7409830,
+  "lon": 100.4946930,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "foot": "yes",
+    "name": "ยอดพิมาน",
+    "name:en": "Yodpiman",
+    "public_transport": "stop_position",
+    "ref": "N6/1"
+  }
+},
+{
+  "type": "node",
+  "id": 269747411,
+  "lat": 13.7258486,
+  "lon": 100.5119758,
+  "tags": {
+    "ferry": "yes",
+    "name": "ท่าเรือไอคอนสยาม 1",
+    "name:en": "Icon Siam Pier 1",
+    "name:th": "ท่าเรือไอคอนสยาม 1",
+    "public_transport": "stop_position",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 487075253,
+  "lat": 13.6824752,
+  "lon": 100.5872296,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "image": "https://commons.wikimedia.org/wiki/File:2025-01-26_pier_Wat_Bang_Nam_Phueng_Nok.JPG",
+    "name": "ท่าเรือวัดบางน้ำผึ้งนอก",
+    "name:en": "Wat Bang Namphueng Nok Pier",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 487075255,
+  "lat": 13.6766314,
+  "lon": 100.5873694,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "floating": "yes",
+    "image": "https://commons.wikimedia.org/wiki/File:2025-01-26_ferry_pier_Wat_Bang_Na_Nok.JPG",
+    "name": "ท่าเรือวัดบางนานอก",
+    "name:en": "Wat Bang Na Nok Pier",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 487075704,
+  "lat": 13.7042890,
+  "lon": 100.5628107,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือบางกะเจ้า",
+    "name:en": "Bang Kachao Pier",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 566622414,
+  "lat": 13.7493577,
+  "lon": 100.5414931,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ประตูน้ำ",
+    "name:en": "Pratunam",
+    "name:ru": "Pratunam",
+    "name:th": "ประตูน้ำ",
+    "public_transport": "stop_position",
+    "ref": "CEN",
+    "route": "NIDA line"
+  }
+},
+{
+  "type": "node",
+  "id": 566622607,
+  "lat": 13.7487051,
+  "lon": 100.5445742,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ชิดลม",
+    "name:en": "Chidlom",
+    "name:ru": "Chidlom",
+    "name:th": "ชิดลม",
+    "network": "NIDA Line",
+    "public_transport": "stop_position",
+    "ref": "E1"
+  }
+},
+{
+  "type": "node",
+  "id": 566622771,
+  "lat": 13.7482674,
+  "lon": 100.5481846,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "สะพานวิทยุ",
+    "name:en": "Wireless",
+    "name:ru": "Wireless",
+    "name:th": "สะพานวิทยุ",
+    "network": "NIDA Line",
+    "public_transport": "stop_position",
+    "ref": "E2"
+  }
+},
+{
+  "type": "node",
+  "id": 566622818,
+  "lat": 13.7482468,
+  "lon": 100.5540323,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "นานาเหนือ",
+    "name:en": "Nana Nua",
+    "name:ru": "Nana Nua",
+    "name:th": "นานาเหนือ",
+    "network": "NIDA Line",
+    "public_transport": "stop_position",
+    "ref": "E3"
+  }
+},
+{
+  "type": "node",
+  "id": 566623226,
+  "lat": 13.7483267,
+  "lon": 100.5591191,
+  "tags": {
+    "addr:street": "ถนนสุขุมวิท ซอย 15",
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "นานาชาติ",
+    "name:en": "Nana Chard",
+    "name:ru": "Nana Chard",
+    "name:th": "นานาชาติ",
+    "network": "NIDA Line",
+    "opening_hours": "Mo-Su 06:00-20:00",
+    "public_transport": "stop_position",
+    "ref": "E4"
+  }
+},
+{
+  "type": "node",
+  "id": 566623721,
+  "lat": 13.7478550,
+  "lon": 100.5629489,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "อโศก",
+    "name:en": "Asok Pier",
+    "name:ru": "Asoke",
+    "name:th": "อโศก",
+    "network": "NIDA Line",
+    "public_transport": "station",
+    "ref": "E5"
+  }
+},
+{
+  "type": "node",
+  "id": 566624462,
+  "lat": 13.7473900,
+  "lon": 100.5657418,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "มศว ประสานมิตร",
+    "name:en": "Prasanmit",
+    "name:th": "มศว ประสานมิตร",
+    "network": "NIDA Line",
+    "public_transport": "stop_position",
+    "ref": "E6"
+  }
+},
+{
+  "type": "node",
+  "id": 566629748,
+  "lat": 13.7459225,
+  "lon": 100.5734809,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "อิตัลไทย",
+    "name:en": "Italthai",
+    "name:th": "อิตัลไทย",
+    "network": "NIDA Line",
+    "public_transport": "stop_position",
+    "ref": "E7"
+  }
+},
+{
+  "type": "node",
+  "id": 566629891,
+  "lat": 13.7457066,
+  "lon": 100.5743712,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "วัดใหม่ช่องลม",
+    "name:en": "Wat Mai Chonglom",
+    "name:th": "วัดใหม่ช่องลม",
+    "network": "NIDA Line",
+    "public_transport": "stop_position",
+    "ref": "E8"
+  }
+},
+{
+  "type": "node",
+  "id": 566630005,
+  "lat": 13.7441488,
+  "lon": 100.5814550,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "สุเหร่าบ้านดอน",
+    "name:en": "Baan Don Mosque",
+    "name:th": "สุเหร่าบ้านดอน",
+    "network": "NIDA Line",
+    "public_transport": "stop_position",
+    "ref": "E9"
+  }
+},
+{
+  "type": "node",
+  "id": 566630007,
+  "lat": 13.7431910,
+  "lon": 100.5858879,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ซอยทองหล่อ",
+    "name:en": "Soi Thonglor",
+    "name:th": "ซอยทองหล่อ",
+    "network": "NIDA Line",
+    "public_transport": "stop_position",
+    "ref": "E10"
+  }
+},
+{
+  "type": "node",
+  "id": 566630278,
+  "lat": 13.7419120,
+  "lon": 100.5982639,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "สะพานคลองตัน",
+    "name:en": "Sapan Klongtun",
+    "name:th": "สะพานคลองตัน",
+    "network": "NIDA Line",
+    "public_transport": "stop_position",
+    "ref": "E13"
+  }
+},
+{
+  "type": "node",
+  "id": 566630389,
+  "lat": 13.7546530,
+  "lon": 100.6081306,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "เดอะมอลล์ราม",
+    "name:en": "The Mall Ram",
+    "name:th": "เดอะมอลล์ราม",
+    "network": "NIDA Line",
+    "public_transport": "stop_position",
+    "ref": "E14"
+  }
+},
+{
+  "type": "node",
+  "id": 566630861,
+  "lat": 13.7578217,
+  "lon": 100.6115814,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "รามคำแหง 29",
+    "name:en": "Ramkhamhaeng 29",
+    "name:th": "รามคำแหง 29",
+    "network": "NIDA Line",
+    "public_transport": "stop_position",
+    "ref": "E15"
+  }
+},
+{
+  "type": "node",
+  "id": 566631063,
+  "lat": 13.7599539,
+  "lon": 100.6137810,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "วัดเทพลีลา",
+    "name:en": "Wat Thepleela",
+    "name:th": "วัดเทพลีลา",
+    "network": "NIDA Line",
+    "public_transport": "stop_position",
+    "ref": "E16"
+  }
+},
+{
+  "type": "node",
+  "id": 566631207,
+  "lat": 13.7615270,
+  "lon": 100.6183156,
+  "tags": {
+    "alt_name:en": "Ramkhamhaeng University",
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ม.รามคำแหง",
+    "name:en": "Ramkhamhaeng",
+    "name:th": "ม.รามคำแหง",
+    "network": "NIDA Line",
+    "public_transport": "stop_position",
+    "ref": "E17"
+  }
+},
+{
+  "type": "node",
+  "id": 566631808,
+  "lat": 13.7646430,
+  "lon": 100.6434461,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "เดอะมอลล์บางกะปิ",
+    "name:en": "The Mall Bangkapi",
+    "name:th": "เดอะมอลล์บางกะปิ",
+    "network": "NIDA Line",
+    "public_transport": "stop_position",
+    "ref": "E20"
+  }
+},
+{
+  "type": "node",
+  "id": 566631929,
+  "lat": 13.7677237,
+  "lon": 100.6521088,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "cargo": "passengers",
+    "ferry": "yes",
+    "name": "วัดศรีบุญเรือง",
+    "name:en": "Wat Sriboonrueng",
+    "name:th": "วัดศรีบุญเรือง",
+    "public_transport": "station",
+    "ref": "E22"
+  }
+},
+{
+  "type": "node",
+  "id": 567013469,
+  "lat": 13.7498204,
+  "lon": 100.5243125,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "สะพานเจริญผล",
+    "name:en": "Sapan Charoenpol",
+    "name:ru": "Sapan Charoenpol",
+    "name:th": "สะพานเจริญผล",
+    "network": "Golden Mount Line",
+    "public_transport": "stop_position",
+    "ref": "W3",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 567014146,
+  "lat": 13.7534236,
+  "lon": 100.5159610,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ตลาดโบ๊เบ๊",
+    "name:en": "Talad Bobae",
+    "name:ru": "Talad Bobae",
+    "name:th": "ตลาดโบ๊เบ๊",
+    "network": "Golden Mount Line",
+    "public_transport": "stop_position",
+    "ref": "W4"
+  }
+},
+{
+  "type": "node",
+  "id": 567014290,
+  "lat": 13.7555116,
+  "lon": 100.5064450,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ผ่านฟ้าลีลาศ",
+    "name:en": "Phanfa Leelard",
+    "name:fr": "Phanfa Leelard",
+    "name:ru": "Phanfa Leelard",
+    "name:th": "ผ่านฟ้าลีลาศ",
+    "network": "Golden Mount Line",
+    "opening_hours": "Mo-Fr 08:00-20:00; Sa-Su 08:00-19:30",
+    "public_transport": "stop_position",
+    "ref": "W5",
+    "tourism": "attraction"
+  }
+},
+{
+  "type": "node",
+  "id": 567014528,
+  "lat": 13.7493879,
+  "lon": 100.5412080,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ประตูน้ำ",
+    "name:en": "Pratunam",
+    "name:ru": "Pratunam",
+    "name:th": "ประตูน้ำ",
+    "public_transport": "stop_position",
+    "ref": "CEN",
+    "route": "Golden Mount Line",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 974438572,
+  "lat": 13.7369820,
+  "lon": 100.5038479,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าดินแดง",
+    "name:en": "Tha Din Daeng",
+    "name:th": "ท่าดินแดง",
+    "opening_hours": "Mo-Su 05:45-21:00",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 974438658,
+  "lat": 13.7384651,
+  "lon": 100.5043646,
+  "tags": {
+    "addr:postcode": "10100",
+    "amenity": "ferry_terminal",
+    "country": "Thailand",
+    "ferry": "yes",
+    "name": "ราชวงศ์",
+    "name:en": "Ratchawong N 5",
+    "name:fr": "Ratchawong N 5",
+    "name:th": "ราชวงศ์",
+    "opening_hours": "Mo-Su 05:45-21:00",
+    "province": "Bangkok",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 1189125946,
+  "lat": 13.6570694,
+  "lon": 100.5374681,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "fee": "yes",
+    "ferry": "yes",
+    "name": "ท่าเรือเภตรา",
+    "name:en": "Phetra Pier",
+    "name:th": "ท่าเรือเภตรา",
+    "operator": "ห้างหุ้นส่วนจำกัดเภตรา",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 1199581265,
+  "lat": 13.6584538,
+  "lon": 100.5350871,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือเทศบาลเมืองพระประแดง",
+    "name:en": "Phra Pradaeng Town Municipality Pier",
+    "name:th": "ท่าเรือเทศบาลเมืองพระประแดง",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 1342348755,
+  "lat": 13.7815481,
+  "lon": 100.5010880,
+  "tags": {
+    "alt_name": "ท่าเรือซังฮี้",
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "สะพานกรุงธน",
+    "name:en": "Krung Thon Bridge",
+    "name:th": "สะพานกรุงธน",
+    "public_transport": "stop_position",
+    "ref": "N16"
+  }
+},
+{
+  "type": "node",
+  "id": 1371997436,
+  "lat": 13.7152237,
+  "lon": 100.6284652,
+  "tags": {
+    "disused": "yes",
+    "man_made": "pier",
+    "name": "สุเหร่าอัลกุ๊บรอ",
+    "name:en": "Surao Al-Kubra",
+    "name:th": "สุเหร่าอัลกุ๊บรอ",
+    "public_transport": "stop_position",
+    "was:amenity": "ferry_terminal",
+    "was:ferry": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 1387912487,
+  "lat": 13.9153300,
+  "lon": 100.4946496,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ปากเกร็ด",
+    "name:en": "Pakkret",
+    "name:ru": "Паккрет",
+    "public_transport": "stop_position",
+    "ref": "N33"
+  }
+},
+{
+  "type": "node",
+  "id": 1388321881,
+  "lat": 13.9128265,
+  "lon": 100.4916797,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "description": "ท่าเรือข้ามฟากไปเกาะเกร็ด\nFerry Pier From: Wat Sanam Nuea (Buddhist Temple) To: Koh Kret",
+    "ferry": "yes",
+    "name": "ท่าวัดสนามเหนือ",
+    "name:en": "Wat Sanam Nuea Ferry Pier",
+    "name:th": "ท่าวัดสนามเหนือ",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 1388321883,
+  "lat": 13.9126861,
+  "lon": 100.4906939,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "name": "ท่าวัดปรมัยยิกาวาส",
+    "name:en": "Wat Pora Mai Yi Ka Wat Ferry Pier",
+    "name:th": "ท่าวัดปรมัยยิกาวาส"
+  }
+},
+{
+  "type": "node",
+  "id": 1408337589,
+  "lat": 13.7986913,
+  "lon": 100.5168511,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "เกียกกาย",
+    "name:en": "Kiak Kai",
+    "name:th": "เกียกกาย",
+    "public_transport": "stop_position",
+    "ref": "N21"
+  }
+},
+{
+  "type": "node",
+  "id": 1408337592,
+  "lat": 13.8322091,
+  "lon": 100.4938913,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "สะพานพระราม 5",
+    "name:en": "Rama 5 Bridge",
+    "name:th": "สะพานพระราม 5",
+    "public_transport": "stop_position",
+    "ref": "N29/1"
+  }
+},
+{
+  "type": "node",
+  "id": 1408337602,
+  "lat": 13.8282189,
+  "lon": 100.4969020,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "วัดเขียน",
+    "name:en": "Wat Kien",
+    "name:th": "วัดเขียน",
+    "public_transport": "stop_position",
+    "ref": "N28"
+  }
+},
+{
+  "type": "node",
+  "id": 1408337604,
+  "lat": 13.8418616,
+  "lon": 100.4911555,
+  "tags": {
+    "alt_name": "พิบูลสงคราม 3",
+    "alt_name:en": "Pibul 3",
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "นนทบุรี",
+    "name:en": "Nonthaburi",
+    "name:th": "นนทบุรี",
+    "public_transport": "stop_position",
+    "ref": "N30"
+  }
+},
+{
+  "type": "node",
+  "id": 1408337608,
+  "lat": 13.8128399,
+  "lon": 100.5137448,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "พระราม 7",
+    "name:en": "Rama 7 Bridge",
+    "name:th": "พระราม 7",
+    "public_transport": "stop_position",
+    "ref": "N24"
+  }
+},
+{
+  "type": "node",
+  "id": 1408346288,
+  "lat": 13.7875432,
+  "lon": 100.5081410,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "พายัพ",
+    "name:de": "Payap",
+    "name:en": "Payap",
+    "name:ru": "Пхаяп",
+    "name:th": "พายัพ",
+    "public_transport": "stop_position",
+    "ref": "N18"
+  }
+},
+{
+  "type": "node",
+  "id": 1408390195,
+  "lat": 13.7675324,
+  "lon": 100.4977304,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "พระราม 8",
+    "name:en": "Rama 8 Bridge",
+    "name:ru": "Рамы VIII",
+    "name:th": "พระราม 8",
+    "public_transport": "stop_position",
+    "ref": "N14"
+  }
+},
+{
+  "type": "node",
+  "id": 1408394726,
+  "lat": 13.8063588,
+  "lon": 100.5187853,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "บางโพ",
+    "name:en": "Bang Po",
+    "name:ru": "Бангпхо",
+    "name:th": "บางโพ",
+    "public_transport": "stop_position",
+    "ref": "N22"
+  }
+},
+{
+  "type": "node",
+  "id": 1408469372,
+  "lat": 13.7556928,
+  "lon": 100.4868281,
+  "tags": {
+    "alt_name": "พรานนก",
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าวังหลัง",
+    "name:en": "Tha Wang Lang",
+    "name:ja": "ワンラン",
+    "name:th": "ท่าวังหลัง",
+    "public_transport": "stop_position",
+    "ref": "N10"
+  }
+},
+{
+  "type": "node",
+  "id": 1408494533,
+  "lat": 13.7383560,
+  "lon": 100.5047432,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "country": "Thailand",
+    "ferry": "yes",
+    "name": "ราชวงศ์",
+    "name:en": "Rachawong",
+    "name:th": "ราชวงศ์",
+    "opening_hours": "Mo-Su 05:45-21:00",
+    "province": "Bangkok",
+    "public_transport": "stop_position",
+    "ref": "N5"
+  }
+},
+{
+  "type": "node",
+  "id": 1408498124,
+  "lat": 13.7324943,
+  "lon": 100.5118793,
+  "tags": {
+    "addr:postcode": "10100",
+    "alt_name:th": "กรมการขนส่งทางน้ำและพาณิชยนาวี",
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "กรมเจ้าท่า",
+    "name:en": "Marine Department",
+    "name:fr": "Marine Departement",
+    "name:th": "กรมเจ้าท่า",
+    "official_name:en": "Marine Department",
+    "old_name:th": "กรมการขนส่งทางน้ำ",
+    "public_transport": "stop_position",
+    "ref": "N4"
+  }
+},
+{
+  "type": "node",
+  "id": 1408509168,
+  "lat": 13.7284160,
+  "lon": 100.5131062,
+  "tags": {
+    "addr:postcode": "10500",
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "สี่พระยา",
+    "name:en": "Si Phraya",
+    "name:fr": "Si Phraya",
+    "name:th": "สี่พระยา",
+    "public_transport": "stop_position",
+    "ref": "N3"
+  }
+},
+{
+  "type": "node",
+  "id": 1408521453,
+  "lat": 13.7233146,
+  "lon": 100.5135187,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือโอเรียนเต็ล",
+    "name:en": "Oriental Pier",
+    "name:th": "ท่าเรือโอเรียนเต็ล",
+    "public_transport": "stop_position",
+    "ref": "N1"
+  }
+},
+{
+  "type": "node",
+  "id": 1408524159,
+  "lat": 13.7065388,
+  "lon": 100.5038450,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "วัดราชสิงขร",
+    "name:en": "Wat Rajsingkorn",
+    "name:ko": "왓 랏싱콘",
+    "name:th": "วัดราชสิงขร",
+    "public_transport": "stop_position",
+    "ref": "S3"
+  }
+},
+{
+  "type": "node",
+  "id": 1408524161,
+  "lat": 13.7095433,
+  "lon": 100.5068599,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "วัดวรจรรยาวาส",
+    "name:en": "Wat Worachanyawas",
+    "name:ko": "왓 워라짠야왓",
+    "name:th": "วัดวรจรรยาวาส",
+    "public_transport": "stop_position",
+    "ref": "S2"
+  }
+},
+{
+  "type": "node",
+  "id": 1623682066,
+  "lat": 13.6570342,
+  "lon": 100.5341593,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือพระประแดง",
+    "name:en": "Phra Pradaeng Pier",
+    "operator": "ห้างหุ้นส่วนจำกัดเภตรา",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 1632812009,
+  "lat": 13.7624275,
+  "lon": 100.4899834,
+  "tags": {
+    "addr:postcode": "10700",
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือพระปิ่นเกล้า (ฝั่งธนบุรี) 12",
+    "name:en": "Phra Pin Klao Pier (Thon Buri) 12",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 1632824440,
+  "lat": 13.7653950,
+  "lon": 100.4934036,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "วัดดาวดึงษาราม",
+    "name:en": "Wat Daowaduengsaram",
+    "name:th": "วัดดาวดึงษาราม",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 1645239685,
+  "lat": 13.9051733,
+  "lon": 100.4913828,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "วัดกลางเกร็ด",
+    "name:en": "Wat Klangkret",
+    "name:ru": "ват Клангкрет",
+    "public_transport": "stop_position",
+    "ref": "N32"
+  }
+},
+{
+  "type": "node",
+  "id": 1645239724,
+  "lat": 13.8832667,
+  "lon": 100.4851632,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "กระทรวงพาณิชย์",
+    "name:en": "Ministry of Commerce",
+    "name:ru": "Министерство торговли",
+    "public_transport": "stop_position",
+    "ref": "N31"
+  }
+},
+{
+  "type": "node",
+  "id": 1656349633,
+  "lat": 13.9324240,
+  "lon": 100.5021883,
+  "tags": {
+    "amenity": "ferry_terminal"
+  }
+},
+{
+  "type": "node",
+  "id": 1730560919,
+  "lat": 13.7614233,
+  "lon": 100.4916887,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือพระปิ่นเกล้า (ฝั่งพระนคร)",
+    "name:en": "Phra Pin Klao Pier (Phra Nakhon)",
+    "name:ru": "Пхра Пинклау",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 1795297733,
+  "lat": 13.6731731,
+  "lon": 100.5800076,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือตาเลื่อน",
+    "name:en": "Ta Luean Pier",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 1799590892,
+  "lat": 13.6890041,
+  "lon": 100.5542208,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือวัดบางกะเจ้านอก",
+    "name:en": "Wat Bang Kachao Nok Pier"
+  }
+},
+{
+  "type": "node",
+  "id": 1886961381,
+  "lat": 13.7413400,
+  "lon": 100.4941859,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "foot": "yes",
+    "name": "อัษฎางค์",
+    "name:en": "Atsadang",
+    "name:th": "อัษฎางค์",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 1886961629,
+  "lat": 13.7416128,
+  "lon": 100.4938532,
+  "tags": {
+    "addr:postcode": "10200",
+    "amenity": "ferry_terminal",
+    "check_date": "2025-01-07",
+    "ferry": "yes",
+    "foot": "yes",
+    "name": "ราชินี",
+    "name:en": "Rajinee N7",
+    "name:fr": "Rajinee",
+    "name:ru": "Рачини",
+    "name:th": "ราชินี",
+    "operator": "CPX-T",
+    "public_transport": "stop_position",
+    "ref": "N7"
+  }
+},
+{
+  "type": "node",
+  "id": 1905838341,
+  "lat": 13.7544784,
+  "lon": 100.4884271,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "มหาราช",
+    "name:en": "Maharaj",
+    "name:th": "มหาราช",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 1905838342,
+  "lat": 13.7635578,
+  "lon": 100.4940371,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "พระอาทิตย์",
+    "name:de": "Phra Arthit",
+    "name:en": "Phra Arthit",
+    "name:ru": "Пирс на Као сан роуд",
+    "name:th": "พระอาทิตย์",
+    "public_transport": "stop_position",
+    "ref": "N13"
+  }
+},
+{
+  "type": "node",
+  "id": 1905838343,
+  "lat": 13.8329058,
+  "lon": 100.4962700,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "พิบูลสงคราม 2",
+    "name:en": "Pibul 2",
+    "name:th": "พิบูลสงคราม 2",
+    "public_transport": "stop_position",
+    "ref": "N29"
+  }
+},
+{
+  "type": "node",
+  "id": 1905838344,
+  "lat": 13.7188644,
+  "lon": 100.5127108,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "designation": "CEN Sathon",
+    "ferry": "yes",
+    "name": "สาทร (ตากสิน)",
+    "name:en": "Sathorn (Taksin)",
+    "name:th": "สาทร (ตากสิน)",
+    "note": "Snel en voordelig zonder file",
+    "public_transport": "stop_position",
+    "ref": "CEN",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 2074694261,
+  "lat": 13.7049496,
+  "lon": 100.5016875,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "image": "http://image.ohozaa.com/i/gb4/MgCEd3.jpg",
+    "name": "เอเชียทีค",
+    "name:en": "Asiatique",
+    "name:ko": "아시아틱",
+    "name:th": "เอเชียทีค",
+    "opening_hours": "Mo-Su 17:00-00:00",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 2321695929,
+  "lat": 13.7492229,
+  "lon": 100.5414896,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ประตูน้ำ",
+    "name:en": "Pratunam",
+    "name:ru": "Pratunam",
+    "name:th": "ประตูน้ำ",
+    "public_transport": "stop_position",
+    "ref": "CEN",
+    "route": "NIDA line"
+  }
+},
+{
+  "type": "node",
+  "id": 2321695930,
+  "lat": 13.7492624,
+  "lon": 100.5412037,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ประตูน้ำ",
+    "name:en": "Pratunam",
+    "name:ko": "빠투남",
+    "name:ru": "Pratunam",
+    "name:th": "ประตูน้ำ",
+    "public_transport": "stop_position",
+    "ref": "CEN",
+    "route": "Golden Mount Line",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 2330683327,
+  "lat": 13.7414830,
+  "lon": 100.5940718,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ร.ร.วิจิตร",
+    "name:en": "Vijit School",
+    "name:th": "ร.ร.วิจิตร",
+    "network": "NIDA Line",
+    "public_transport": "stop_position",
+    "ref": "E12"
+  }
+},
+{
+  "type": "node",
+  "id": 2331436115,
+  "lat": 13.6909014,
+  "lon": 100.5503294,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือช่องนนทรี",
+    "name:en": "Chong Nonsi Pier",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 2339057520,
+  "lat": 13.7650302,
+  "lon": 100.6474057,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "บางกะปิ",
+    "name:en": "Bangkapi",
+    "name:th": "บางกะปิ",
+    "network": "NIDA Line",
+    "public_transport": "stop_position",
+    "ref": "E21"
+  }
+},
+{
+  "type": "node",
+  "id": 2339057521,
+  "lat": 13.7621650,
+  "lon": 100.6236947,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "สะพานมิตรมหาดไทย",
+    "name:en": "Sapan Mit Mahadthai",
+    "name:th": "สะพานมิตรมหาดไทย",
+    "network": "NIDA Line",
+    "public_transport": "stop_position",
+    "ref": "E18"
+  }
+},
+{
+  "type": "node",
+  "id": 2367398625,
+  "lat": 13.7397402,
+  "lon": 100.4982194,
+  "tags": {
+    "addr:postcode": "10200",
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "สะพานพุทธ",
+    "name:en": "Memorial Bridge",
+    "name:fr": "Memorial Bridge",
+    "name:th": "สะพานพุทธ",
+    "public_transport": "stop_position",
+    "ref": "N6"
+  }
+},
+{
+  "type": "node",
+  "id": 2393548001,
+  "lat": 13.6697957,
+  "lon": 100.5277363,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "cargo": "passengers;vehicle",
+    "ferry": "yes",
+    "name": "ท่าเรือคลองลัดหลวง",
+    "name:en": "Khlong Lat Luang Pier",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 2393558026,
+  "lat": 13.6769773,
+  "lon": 100.5272491,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "cargo": "passengers;vehicle",
+    "ferry": "yes",
+    "name": "ท่าเรือสาธุประดิษฐ์",
+    "name:en": "Sathu Pradit Pier",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 2397987932,
+  "lat": 13.7263089,
+  "lon": 100.5134803,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "วัดม่วงแค",
+    "name:en": "Wat Muang Kae",
+    "name:th": "วัดม่วงแค",
+    "public_transport": "stop_position",
+    "ref": "N2",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 2519640795,
+  "lat": 13.7426935,
+  "lon": 100.5884556,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ชาญอิสสระ",
+    "name:en": "Charn Issara",
+    "name:th": "ชาญอิสสระ",
+    "network": "NIDA Line",
+    "public_transport": "stop_position",
+    "ref": "E11"
+  }
+},
+{
+  "type": "node",
+  "id": 2618522299,
+  "lat": 13.7758001,
+  "lon": 100.4563684,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "name": "ท่าเรือตลิ่งชัน",
+    "name:en": "Taling Chan Pier",
+    "opening_hours": "Sa-Su 09:00-17:00"
+  }
+},
+{
+  "type": "node",
+  "id": 2757817163,
+  "lat": 13.9046597,
+  "lon": 100.4915896,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือข้ามฟากวัดกลางเกร็ด",
+    "name:en": "Wat Klang Kret Ferry",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 2757817164,
+  "lat": 13.9046617,
+  "lon": 100.4903118,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือป่าฝ้าย",
+    "name:en": "Pa Fai",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 2902806579,
+  "lat": 13.7634595,
+  "lon": 100.6335710,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "วัดกลาง",
+    "name:en": "Wat Klang",
+    "name:th": "วัดกลาง",
+    "network": "NIDA Line",
+    "public_transport": "stop_position",
+    "ref": "E19"
+  }
+},
+{
+  "type": "node",
+  "id": 2993468033,
+  "lat": 13.7525131,
+  "lon": 100.4867080,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "วัดระฆังฯ",
+    "name:en": "Wat Rakhang",
+    "name:th": "วัดระฆังฯ",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 2993472311,
+  "lat": 13.7409626,
+  "lon": 100.4921971,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "country": "Thailand",
+    "ferry": "yes",
+    "name": "ท่าเรือวัดกัลยาณมิตร",
+    "name:en": "Wat Kanlayanamit Pier",
+    "name:th": "ท่าเรือวัดกัลยาณมิตร",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 3053005367,
+  "lat": 13.7592070,
+  "lon": 100.4878041,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่ารถไฟ",
+    "name:en": "Thonburi Railway",
+    "name:th": "ท่ารถไฟ",
+    "public_transport": "stop_position",
+    "ref": "N11"
+  }
+},
+{
+  "type": "node",
+  "id": 3053005368,
+  "lat": 13.7563104,
+  "lon": 100.4868725,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "พรานนก",
+    "name:en": "Prannok",
+    "name:th": "พรานนก",
+    "public_transport": "stop_position",
+    "ref": "N10",
+    "wikidata": "Q16306411",
+    "wikimedia_commons": "Category:Prannok Pier",
+    "wikipedia": "th:ท่าวังหลังและท่าพรานนก"
+  }
+},
+{
+  "type": "node",
+  "id": 3053005369,
+  "lat": 13.7621096,
+  "lon": 100.4908384,
+  "tags": {
+    "man_made": "pier",
+    "name": "Phrapinklao Bridge"
+  }
+},
+{
+  "type": "node",
+  "id": 3309041468,
+  "lat": 13.7531549,
+  "lon": 100.4883181,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าช้าง",
+    "name:en": "Tha Chang",
+    "name:fr": "Tha Chang",
+    "name:th": "ท่าช้าง",
+    "public_transport": "stop_position",
+    "ref": "N9"
+  }
+},
+{
+  "type": "node",
+  "id": 3309041474,
+  "lat": 13.7532018,
+  "lon": 100.4883207,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าช้าง",
+    "name:en": "Tha Chang",
+    "name:fr": "Tha Chang",
+    "name:th": "ท่าช้าง",
+    "public_transport": "stop_position",
+    "ref": "N9"
+  }
+},
+{
+  "type": "node",
+  "id": 3309041483,
+  "lat": 13.7559054,
+  "lon": 100.4868610,
+  "tags": {
+    "addr:postcode": "10700",
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าวังหลัง",
+    "name:en": "Tha Wang Lang",
+    "name:fr": "Tha Wang Lang",
+    "name:ja": "ワンラン N10",
+    "name:th": "ท่าวังหลัง",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 3309041492,
+  "lat": 13.7560095,
+  "lon": 100.4868675,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "charge": "4.5Thb",
+    "ferry": "yes",
+    "name": "ท่าวังหลัง",
+    "name:en": "Tha Wang Lang",
+    "name:th": "ท่าวังหลัง",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 3309041506,
+  "lat": 13.7565171,
+  "lon": 100.4886763,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "charge": "4.5Thb",
+    "ferry": "yes",
+    "name": "ท่าพระจันทร์",
+    "name:en": "Tha Phra Chan",
+    "name:es": "Tha Phra Chan",
+    "name:etymology:wikidata": "Q16304366",
+    "name:th": "ท่าพระจันทร์",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 3309041510,
+  "lat": 13.7566499,
+  "lon": 100.4887151,
+  "tags": {
+    "addr:postcode": "10200",
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าพระจันทร์",
+    "name:en": "Tha Phra Chan",
+    "name:es": "Tha Phra Chan",
+    "name:etymology:wikidata": "Q16304366",
+    "name:th": "ท่าพระจันทร์",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 3493488226,
+  "lat": 13.7449657,
+  "lon": 100.4892081,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือวัดอรุณฯ",
+    "name:en": "Wat Arun Pier",
+    "name:es": "Wat Arun",
+    "name:th": "ท่าเรือวัดอรุณฯ",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 3505137003,
+  "lat": 13.7269639,
+  "lon": 100.5134675,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือกสท. โทรคมนาคม",
+    "name:th": "ท่าเรือกสท. โทรคมนาคม",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 3542061069,
+  "lat": 13.7720432,
+  "lon": 100.5000982,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "เทเวศร์",
+    "name:en": "Thewet",
+    "name:ru": "Тхевет",
+    "name:th": "เทเวศร์",
+    "public_transport": "station",
+    "ref": "N15"
+  }
+},
+{
+  "type": "node",
+  "id": 3578648768,
+  "lat": 13.9154654,
+  "lon": 100.4850230,
+  "tags": {
+    "ferry": "yes",
+    "name": "ท่าเรือข้ามฟากวัดบางจาก",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 3578648769,
+  "lat": 13.9142342,
+  "lon": 100.4832860,
+  "tags": {
+    "ferry": "yes",
+    "name": "ท่าเรือข้ามฟากวัดเสาธงทอง",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 3578835663,
+  "lat": 13.7200153,
+  "lon": 100.5113205,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือตากสิน",
+    "name:en": "Taksin Pier",
+    "name:th": "ท่าเรือตากสิน",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 3608386001,
+  "lat": 13.7129509,
+  "lon": 100.6264973,
+  "tags": {
+    "disused": "yes",
+    "man_made": "pier",
+    "name": "วัดต้นไทรย์",
+    "name:en": "Wat Ton Sai",
+    "name:th": "วัดต้นไทรย์",
+    "public_transport": "stop_position",
+    "was:amenity": "ferry_terminal",
+    "was:ferry": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 3667972113,
+  "lat": 13.5971751,
+  "lon": 100.5865555,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "harbour": "yes",
+    "name": "ท่าเรือพระสมุทรเจดีย์",
+    "name:en": "Phra Samut Chedi Pier",
+    "name:th": "ท่าเรือพระสมุทรเจดีย์",
+    "public_transport": "stop_position",
+    "seamark:harbour:category": "ferry"
+  }
+},
+{
+  "type": "node",
+  "id": 3812958499,
+  "lat": 13.7718923,
+  "lon": 100.4971703,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "วัดคฤหบดี",
+    "name:en": "Wat Kharuehabodi",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 3812958959,
+  "lat": 13.7742094,
+  "lon": 100.4980775,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือวัดบวรมงคล",
+    "name:en": "Wat Bowon Mongkhon Pier",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 3946362036,
+  "lat": 13.7240879,
+  "lon": 100.5118440,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือวัดสุวรรณ",
+    "name:en": "Wat Suwan Pier",
+    "name:th": "ท่าเรือวัดสุวรรณ",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 3946372581,
+  "lat": 13.7294320,
+  "lon": 100.5129442,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือสี่พระยา (ประตู 1)",
+    "name:en": "Si Phraya Pier (Gate 1)",
+    "name:th": "ท่าเรือสี่พระยา (ประตู 1)",
+    "public_transport": "stop_position",
+    "ref": "1"
+  }
+},
+{
+  "type": "node",
+  "id": 3946372582,
+  "lat": 13.7291082,
+  "lon": 100.5116047,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือคลองสาน",
+    "name:en": "Khlong San Pier",
+    "name:th": "ท่าเรือคลองสาน",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 4327591716,
+  "lat": 13.7409063,
+  "lon": 100.5157635,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "หัวลำโพง",
+    "name:en": "Hua Lamphong Pier",
+    "public_transport": "stop_position",
+    "ref": "2",
+    "wikidata": "Q131557189"
+  }
+},
+{
+  "type": "node",
+  "id": 4561417665,
+  "lat": 13.6678718,
+  "lon": 100.5387609,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือคลองลัดโพธิ์",
+    "name:en": "Khlong Lat Pho Pier",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 4561417666,
+  "lat": 13.6703741,
+  "lon": 100.5384480,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือพระรามที่ 3",
+    "name:en": "Rama III Pier",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 4566970962,
+  "lat": 13.7183726,
+  "lon": 100.5125661,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือสาทร",
+    "name:en": "Sathorn Pier",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 4586843050,
+  "lat": 13.7491969,
+  "lon": 100.5308829,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "check_date": "2024-03-10",
+    "ferry": "yes",
+    "name": "สะพานหัวช้าง",
+    "name:en": "Sapan Hua Chang",
+    "name:ru": "Sapan Hua Chang",
+    "name:th": "สะพานหัวช้าง",
+    "network": "Golden Mount Line",
+    "public_transport": "stop_position",
+    "ref": "W1"
+  }
+},
+{
+  "type": "node",
+  "id": 4801299808,
+  "lat": 13.7072028,
+  "lon": 100.5635823,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือวัดคลองเตยนอก",
+    "name:en": "Wat Khlong Toei Nok Pier",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 5365165134,
+  "lat": 13.9006671,
+  "lon": 100.5885078,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "name": "ท่าเรือ เคหะทุ่งสองห้อง",
+    "name:en": "Tongsonghong pier"
+  }
+},
+{
+  "type": "node",
+  "id": 5818119896,
+  "lat": 13.8120953,
+  "lon": 100.5174810,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "วัดสร้อยทอง",
+    "name:en": "Wat Soi Thong",
+    "name:th": "วัดสร้อยทอง",
+    "public_transport": "station",
+    "ref": "N23"
+  }
+},
+{
+  "type": "node",
+  "id": 5835645103,
+  "lat": 13.7627136,
+  "lon": 100.4983744,
+  "tags": {
+    "disused:amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือคลองบางลำพู",
+    "name:en": "Kllong Banglamphu (not operated)",
+    "name:th": "ท่าเรือคลองบางลำพู",
+    "public_transport": "station",
+    "short_name:th": "คลองบางลำพู"
+  }
+},
+{
+  "type": "node",
+  "id": 6150815344,
+  "lat": 13.7266265,
+  "lon": 100.5118539,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "country": "ไทย",
+    "ferry": "yes",
+    "name": "ท่าเรือไอคอนสยาม 2",
+    "name:en": "Icon Siam Pier 2",
+    "name:th": "ท่าเรือไอคอนสยาม 2",
+    "public_transport": "station",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 6150815346,
+  "lat": 13.7275593,
+  "lon": 100.5117949,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "country": "Thailand",
+    "ferry": "yes",
+    "name": "ท่าเรือไอคอนสยาม 4",
+    "name:en": "Icon Siam Pier 4",
+    "name:th": "ท่าเรือไอคอนสยาม 4",
+    "province": "Bangkok",
+    "public_transport": "stop_position",
+    "ref": "N2/1"
+  }
+},
+{
+  "type": "node",
+  "id": 6158336920,
+  "lat": 13.8418947,
+  "lon": 100.4892735,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "description": "ท่าเรือข้ามฟาก ท่าน้ำบางศรีเมือง (ferry boat); Ferry fee 4 THB (updated: 2022-06-01); Pay at Bangsrimuang Pier.",
+    "fee": "yes",
+    "ferry": "yes",
+    "name": "ท่าเรือข้ามฟากบางศรีเมือง",
+    "name:en": "Bang Si Mueang Ferry Pier",
+    "name:th": "ท่าเรือข้ามฟากบางศรีเมือง",
+    "payment:cash": "yes",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 6158344590,
+  "lat": 13.8421696,
+  "lon": 100.4910036,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าน้ำนนทบุรี",
+    "name:en": "Nonthaburi Pier",
+    "name:th": "ท่าน้ำนนทบุรี",
+    "public_transport": "station",
+    "wikidata": "Q64746744",
+    "wikipedia": "en:Nonthaburi Pier"
+  }
+},
+{
+  "type": "node",
+  "id": 6167718985,
+  "lat": 13.7641078,
+  "lon": 100.4963148,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "bench": "no",
+    "bin": "no",
+    "ferry": "yes",
+    "name": "ป้อมพระสุเมรุ",
+    "name:en": "Phra Sumen Fort",
+    "name:th": "ป้อมพระสุเมรุ",
+    "public_transport": "station",
+    "ref": "7"
+  }
+},
+{
+  "type": "node",
+  "id": 6174365548,
+  "lat": 13.7262037,
+  "lon": 100.5118963,
+  "tags": {
+    "floating": "yes",
+    "man_made": "pier",
+    "name": "Icon Siam Pontoon 1B"
+  }
+},
+{
+  "type": "node",
+  "id": 6463773574,
+  "lat": 13.7438761,
+  "lon": 100.4899411,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "country": "Thailand",
+    "ferry": "yes",
+    "name": "วัดอรุณราชวราราม",
+    "name:en": "Wat Arun Ratchawararam",
+    "name:th": "วัดอรุณราชวราราม",
+    "province": "Bangkok",
+    "public_transport": "stop_position",
+    "ref": "1"
+  }
+},
+{
+  "type": "node",
+  "id": 6463773575,
+  "lat": 13.7440526,
+  "lon": 100.4898380,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "country": "ไทย",
+    "ferry": "yes",
+    "name": "วัดอรุณราชวราราม",
+    "name:en": "Wat Arun Ratchawararam",
+    "name:th": "วัดอรุณราชวราราม",
+    "province": "กรุงเทพมหานคร",
+    "public_transport": "stop_position",
+    "ref": "2"
+  }
+},
+{
+  "type": "node",
+  "id": 6477651955,
+  "lat": 13.7612983,
+  "lon": 100.4842579,
+  "tags": {
+    "ferry": "yes",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 6548920525,
+  "lat": 13.7186239,
+  "lon": 100.4581752,
+  "tags": {
+    "ferry": "yes",
+    "name": "ท่าเรือบางหว้า (คลองภาษีเจริญ)",
+    "name:en": "Bangwa Pier (Phasi Charoen Canal)",
+    "name:th": "ท่าเรือบางหว้า (คลองภาษีเจริญ)",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 6548920526,
+  "lat": 13.7187206,
+  "lon": 100.4581500,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "บางหว้า",
+    "name:en": "Bang Wa",
+    "name:th": "บางหว้า",
+    "old_name": "สะพานตากสิน-เพชรเกษม",
+    "old_name:en": "Saphan Taksin-Phetchakasem",
+    "public_transport": "stop_position",
+    "ref": "P4"
+  }
+},
+{
+  "type": "node",
+  "id": 6548931253,
+  "lat": 13.7237603,
+  "lon": 100.4821447,
+  "tags": {
+    "ferry": "yes",
+    "name": "ท่าเรือวัดอินทาราม",
+    "name:en": "Wat Intharam Pier",
+    "name:th": "ท่าเรือวัดอินทาราม",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 6549136021,
+  "lat": 13.8419006,
+  "lon": 100.4892994,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "description": "ท่าเรือข้ามฟาก ท่าน้ำบางศรีเมือง (ferry boat) Ferry fee 3.50 Baht. Pay at Bangsrimuang Pier.",
+    "fee": "yes",
+    "ferry": "yes",
+    "name": "ท่าเรือเทศบาลเมืองบางศรีเมือง",
+    "name:en": "Bang Si Mueang Ferry Pier",
+    "name:th": "ท่าเรือเทศบาลเมืองบางศรีเมือง",
+    "payment:cash": "yes",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 6549136022,
+  "lat": 13.8425105,
+  "lon": 100.4910185,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "description": "ท่าเรือข้ามฟาก ท่าน้ำนนทบุรี (ferry boat)\nFerry fee 3.50 Baht. Pay at Bangsrimuang Pier.",
+    "ferry": "yes",
+    "name": "ท่าเรือข้ามฟากท่าน้ำนนท์",
+    "name:en": "Nonthaburi Ferry Pier",
+    "name:th": "ท่าเรือข้ามฟากท่าน้ำนนท์",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 7791237198,
+  "lat": 13.7126629,
+  "lon": 100.5071847,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "วัดเศวตฉัตร",
+    "name:en": "Wat Sawetachat",
+    "name:th": "วัดเศวตฉัตร",
+    "public_transport": "stop_position",
+    "ref": "S1"
+  }
+},
+{
+  "type": "node",
+  "id": 7791237205,
+  "lat": 13.7839664,
+  "lon": 100.5023314,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "วัดเทพนารี",
+    "name:en": "Wat Thepnahree",
+    "public_transport": "stop_position",
+    "ref": "N17"
+  }
+},
+{
+  "type": "node",
+  "id": 7791237208,
+  "lat": 13.7855317,
+  "lon": 100.5034266,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "วัดเทพากร",
+    "name:en": "Wat Thepakorn",
+    "public_transport": "stop_position",
+    "ref": "N17/1"
+  }
+},
+{
+  "type": "node",
+  "id": 7791237213,
+  "lat": 13.7888406,
+  "lon": 100.5095300,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "กรมชลประทาน",
+    "name:en": "Irrigation Dept.",
+    "name:th": "กรมชลประทาน",
+    "public_transport": "stop_position",
+    "ref": "N19"
+  }
+},
+{
+  "type": "node",
+  "id": 7791237216,
+  "lat": 13.7894033,
+  "lon": 100.5069843,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือวัดอาวุธวิกสิตาราม",
+    "name:en": "Wat Awut Wikasitaram Pier",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 7791237220,
+  "lat": 13.7911233,
+  "lon": 100.5115992,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "เขียวไข่กา",
+    "name:en": "Kheaw Khai Ka",
+    "public_transport": "stop_position",
+    "ref": "N20"
+  }
+},
+{
+  "type": "node",
+  "id": 7791237222,
+  "lat": 13.8176906,
+  "lon": 100.5055923,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "พิบูลสงคราม 1",
+    "name:en": "Pibul 1",
+    "public_transport": "station",
+    "ref": "N25"
+  }
+},
+{
+  "type": "node",
+  "id": 7791237223,
+  "lat": 13.8218306,
+  "lon": 100.5020832,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "วัดเขมา",
+    "name:en": "Wat Khema",
+    "public_transport": "stop_position",
+    "ref": "N26"
+  }
+},
+{
+  "type": "node",
+  "id": 7791237224,
+  "lat": 13.8245003,
+  "lon": 100.4988743,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "วัดตึก",
+    "name:en": "Wat Tuek",
+    "public_transport": "stop_position",
+    "ref": "N27"
+  }
+},
+{
+  "type": "node",
+  "id": 7791237225,
+  "lat": 13.8980124,
+  "lon": 100.4909799,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "บ้านพักข้าราชบริพารติวานนท์",
+    "name:en": "Office Residence Tiwanon",
+    "name:th": "บ้านพักข้าราชบริพารติวานนท์",
+    "public_transport": "stop_position",
+    "ref": "N31/1"
+  }
+},
+{
+  "type": "node",
+  "id": 7812385553,
+  "lat": 13.7433182,
+  "lon": 100.5988984,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "รามหนึ่ง",
+    "name:en": "Ramnueng",
+    "name:th": "รามหนึ่ง",
+    "network": "NIDA Line",
+    "public_transport": "stop_position",
+    "ref": "E13-1"
+  }
+},
+{
+  "type": "node",
+  "id": 7829305293,
+  "lat": 13.7203967,
+  "lon": 100.4630925,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "สะพานประชารัฐ",
+    "name:en": "Saphan Pracharat",
+    "name:th": "สะพานประชารัฐ",
+    "public_transport": "stop_position",
+    "ref": "P3"
+  }
+},
+{
+  "type": "node",
+  "id": 7829305294,
+  "lat": 13.7213471,
+  "lon": 100.4662287,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "อู่รถเมล์สาย 9",
+    "name:en": "U Rot Me Sai 9",
+    "name:th": "อู่รถเมล์สาย 9",
+    "public_transport": "stop_position",
+    "ref": "P2"
+  }
+},
+{
+  "type": "node",
+  "id": 7829305295,
+  "lat": 13.7221535,
+  "lon": 100.4681348,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ประตูน้ำภาษีเจริญ",
+    "name:en": "Pratunam Phasi Charoen",
+    "name:th": "ประตูน้ำภาษีเจริญ",
+    "public_transport": "stop_position",
+    "ref": "P1"
+  }
+},
+{
+  "type": "node",
+  "id": 7829305296,
+  "lat": 13.7172143,
+  "lon": 100.4544451,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "วัดอ่างแก้ว",
+    "name:en": "Wat Ang Kaeo",
+    "name:th": "วัดอ่างแก้ว",
+    "public_transport": "stop_position",
+    "ref": "P5"
+  }
+},
+{
+  "type": "node",
+  "id": 7829305297,
+  "lat": 13.7139955,
+  "lon": 100.4449103,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "เพชรเกษม 31",
+    "name:en": "Phetchakasem 31",
+    "name:th": "เพชรเกษม 31",
+    "public_transport": "stop_position",
+    "ref": "P6"
+  }
+},
+{
+  "type": "node",
+  "id": 7829305298,
+  "lat": 13.7116659,
+  "lon": 100.4387022,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "วัดรางบัว",
+    "name:en": "Wat Rang Bua",
+    "name:th": "วัดรางบัว",
+    "public_transport": "stop_position",
+    "ref": "P7"
+  }
+},
+{
+  "type": "node",
+  "id": 7829305300,
+  "lat": 13.7095775,
+  "lon": 100.4324609,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "เพชรเกษม 35",
+    "name:en": "Phetchakasem 35",
+    "name:th": "เพชรเกษม 35",
+    "public_transport": "stop_position",
+    "ref": "P8"
+  }
+},
+{
+  "type": "node",
+  "id": 7829305301,
+  "lat": 13.7091445,
+  "lon": 100.4311793,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "เพชรเกษม 37",
+    "name:en": "Phetchakasem 37",
+    "name:th": "เพชรเกษม 37",
+    "public_transport": "stop_position",
+    "ref": "P9"
+  }
+},
+{
+  "type": "node",
+  "id": 7829305302,
+  "lat": 13.7084408,
+  "lon": 100.4291649,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "เพชรเกษม 39",
+    "name:en": "Phetchakasem 39",
+    "name:th": "เพชรเกษม 39",
+    "public_transport": "stop_position",
+    "ref": "P10"
+  }
+},
+{
+  "type": "node",
+  "id": 7829305303,
+  "lat": 13.7076510,
+  "lon": 100.4269942,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "วัดนิมมานรดี",
+    "name:en": "Wat Nimmanoradi",
+    "name:th": "วัดนิมมานรดี",
+    "public_transport": "stop_position",
+    "ref": "P11"
+  }
+},
+{
+  "type": "node",
+  "id": 7829305304,
+  "lat": 13.7056321,
+  "lon": 100.4211857,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "เกษตรบางแค",
+    "name:en": "Kaset Bang Khae",
+    "name:th": "เกษตรบางแค",
+    "public_transport": "stop_position",
+    "ref": "P12"
+  }
+},
+{
+  "type": "node",
+  "id": 7829305306,
+  "lat": 13.7003061,
+  "lon": 100.4063211,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "สะพานกาญจนาภิเษก",
+    "name:en": "Saphan Kanchanaphisek",
+    "name:th": "สะพานกาญจนาภิเษก",
+    "public_transport": "stop_position",
+    "ref": "P13"
+  }
+},
+{
+  "type": "node",
+  "id": 7829305307,
+  "lat": 13.6954285,
+  "lon": 100.3925572,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "วัดม่วง",
+    "name:en": "Wat Muang",
+    "name:th": "วัดม่วง",
+    "public_transport": "stop_position",
+    "ref": "P14"
+  }
+},
+{
+  "type": "node",
+  "id": 7829305308,
+  "lat": 13.6917591,
+  "lon": 100.3814200,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "เพชรเกษม 69",
+    "name:en": "Phetchakasem 69",
+    "name:th": "เพชรเกษม 69",
+    "public_transport": "stop_position",
+    "ref": "P15"
+  }
+},
+{
+  "type": "node",
+  "id": 7829305344,
+  "lat": 13.7117640,
+  "lon": 100.6214220,
+  "tags": {
+    "disused": "yes",
+    "man_made": "pier",
+    "name": "วัดทองใน",
+    "name:en": "Wat Thong Nai",
+    "name:th": "วัดทองใน",
+    "public_transport": "stop_position",
+    "was:amenity": "ferry_terminal",
+    "was:ferry": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 7829320691,
+  "lat": 13.6577342,
+  "lon": 100.5374300,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือเภตรา",
+    "name:en": "Phetra Pier",
+    "name:th": "ท่าเรือเภตรา",
+    "operator": "ห้างหุ้นส่วนจำกัดเภตรา",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 7829320700,
+  "lat": 13.7051128,
+  "lon": 100.5592410,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือแพเจี๊ยบ",
+    "name:en": "Pae Jeab Pier",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 7829320711,
+  "lat": 13.6750474,
+  "lon": 100.5235959,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือวัดบางพึ่ง",
+    "name:en": "Wat Bang Phueng Pier",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 7829320712,
+  "lat": 13.7193143,
+  "lon": 100.5128954,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือสาทร",
+    "name:en": "Sathon Pier",
+    "name:th": "ท่าเรือสาทร",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 7829320722,
+  "lat": 13.7352241,
+  "lon": 100.5082762,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือวัดทองธรรมชาติ",
+    "name:en": "Wat Thong Thammachat Pier",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 7829320737,
+  "lat": 13.7361988,
+  "lon": 100.5093072,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือสวัสดี",
+    "name:en": "Sawatdi Pier",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 8130282595,
+  "lat": 13.7386935,
+  "lon": 100.5157410,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือสถานีรถไฟหัวลำโพง",
+    "name:en": "Hua Lamphong Station Pier",
+    "name:th": "ท่าเรือสถานีรถไฟหัวลำโพง",
+    "public_transport": "stop_position",
+    "ref": "1",
+    "wikidata": "Q131555970"
+  }
+},
+{
+  "type": "node",
+  "id": 8130282598,
+  "lat": 13.7449517,
+  "lon": 100.5163042,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือนพวงศ์",
+    "name:en": "Nopphawong Pier",
+    "name:th": "ท่าเรือนพวงศ์",
+    "public_transport": "stop_position",
+    "ref": "3",
+    "wikidata": "Q131557195"
+  }
+},
+{
+  "type": "node",
+  "id": 8130282601,
+  "lat": 13.7468323,
+  "lon": 100.5164749,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือยศเส",
+    "name:en": "Yotse Pier",
+    "name:th": "ท่าเรือยศเส",
+    "public_transport": "stop_position",
+    "ref": "4",
+    "wikidata": "Q131557201"
+  }
+},
+{
+  "type": "node",
+  "id": 8130282604,
+  "lat": 13.7492906,
+  "lon": 100.5170059,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือกระทรวงพลังงาน",
+    "name:en": "Department of Energy Pier",
+    "name:th": "ท่าเรือกระทรวงพลังงาน",
+    "public_transport": "stop_position",
+    "ref": "5",
+    "wikidata": "Q131557203"
+  }
+},
+{
+  "type": "node",
+  "id": 8130282610,
+  "lat": 13.7597686,
+  "lon": 100.5132132,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือนครสวรรค์",
+    "name:en": "Nakhon Sawan Pier",
+    "name:th": "ท่าเรือนครสวรรค์",
+    "public_transport": "stop_position",
+    "ref": "7",
+    "wikidata": "Q131557223"
+  }
+},
+{
+  "type": "node",
+  "id": 8130282613,
+  "lat": 13.7628618,
+  "lon": 100.5100915,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือราชดำเนินนอก",
+    "name:en": "Ratchadamnoen Nok Pier",
+    "name:th": "ท่าเรือราชดำเนินนอก",
+    "public_transport": "stop_position",
+    "ref": "8",
+    "wikidata": "Q131557226"
+  }
+},
+{
+  "type": "node",
+  "id": 8130282615,
+  "lat": 13.7650838,
+  "lon": 100.5079600,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ประชาธิปไตย",
+    "name:en": "Praca Thippatai",
+    "name:th": "ทประชาธิปไตย",
+    "public_transport": "stop_position",
+    "ref": "9",
+    "wikidata": "Q131557234"
+  }
+},
+{
+  "type": "node",
+  "id": 8130294620,
+  "lat": 13.7711639,
+  "lon": 100.5020131,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ทตลาดเทวราช",
+    "name:en": "Thevaraj Market",
+    "name:th": "ตลาดเทวราช",
+    "public_transport": "stop_position",
+    "ref": "11",
+    "wikidata": "Q131557242"
+  }
+},
+{
+  "type": "node",
+  "id": 8130294655,
+  "lat": 13.7554450,
+  "lon": 100.5168641,
+  "tags": {
+    "ferry": "yes",
+    "name": "Lan Luang Intersection Pier",
+    "public_transport": "stop_position",
+    "wikidata": "Q131557218"
+  }
+},
+{
+  "type": "node",
+  "id": 8130294690,
+  "lat": 13.7685662,
+  "lon": 100.5048108,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือเทเวศร์",
+    "name:en": "Thewet Pier",
+    "name:th": "ท่าเรือเทเวศร์",
+    "public_transport": "stop_position",
+    "ref": "10",
+    "wikidata": "Q131557237"
+  }
+},
+{
+  "type": "node",
+  "id": 8749228193,
+  "lat": 13.8706181,
+  "lon": 100.4772981,
+  "tags": {
+    "ferry": "yes",
+    "name": "สะพานพระนั่งเกล้า",
+    "name:en": "Phra Nang Klao Bridge",
+    "name:ru": "мост Пхра Нангклау",
+    "name:th": "สะพานพระนั่งเกล้า",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 9622825431,
+  "lat": 13.7527005,
+  "lon": 100.4882740,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าช้าง",
+    "name:en": "Tha Chang",
+    "name:fr": "Tha Chang",
+    "name:th": "ท่าช้าง",
+    "public_transport": "stop_position",
+    "ref": "N9"
+  }
+},
+{
+  "type": "node",
+  "id": 9758722596,
+  "lat": 13.7705309,
+  "lon": 100.6558743,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "โรงเรียนพร้อมมิตรพิทยา",
+    "name:en": "Prommitpittaya School",
+    "name:th": "โรงเรียนพร้อมมิตรพิทยา",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 9758722599,
+  "lat": 13.7758477,
+  "lon": 100.6658655,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "พาซิโอ",
+    "name:en": "Paseo",
+    "name:th": "พาซิโอ",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 9758722602,
+  "lat": 13.7807959,
+  "lon": 100.6745504,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "เสรีไทย 26",
+    "name:en": "Seri Thai 26",
+    "name:th": "เสรีไทย 26",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 9758722604,
+  "lat": 13.7830846,
+  "lon": 100.6786888,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "คลองระหัส",
+    "name:en": "Khlong Rahat",
+    "name:th": "คลองระหัส",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 9758722607,
+  "lat": 13.7846294,
+  "lon": 100.6814395,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "หมู่บ้านร่มไทร",
+    "name:en": "Rom Sai Village",
+    "name:th": "หมู่บ้านร่มไทร",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 9758722610,
+  "lat": 13.7888569,
+  "lon": 100.6892481,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "สุเหร่าแดง",
+    "name:en": "Red Mosque Pier",
+    "name:th": "สุเหร่าแดง",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 9758722613,
+  "lat": 13.7925051,
+  "lon": 100.6956330,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ชุมชนหลอแหลใหญ่",
+    "name:en": "Lolae Yai Community",
+    "name:th": "ชุมชนหลอแหลใหญ่",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 9758735118,
+  "lat": 13.7971962,
+  "lon": 100.7042362,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "Lower Bang Chan Dam Pier",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 9758735121,
+  "lat": 13.7975034,
+  "lon": 100.7047798,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "Upper Bang Chan Dam Pier",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 9758735123,
+  "lat": 13.8109446,
+  "lon": 100.7290701,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "Talat Minburi Pier",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 9758735125,
+  "lat": 13.8120955,
+  "lon": 100.7312320,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "Khet Minburi Pier",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 10726384742,
+  "lat": 13.7295040,
+  "lon": 100.5129272,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือสี่พระยา (ประตู 2)",
+    "name:en": "Si Phraya Pier (Gate 2)",
+    "name:th": "ท่าเรือสี่พระยา (ประตู 2)",
+    "public_transport": "stop_position",
+    "ref": "2"
+  }
+},
+{
+  "type": "node",
+  "id": 11052197852,
+  "lat": 13.7285963,
+  "lon": 100.5116960,
+  "tags": {
+    "ferry": "yes",
+    "name": "ท่าเรือฮิลตัน",
+    "name:en": "Hilton Pier",
+    "name:th": "ท่าเรือฮิลตัน",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 11264893194,
+  "lat": 13.9599829,
+  "lon": 100.6357097,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "internet_access": "no",
+    "name": "ท่าเรือวัดลาดสนุ่น",
+    "name:en": "Wat Lad Sanun Pier",
+    "name:th": "ท่าเรือวัดลาดสนุ่น",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 11466860298,
+  "lat": 13.9156440,
+  "lon": 100.4954005,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือลพชัย ตลาดเก่าริมน้ำปากเกร็ด",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 11466860301,
+  "lat": 13.9176042,
+  "lon": 100.4949538,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 11562722280,
+  "lat": 13.9135727,
+  "lon": 100.4885183,
+  "tags": {
+    "ferry": "yes",
+    "name": "ท่าเรือบ้านโอ่งอ่าง",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 11743570947,
+  "lat": 13.7458358,
+  "lon": 100.4900957,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "description": "왓 아룬 가는 나루; cross rhe river",
+    "ferry": "yes",
+    "image": "https://images.mapillary.com/cRJJWo0oy6N2sKqgA7nWRA/thumb-2048.jpg",
+    "mapillary": "325115346413718",
+    "name": "ท่าเตียน",
+    "name:en": "Tha Tien",
+    "name:he": "טאן טיאן",
+    "name:ko": "타 띠엔",
+    "name:ru": "Tha Tien",
+    "name:th": "ท่าเตียน",
+    "operator": "CPX-B, CPX-O, CPX-T",
+    "province": "Bangkok",
+    "public_transport": "stop_position",
+    "ref": "N8"
+  }
+},
+{
+  "type": "node",
+  "id": 11743570949,
+  "lat": 13.7455462,
+  "lon": 100.4903196,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "description": "왓 아룬 가는 나루; cross rhe river",
+    "ferry": "yes",
+    "image": "https://images.mapillary.com/cRJJWo0oy6N2sKqgA7nWRA/thumb-2048.jpg",
+    "mapillary": "325115346413718",
+    "name": "ท่าเตียน",
+    "name:en": "Tha Tien",
+    "name:he": "טאן טיאן",
+    "name:ko": "타 띠엔",
+    "name:ru": "Тиан",
+    "name:th": "ท่าเตียน",
+    "operator": "CPX-B, CPX-O, CPX-T",
+    "province": "กรุงเทพมหานคร",
+    "public_transport": "stop_position",
+    "ref": "N8"
+  }
+},
+{
+  "type": "node",
+  "id": 11743570951,
+  "lat": 13.7454115,
+  "lon": 100.4904047,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "country": "ไทย",
+    "description": "왓 아룬 가는 나루; cross rhe river",
+    "ferry": "yes",
+    "image": "https://images.mapillary.com/cRJJWo0oy6N2sKqgA7nWRA/thumb-2048.jpg",
+    "mapillary": "325115346413718",
+    "name": "ท่าเตียน",
+    "name:en": "Tha Tien",
+    "name:he": "טאן טיאן",
+    "name:ko": "타 띠엔",
+    "name:ru": "Tha Tien",
+    "name:th": "ท่าเตียน",
+    "operator": "CPX-B, CPX-O, CPX-T",
+    "province": "Bangkok",
+    "public_transport": "stop_position",
+    "ref": "N8"
+  }
+},
+{
+  "type": "node",
+  "id": 12415690682,
+  "lat": 13.7288733,
+  "lon": 100.5130724,
+  "tags": {
+    "ferry": "yes",
+    "name": "ท่าเรือรอยัลออคิด เชอราตัน",
+    "name:en": "Royal Orchid Sheraton Jetty",
+    "name:th": "ท่าเรือรอยัลออคิด เชอราตัน",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 12432276105,
+  "lat": 13.7327251,
+  "lon": 100.4626175,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือวัดคูหาสวรรค์",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 12442803776,
+  "lat": 13.7019305,
+  "lon": 100.4906890,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือสยามเจริญนคร",
+    "name:en": "Siam Charoen Nakhon Pier",
+    "name:th": "ท่าเรือสยามเจริญนคร",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 12508852179,
+  "lat": 13.6800533,
+  "lon": 100.5503944,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ท่าเรือวัดคลองภูมิ",
+    "name:th": "ท่าเรือวัดคลองภูมิ",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 12528905212,
+  "lat": 13.6819114,
+  "lon": 100.5868972,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 12616016860,
+  "lat": 13.7789834,
+  "lon": 100.6712175,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "เสรีไทย 16",
+    "name:en": "Seri Thai 16",
+    "name:th": "เสรีไทย 16",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 12616016864,
+  "lat": 13.7791760,
+  "lon": 100.6715048,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12616016866,
+  "lat": 13.7790449,
+  "lon": 100.6715953,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 13039134570,
+  "lat": 13.9136906,
+  "lon": 100.4858039,
+  "tags": {
+    "ferry": "yes",
+    "name": "ท่าเรือวัดไผ่ล้อม",
+    "name:en": "Ferry Pier Wat Pai Lom",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 13352672084,
+  "lat": 13.7440310,
+  "lon": 100.4915218,
+  "tags": {
+    "fee": "yes",
+    "ferry": "yes",
+    "name:en": "Wat Pho Pier",
+    "name:ru": "ват Пхо",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 13377689098,
+  "lat": 13.7397308,
+  "lon": 100.4941534,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "foot": "yes",
+    "internet_access": "no",
+    "name": "วัดซางตาครู้ส",
+    "name:en": "Santa Cruz Church",
+    "name:th": "วัดซางตาครู้ส",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 13452383201,
+  "lat": 13.7440374,
+  "lon": 100.4915217,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name:en": "Wat Pho",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 13608990763,
+  "lat": 13.7224408,
+  "lon": 100.4771199,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "ตลาดพลู",
+    "name:th": "ตลาดพลู",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "node",
+  "id": 13730281933,
+  "lat": 13.7277262,
+  "lon": 100.4853642,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "ferry": "yes",
+    "name": "เนาวจำเนียร",
+    "name:en": "Naowachamnian",
+    "name:th": "เนาวจำเนียร",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "way",
+  "id": 29976999,
+  "center": {
+    "lat": 13.5992371,
+    "lon": 100.5869272
+  },
+  "tags": {
+    "amenity": "ferry_terminal",
+    "building": "yes",
+    "ferry": "yes",
+    "name": "Chedi Pier",
+    "public_transport": "station"
+  }
+},
+{
+  "type": "way",
+  "id": 40274645,
+  "center": {
+    "lat": 13.7042538,
+    "lon": 100.5628067
+  },
+  "tags": {
+    "area": "yes",
+    "man_made": "pier",
+    "name": "ท่าเรือบางกะเจ้า",
+    "name:en": "Bang Kachao Pier",
+    "note": "To Klong Toey Port pier"
+  }
+},
+{
+  "type": "way",
+  "id": 40346505,
+  "center": {
+    "lat": 13.6825169,
+    "lon": 100.5870416
+  },
+  "tags": {
+    "area": "yes",
+    "man_made": "pier",
+    "name": "ท่าเรือวัดบางน้ำผึ้งนอก",
+    "name:en": "Wat Bang Nam Phueng Nok Pier"
+  }
+},
+{
+  "type": "way",
+  "id": 178329996,
+  "center": {
+    "lat": 13.7416568,
+    "lon": 100.4940593
+  },
+  "tags": {
+    "area": "yes",
+    "man_made": "pier",
+    "name": "ท่าเรือราชินี"
+  }
+},
+{
+  "type": "way",
+  "id": 178329997,
+  "center": {
+    "lat": 13.7415110,
+    "lon": 100.4942793
+  },
+  "tags": {
+    "area": "yes",
+    "highway": "footway",
+    "man_made": "pier",
+    "name": "ท่าเรืออัษฎางค์ (ปากคลองตลาด)"
+  }
+},
+{
+  "type": "way",
+  "id": 230925663,
+  "center": {
+    "lat": 13.6697985,
+    "lon": 100.5277660
+  },
+  "tags": {
+    "area": "yes",
+    "bicycle": "yes",
+    "man_made": "pier",
+    "name": "Khlong Lat Luang Pier"
+  }
+},
+{
+  "type": "way",
+  "id": 230926695,
+  "center": {
+    "lat": 13.6770797,
+    "lon": 100.5273440
+  },
+  "tags": {
+    "area": "yes",
+    "bicycle": "yes",
+    "man_made": "pier",
+    "name": "ท่าเรือสาธุประดิษฐ์",
+    "name:en": "Sathu Pradit Pier"
+  }
+},
+{
+  "type": "way",
+  "id": 242179387,
+  "center": {
+    "lat": 13.5173924,
+    "lon": 100.6436156
+  },
+  "tags": {
+    "man_made": "pier",
+    "name": "สะพานแดง"
+  }
+},
+{
+  "type": "way",
+  "id": 320240804,
+  "center": {
+    "lat": 13.5070749,
+    "lon": 100.6781594
+  },
+  "tags": {
+    "man_made": "pier",
+    "name": "สะพานแดง(บำหรุ)"
+  }
+},
+{
+  "type": "way",
+  "id": 338294416,
+  "center": {
+    "lat": 13.7200532,
+    "lon": 100.5111623
+  },
+  "tags": {
+    "area": "yes",
+    "man_made": "pier",
+    "name": "ท่าเรือตากสิน",
+    "name:en": "Taksin Pier"
+  }
+},
+{
+  "type": "way",
+  "id": 342339407,
+  "center": {
+    "lat": 13.7449505,
+    "lon": 100.4891401
+  },
+  "tags": {
+    "area": "yes",
+    "man_made": "pier",
+    "name": "วัดอรุณ",
+    "name:ko": "왓아룬(나루)"
+  }
+},
+{
+  "type": "way",
+  "id": 342537781,
+  "center": {
+    "lat": 13.7038167,
+    "lon": 100.4927414
+  },
+  "tags": {
+    "departures_board": "timetable",
+    "ferry": "yes",
+    "man_made": "pier",
+    "name": "Anantara",
+    "name:en": "Anantara Pier",
+    "note": "Please find the timetable on the website",
+    "public_transport": "platform",
+    "website": "https://mailchi.mp/minor/riverside-shuttle-boat-service"
+  }
+},
+{
+  "type": "way",
+  "id": 351091877,
+  "center": {
+    "lat": 13.7528089,
+    "lon": 100.4885460
+  },
+  "tags": {
+    "area": "yes",
+    "embankment": "yes",
+    "highway": "pedestrian",
+    "man_made": "pier",
+    "name": "ท่าช้าง",
+    "name:en": "Tha Chang Pier",
+    "name:etymology:wikidata": "Q7378",
+    "name:th": "ท่าช้าง"
+  }
+},
+{
+  "type": "way",
+  "id": 352102184,
+  "center": {
+    "lat": 13.9046949,
+    "lon": 100.4902593
+  },
+  "tags": {
+    "area": "yes",
+    "man_made": "pier",
+    "name": "ท่าเรือป่าฝ้าย"
+  }
+},
+{
+  "type": "way",
+  "id": 352102185,
+  "center": {
+    "lat": 13.9046538,
+    "lon": 100.4915709
+  },
+  "tags": {
+    "area": "yes",
+    "man_made": "pier",
+    "name": "ท่าเรือวัดกลางเกร็ด"
+  }
+},
+{
+  "type": "way",
+  "id": 352102186,
+  "center": {
+    "lat": 13.9127903,
+    "lon": 100.4916709
+  },
+  "tags": {
+    "area": "yes",
+    "man_made": "pier",
+    "name": "เท่าเรือวัดสนามเหนือ"
+  }
+},
+{
+  "type": "way",
+  "id": 352102187,
+  "center": {
+    "lat": 13.9152739,
+    "lon": 100.4946793
+  },
+  "tags": {
+    "area": "yes",
+    "man_made": "pier",
+    "name": "ท่าเรือปากเกร็ด"
+  }
+},
+{
+  "type": "way",
+  "id": 352102188,
+  "center": {
+    "lat": 13.9149482,
+    "lon": 100.4942964
+  },
+  "tags": {
+    "area": "yes",
+    "man_made": "pier",
+    "name": "Chao Praya Express Boat Pier"
+  }
+},
+{
+  "type": "way",
+  "id": 352117285,
+  "center": {
+    "lat": 13.7291011,
+    "lon": 100.5115249
+  },
+  "tags": {
+    "area": "yes",
+    "highway": "footway",
+    "man_made": "pier",
+    "name": "ท่าคลองสาน"
+  }
+},
+{
+  "type": "way",
+  "id": 352117286,
+  "center": {
+    "lat": 13.7294887,
+    "lon": 100.5131265
+  },
+  "tags": {
+    "area": "yes",
+    "highway": "footway",
+    "lit": "yes",
+    "man_made": "pier",
+    "name": "ท่าเรือสี่พระยา",
+    "name:en": "Si Phraya Pier",
+    "name:th": "ท่าเรือสี่พระยา"
+  }
+},
+{
+  "type": "way",
+  "id": 352117288,
+  "center": {
+    "lat": 13.7188648,
+    "lon": 100.5127440
+  },
+  "tags": {
+    "area": "yes",
+    "man_made": "pier",
+    "name": "Saphan Taksin Pier",
+    "name:ko": "사판 탁신 부두"
+  }
+},
+{
+  "type": "way",
+  "id": 352117289,
+  "center": {
+    "lat": 13.7184227,
+    "lon": 100.5126127
+  },
+  "tags": {
+    "area": "yes",
+    "man_made": "pier",
+    "name": "Asiatique Pier"
+  }
+},
+{
+  "type": "way",
+  "id": 352117291,
+  "center": {
+    "lat": 13.7385111,
+    "lon": 100.5043781
+  },
+  "tags": {
+    "area": "yes",
+    "country": "ไทย",
+    "man_made": "pier",
+    "name": "ท่าเรือข้ามฟากราชวงศ์",
+    "province": "กรุงเทพมหานคร"
+  }
+},
+{
+  "type": "way",
+  "id": 352117292,
+  "center": {
+    "lat": 13.7368887,
+    "lon": 100.5038364
+  },
+  "tags": {
+    "area": "yes",
+    "man_made": "pier",
+    "name": "ท่าดินแดง",
+    "name:en": "Tha Din Daeng"
+  }
+},
+{
+  "type": "way",
+  "id": 434839896,
+  "center": {
+    "lat": 13.7409040,
+    "lon": 100.5157837
+  },
+  "tags": {
+    "addr:district": "ปทุมวัน",
+    "addr:postcode": "10330",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:subdistrict": "รองเมือง",
+    "building": "yes",
+    "floating": "yes",
+    "man_made": "pier",
+    "name": "ท่าเรือหัวลำโพง",
+    "name:en": "Hua Lamphong Pier",
+    "name:th": "ท่าเรือหัวลำโพง"
+  }
+},
+{
+  "type": "way",
+  "id": 487690666,
+  "center": {
+    "lat": 13.7072606,
+    "lon": 100.5635843
+  },
+  "tags": {
+    "area": "yes",
+    "man_made": "pier",
+    "name": "ท่าเรือวัดคลองเตยนอก",
+    "name:en": "Wat Klong Toei Nok Pier"
+  }
+},
+{
+  "type": "way",
+  "id": 663703813,
+  "center": {
+    "lat": 13.7796122,
+    "lon": 100.5001656
+  },
+  "tags": {
+    "access": "customers",
+    "man_made": "pier",
+    "mooring": "private",
+    "name": "Riverside Cruise",
+    "operator": "Riverside Hotel",
+    "website": "https://www.riversidebangkok.com/en/cruise.php"
+  }
+},
+{
+  "type": "way",
+  "id": 756642530,
+  "center": {
+    "lat": 13.7494001,
+    "lon": 100.4887507
+  },
+  "tags": {
+    "access": "private",
+    "man_made": "pier",
+    "name": "ท่าราชวรดิฐ",
+    "name:th": "ท่าราชวรดิฐ",
+    "wikidata": "Q16433837"
+  }
+},
+{
+  "type": "way",
+  "id": 756642531,
+  "center": {
+    "lat": 13.7495221,
+    "lon": 100.4888739
+  },
+  "tags": {
+    "access": "private",
+    "man_made": "pier",
+    "mooring": "yes",
+    "name": "ท่าราชวรดิฐ",
+    "name:th": "ท่าราชวรดิฐ",
+    "wikidata": "Q16433837"
+  }
+},
+{
+  "type": "way",
+  "id": 777869147,
+  "center": {
+    "lat": 13.8702272,
+    "lon": 100.4785423
+  },
+  "tags": {
+    "area": "yes",
+    "man_made": "pier",
+    "name": "ท่าเรือสะพานพระนั่งเกล้า",
+    "name:en": "Phra Nangklao Pier",
+    "name:th": "ท่าเรือสะพานพระนั่งเกล้า",
+    "opening_date": "2021-03-06",
+    "operator": "Panrail Thailand LTD.",
+    "start_date": "2020-01-31",
+    "website": "https://www.facebook.com/PanrailTH"
+  }
+},
+{
+  "type": "way",
+  "id": 857726208,
+  "center": {
+    "lat": 13.6526947,
+    "lon": 100.5361167
+  },
+  "tags": {
+    "amenity": "ferry_terminal"
+  }
+},
+{
+  "type": "way",
+  "id": 1020887825,
+  "center": {
+    "lat": 13.7457842,
+    "lon": 100.4903861
+  },
+  "tags": {
+    "area": "yes",
+    "country": "Thailand",
+    "man_made": "pier",
+    "name": "ท่าเตียน",
+    "name:en": "Tha Tien Pier",
+    "name:th": "ท่าเตียน",
+    "province": "Bangkok"
+  }
+},
+{
+  "type": "way",
+  "id": 1057672409,
+  "center": {
+    "lat": 13.7285735,
+    "lon": 100.5116278
+  },
+  "tags": {
+    "man_made": "pier",
+    "name": "ท่าเรือฮิลตัน",
+    "name:en": "Hilton Pier",
+    "name:th": "ท่าเรือฮิลตัน"
+  }
+},
+{
+  "type": "way",
+  "id": 1076376943,
+  "center": {
+    "lat": 13.7185691,
+    "lon": 100.5127715
+  },
+  "tags": {
+    "addr:country": "ไทย",
+    "addr:district": "สาทร",
+    "addr:postcode": "10120",
+    "addr:province": "กรุงเทพมหานคร",
+    "addr:province:en": "Bangkok",
+    "addr:subdistrict": "ยานนาวา",
+    "building": "yes",
+    "description": "ท่าเรือสาธร Sathon Pier",
+    "layer": "1",
+    "man_made": "pier",
+    "name": "ท่าเรือสาทร",
+    "name:en": "Sathon Pier",
+    "name:th": "ท่าเรือสาทร"
+  }
+},
+{
+  "type": "way",
+  "id": 1125101141,
+  "center": {
+    "lat": 13.7482678,
+    "lon": 100.5539388
+  },
+  "tags": {
+    "man_made": "pier",
+    "name": "Nana Nuea"
+  }
+},
+{
+  "type": "way",
+  "id": 1153316951,
+  "center": {
+    "lat": 13.7299464,
+    "lon": 100.5129038
+  },
+  "tags": {
+    "area": "yes",
+    "floating": "yes",
+    "lit": "no",
+    "man_made": "pier",
+    "name": "Pier 1"
+  }
+},
+{
+  "type": "way",
+  "id": 1153316953,
+  "center": {
+    "lat": 13.7302695,
+    "lon": 100.5128166
+  },
+  "tags": {
+    "area": "yes",
+    "floating": "yes",
+    "lit": "no",
+    "man_made": "pier",
+    "name": "Pier 2",
+    "name:en": "Pier 2"
+  }
+},
+{
+  "type": "way",
+  "id": 1153316954,
+  "center": {
+    "lat": 13.7305409,
+    "lon": 100.5127433
+  },
+  "tags": {
+    "area": "yes",
+    "floating": "yes",
+    "lit": "no",
+    "man_made": "pier",
+    "name": "Pier 3"
+  }
+},
+{
+  "type": "way",
+  "id": 1172196566,
+  "center": {
+    "lat": 13.7692419,
+    "lon": 100.4987301
+  },
+  "tags": {
+    "area": "yes",
+    "floating": "yes",
+    "man_made": "pier",
+    "name": "ท่าเรือ ธปท."
+  }
+},
+{
+  "type": "way",
+  "id": 1172196596,
+  "center": {
+    "lat": 13.7699265,
+    "lon": 100.4991859
+  },
+  "tags": {
+    "area": "yes",
+    "floating": "yes",
+    "man_made": "pier",
+    "name": "เรือนแพ ธปท."
+  }
+},
+{
+  "type": "way",
+  "id": 1190310308,
+  "center": {
+    "lat": 13.7296962,
+    "lon": 100.5113140
+  },
+  "tags": {
+    "floating": "yes",
+    "man_made": "pier",
+    "name": "ท่าเรือเดอะแจมแฟคทอรี่",
+    "name:en": "The Jam Factory Pier",
+    "name:th": "ท่าเรือเดอะแจมแฟคทอรี่"
+  }
+},
+{
+  "type": "way",
+  "id": 1203025914,
+  "center": {
+    "lat": 13.9164728,
+    "lon": 100.4936073
+  },
+  "tags": {
+    "area": "yes",
+    "man_made": "pier",
+    "name": "ท่าเรือปากเกร็ด"
+  }
+},
+{
+  "type": "way",
+  "id": 1227647287,
+  "center": {
+    "lat": 13.7501018,
+    "lon": 100.4886109
+  },
+  "tags": {
+    "man_made": "pier",
+    "name": "นิเวศน์วรดิฐ",
+    "name:th": "นิเวศน์วรดิฐ"
+  }
+},
+{
+  "type": "way",
+  "id": 1227647288,
+  "center": {
+    "lat": 13.7501351,
+    "lon": 100.4887389
+  },
+  "tags": {
+    "man_made": "pier",
+    "name": "นิเวศน์วรดิฐ",
+    "name:th": "นิเวศน์วรดิฐ"
+  }
+},
+{
+  "type": "way",
+  "id": 1227647290,
+  "center": {
+    "lat": 13.7494807,
+    "lon": 100.4886248
+  },
+  "tags": {
+    "floating": "yes",
+    "man_made": "pier",
+    "name": "ท่าราชวรดิฐ",
+    "name:th": "ท่าราชวรดิฐ",
+    "wikidata": "Q16433837"
+  }
+},
+{
+  "type": "way",
+  "id": 1264028723,
+  "center": {
+    "lat": 13.7445475,
+    "lon": 100.4913510
+  },
+  "tags": {
+    "area": "yes",
+    "man_made": "pier",
+    "name": "ท่าเรือเขียว (วัดโพธิ์)",
+    "name:en": "Green Pier (Wat Pho)",
+    "name:th": "ท่าเรือเขียว (วัดโพธิ์)"
+  }
+},
+{
+  "type": "way",
+  "id": 1342088528,
+  "center": {
+    "lat": 13.7288759,
+    "lon": 100.5131400
+  },
+  "tags": {
+    "area": "yes",
+    "man_made": "pier",
+    "name": "ท่าเรือรอยัลออคิด เชอราตัน",
+    "name:en": "Royal Orchid Sheraton Jetty",
+    "name:th": "ท่าเรือรอยัลออคิด เชอราตัน"
+  }
+},
+{
+  "type": "way",
+  "id": 1362786860,
+  "center": {
+    "lat": 13.7227407,
+    "lon": 100.4705987
+  },
+  "tags": {
+    "floating": "yes",
+    "man_made": "pier",
+    "name": "Phasi Charoen Pier"
+  }
+},
+{
+  "type": "way",
+  "id": 1434339945,
+  "center": {
+    "lat": 13.7625649,
+    "lon": 100.4930240
+  },
+  "tags": {
+    "floating": "yes",
+    "man_made": "pier",
+    "mooring": "yes",
+    "name": "Riva Surya",
+    "name:en": "Riva Surya"
+  }
+},
+{
+  "type": "way",
+  "id": 1469037212,
+  "center": {
+    "lat": 13.7385228,
+    "lon": 100.5046378
+  },
+  "tags": {
+    "area": "yes",
+    "country": "Thailand",
+    "description": "ท่าเรือราชวงศ์ ใกล้ถนนทรงวาด เยาวราช Ratchawong Pier Bangkok Thailand Yaowarat road Thai Street Food.",
+    "man_made": "pier",
+    "name": "ท่าเรือราชวงศ์",
+    "name:en": "Ratchawong Pier",
+    "name:th": "ท่าเรือราชวงศ์",
+    "province": "Bangkok"
+  }
+},
+{
+  "type": "way",
+  "id": 1487605346,
+  "center": {
+    "lat": 13.7610253,
+    "lon": 100.4828801
+  },
+  "tags": {
+    "area": "yes",
+    "floating": "yes",
+    "man_made": "pier",
+    "name": "วัดอมรินทรารามวรวิหาร",
+    "name:en": "Wat Amarintharam",
+    "name:th": "วัดอมรินทรารามวรวิหาร"
+  }
+},
+{
+  "type": "relation",
+  "id": 20121923,
+  "center": {
+    "lat": 13.7398168,
+    "lon": 100.4982332
+  },
+  "tags": {
+    "area": "yes",
+    "man_made": "pier",
+    "name": "ท่าเรือสะพานพุทธ",
+    "type": "multipolygon"
+  }
+}
+
+  ]
+}

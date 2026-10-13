@@ -1,0 +1,10 @@
+[warning] [.WebGL-0x104000d6200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[requestfailed] https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%5Btimeout%3A60%5D%3Brel%5Bboundary%3Dadministrative%5D%5Badmin_level%3D6%5D%5B%22name%22~%22%5E%E0%B9%80%E0%B8%82%E0%B8%95%22%5D(13.5%2C100.3%2C14.05%2C100.95)%3Bout%20geom%20qt%3B net::ERR_CONNECTION_REFUSED
+[error] Failed to load resource: net::ERR_CONNECTION_REFUSED
+[warning] [.WebGL-0x104000d6200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[warning] [.WebGL-0x104000d6200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[error] Access to fetch at 'https://overpass.openstreetmap.fr/api/interpreter?data=%5Bout%3Ajson%5D%5Btimeout%3A60%5D%3Brel%5Bboundary%3Dadministrative%5D%5Badmin_level%3D6%5D%5B%22name%22~%22%5E%E0%B9%80%E0%B8%82%E0%B8%95%22%5D(13.5%2C100.3%2C14.05%2C100.95)%3Bout%20geom%20qt%3B' from origin 'http://127.0.0.1:8791' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[requestfailed] https://overpass.openstreetmap.fr/api/interpreter?data=%5Bout%3Ajson%5D%5Btimeout%3A60%5D%3Brel%5Bboundary%3Dadministrative%5D%5Badmin_level%3D6%5D%5B%22name%22~%22%5E%E0%B9%80%E0%B8%82%E0%B8%95%22%5D(13.5%2C100.3%2C14.05%2C100.95)%3Bout%20geom%20qt%3B net::ERR_FAILED
+[error] Failed to load resource: net::ERR_FAILED
+[warning] [.WebGL-0x104000d6200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)
+[warning] Image "wood-pattern" could not be loaded. Please make sure you have added the image before it is needed with map.addImage(), resolved it with map.setMissingStyleImageResolver(), or included it in a "sprite" property in your style.

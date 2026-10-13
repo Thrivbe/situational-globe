@@ -1,0 +1,57 @@
+/* OWNER: 2D layers & data worker. Popups, radar timeline and rain chart. */
+
+/* popups: dark card */
+.maplibregl-popup.pp .maplibregl-popup-content { background:#121821; color:#e6edf3; border:1px solid #2a3644; border-radius:10px; padding:10px 12px; box-shadow:0 8px 28px rgba(0,0,0,.55); }
+.maplibregl-popup.pp .maplibregl-popup-tip { border-top-color:#121821; border-bottom-color:#121821; }
+.pp-body { font-size:12.5px; min-width:190px; }
+.pp-t { font-weight:700; font-size:14px; line-height:1.25; }
+.pp-s { color:#8b98a5; margin:1px 0 6px; }
+.pp-row { display:flex; justify-content:space-between; gap:14px; padding:2px 0; border-top:1px solid #1f2a36; }
+.pp-row span { color:#8b98a5; } .pp-row b { font-weight:600; text-align:right; }
+.pp-note { margin-top:6px; padding-top:6px; border-top:1px solid #1f2a36; color:#b6c2cf; font-size:12px; line-height:1.35; }
+
+/* timeline footer */
+.timeline { align-items:start; }
+.tl-radar, .tl-chart { min-width:0; }
+.tl-head { display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
+.tl-time { font-size:20px; font-weight:700; font-variant-numeric:tabular-nums; letter-spacing:-.01em; }
+.tl-kind { min-height:16px; margin-bottom:2px; }
+.tl-ends { display:flex; justify-content:space-between; font-variant-numeric:tabular-nums; }
+.tl-btns { display:flex; gap:8px; margin-top:4px; }
+.tl-btns button:disabled { opacity:.4; cursor:default; }
+.timeline input[type=range] { -webkit-appearance:none; appearance:none; height:8px; border-radius:99px; margin:6px 0 2px; --obs:100%;
+  background:linear-gradient(90deg,#2b6f93 0,#38bdf8 var(--obs),#312e81 var(--obs),#818cf8 100%); outline-offset:3px; }
+.timeline input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:#fff; border:2px solid #0b0f14; box-shadow:0 0 0 2px #38bdf8; cursor:pointer; }
+.timeline input[type=range]::-moz-range-thumb { width:16px; height:16px; border-radius:50%; background:#fff; border:2px solid #0b0f14; box-shadow:0 0 0 2px #38bdf8; cursor:pointer; }
+#chartwrap { margin-top:2px; } #chartwrap svg { display:block; }
+
+/* radar track: observed vs forecast */
+.tl-track { position:relative; }
+.tl-split { position:absolute; top:2px; width:2px; height:18px; margin-left:-1px; background:#fff; opacity:.8; pointer-events:none; display:none; }
+.tl-kind { min-height:16px; margin-bottom:2px; color:#8b98a5; } .tl-kind.fc { color:#a5b4fc; font-weight:600; }
+.tl-time .bd { font-size:10px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; padding:2px 6px; border-radius:99px; vertical-align:middle; margin-left:4px; }
+.bd.obs { background:#0c4a6e; color:#7dd3fc; } .bd.fc { background:#312e81; color:#c7d2fe; }
+.tl-key { display:flex; gap:14px; font-size:11px; margin-top:2px; } .tl-key span { display:inline-flex; align-items:center; gap:5px; }
+.tl-key .k { width:14px; height:5px; border-radius:99px; display:inline-block; } .k.obs { background:#38bdf8; } .k.fc { background:#818cf8; }
+
+/* radar footer: now marker, intensity ramp, rain-not-flood note */
+.tl-ends { position:relative; }
+.tl-nowlab { display:none; position:absolute; top:0; padding-right:6px; pointer-events:none; transform:translateX(-100%); color:#e6edf3; font-weight:700; font-size:10px; letter-spacing:.04em; text-transform:uppercase; }
+.tl-int { display:grid; grid-template-columns:auto 1fr; gap:2px 8px; align-items:center; margin-top:4px; font-size:11px; }
+.tl-int .ramp { display:flex; justify-content:space-between; align-items:center; height:14px; padding:0 8px; border-radius:99px; background:linear-gradient(90deg,#88ddee,#0077ee 50%,#ffaa00); }
+.tl-int .ramp em { font-style:normal; font-size:9.5px; font-weight:700; color:#fff; text-shadow:0 0 3px #000,0 0 3px #000; }
+.tl-note { margin-top:3px; font-size:11px; font-weight:600; color:#7dd3fc; }
+.tl-kind { display:none; }
+.tl-key { align-items:center; } .tl-key .tl-btns { margin:0 0 0 auto; display:flex; gap:6px; } .tl-key .tl-btns button { padding:2px 10px; font-size:11.5px; }
+.tl-int { margin-top:3px; }
+
+/* river discharge card (top-left of the map) */
+.flowcard { position:absolute; left:10px; top:10px; z-index:2; width:300px; background:rgba(18,24,33,.9); border:1px solid #2a3644; border-radius:10px; padding:6px 10px 7px; font-size:11px; backdrop-filter:blur(6px); }
+.flowcard summary { cursor:pointer; font-weight:700; font-size:12px; } .flowcard summary .dim { font-weight:400; }
+.fl-sub { font-size:10px; margin:2px 0 4px; }
+.fl-row { display:grid; grid-template-columns:104px 84px minmax(0,1fr); gap:8px; align-items:center; padding:2px 0; border-top:1px solid #1f2a36; }
+.fl-n { color:#cbd5e1; line-height:1.15; }
+.fl-v b { font-size:13px; font-variant-numeric:tabular-nums; } .fl-v small { display:block; color:#8b98a5; font-size:10px; line-height:1.15; }
+.fl-v small.rising { color:#fb923c; } .fl-v small.falling { color:#4ade80; }
+.fl-row svg { margin:0; }
+.swd { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px; vertical-align:-1px; border:1px solid #0b0f14; }

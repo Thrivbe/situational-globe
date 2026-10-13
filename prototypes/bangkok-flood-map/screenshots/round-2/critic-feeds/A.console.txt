@@ -1,0 +1,8 @@
+[http 503] https://api.open-meteo.com/v1/forecast?latitude=13.75&longitude=100.53&current=precipitation,rain&hourly=precipitation,precipitation_probability&past_hours=12&forecast_hours=48&timezone=Asia/Bangkok
+[error] Failed to load resource: the server responded with a status of 503 (Service Unavailable)
+[warning] [bangkok-flood-map] forecast unavailable: https://api.open-meteo.com/v1/forecast?latitude=13.75&longitude=100.53&current=precipitation,rain&hourly=precipitation,precipitation_probability&past_hours=12&forecast_hours=48&timezone=Asia/Bangkok → 503
+[warning] [.WebGL-0x104000d5600]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[warning] [.WebGL-0x104000d5600]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[warning] [.WebGL-0x104000d5600]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[warning] [.WebGL-0x104000d5600]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)
+[warning] Image "wood-pattern" could not be loaded. Please make sure you have added the image before it is needed with map.addImage(), resolved it with map.setMissingStyleImageResolver(), or included it in a "sprite" property in your style.
