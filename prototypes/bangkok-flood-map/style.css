@@ -273,3 +273,14 @@ body:has(.hud .collapsed) .maplegend, body:has(.hud.collapsed) .maplegend { left
 .a .sevkey b { font-size:16px; } .a .disc { margin-top:4px; } .a .dsum { margin-top:6px; }
 .a .maplegend[open] { width:min(900px,calc(100% - 24px)); }
 .a .maplegend[open] .legend { grid-template-columns:repeat(4,1fr); }
+
+/* ---- round 6 ---- */
+.maplibregl-ctrl.maplibregl-ctrl-attrib { max-width:min(60%,820px); text-align:right; }
+.a .maplibregl-ctrl.maplibregl-ctrl-attrib { max-width:min(70%,900px); }
+.bhint { display:none; color:var(--water); } .bhint.show { display:block; }
+.tchip.zoomout { opacity:.4; }
+.laysec { flex:none; border-top:1px solid var(--line); padding:10px 0 12px; }
+.laysec summary { cursor:pointer; font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:var(--dim); font-weight:650; margin-bottom:8px; }
+.laysec:not([open]) summary { margin-bottom:0; }
+.a aside > section.roadsec { flex:1 0 300px; min-height:300px; }
+.maplibregl-ctrl-attrib .nw { white-space:nowrap; } .maplibregl-ctrl.maplibregl-ctrl-attrib { max-width:min(72%,900px); }

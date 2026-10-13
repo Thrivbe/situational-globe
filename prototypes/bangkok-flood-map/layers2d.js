@@ -6,7 +6,7 @@ import { COLOR, esc, ago, hhmm, loadPoints, loadDistricts, loadForecastGrid, loa
 
 // One colour per meaning: roads = traffic lights, rain = blues, every OSM class its own hue + letter.
 const C = { blocked:'#ef4444', risky:'#fb923c', caution:'#facc15', ok:'#4ade80', rain:'#38bdf8', later:'#94a3b8',
-  hospital:'#ec4899', shelter:'#14b8a6', pump:'#c2855a', fire:'#d6d3d1', landmark:'#c4b5fd', rail:'#e5e7eb', metro:'#60a5fa', sky:'#4ade80', airport:'#fde68a', canal:'#22d3ee', ferry:'#f59e0b', wl1:'#a3e635', wl2:'#fbbf24', wl3:'#f43f5e', wl0:'#94a3b8', traffy:'#e879f9' };
+  hospital:'#ec4899', shelter:'#14b8a6', pump:'#c2855a', fire:'#d6d3d1', landmark:'#c4b5fd', rail:'#e5e7eb', metro:'#60a5fa', sky:'#4ade80', airport:'#fde68a', canal:'#22d3ee', ferry:'#f59e0b', wl1:'#a3e635', wl2:'#fbbf24', wl3:'#f43f5e', wl0:'#94a3b8', traffy:'#e879f9', park:'#3b82f6' };
 const DG = ['', 'rgba(56,189,248,.12)', 'rgba(251,146,60,.17)', 'rgba(239,68,68,.27)'];
 
 // Order here = order of toggles and legend in the side panel.
@@ -44,6 +44,8 @@ export const LAYERS2D = [
   { key:'hospitals', label:'Hospitals (OSM)', ids:['hospitals','hospitals-g'], legend:[{ shape:'dot', color:C.hospital, label:'H  hospital' }] },
   { key:'shelters', label:'Possible shelters (OSM, unofficial)', ids:['shelters','shelters-g'], legend:[{ shape:'dot', color:C.shelter, label:'S  possible gathering site' }] },
   { key:'pumping', label:'Pumps and sluice gates (OSM)', ids:['pumping','pumping-g'], legend:[{ shape:'dot', color:C.pump, label:'P  pump / sluice / lock / weir' }] },
+  { key:'piers', label:'Ferry piers and boat stops (OSM)', ids:['piers','piers-g'], legend:[{ shape:'dot', color:C.ferry, label:'ferry pier / boat stop' }] },
+  { key:'parking', label:'Car parks, multi-storey (OSM)', ids:['parking','parking-g'], legend:[{ shape:'dot', color:C.park, label:'P  car park / multi-storey' }] },
   { key:'fire', label:'Fire and rescue stations (OSM)', ids:['fire','fire-g'], legend:[{ shape:'dot', color:C.fire, label:'F  fire station' }] },
 ];
 
@@ -62,10 +64,14 @@ const POPUPS = {
   hospitals: p => title(nm(p) || 'Hospital (unnamed)', p.healthcare === 'clinic' ? 'Clinic' : 'Hospital') + kv('Emergency', p.emergency === 'yes' ? 'yes' : '') + kv('Operator', esc(p.operator || '')) + kv('Phone', esc(p.phone || p['contact:phone'] || '')) + kv('Hours', esc(p.opening_hours || '')),
   shelters: p => title(nm(p) || 'Unnamed site', p.emergency === 'assembly_point' ? 'Assembly point' : p.social_facility === 'shelter' ? 'Social shelter' : p.amenity === 'community_centre' ? 'Community centre' : 'Emergency shelter')
     + '<div class="pp-note">Possible gathering site from OpenStreetMap. Not an official evacuation list: check with the district office.</div>',
-  pumping: p => title(nm(p) || WATER[p.man_made] || WATER[p.waterway] || 'Water infrastructure', WATER[p.man_made] || WATER[p.waterway] || 'Water infrastructure') + kv('Operator', esc(p.operator || '')),
+  pumping: p => { const t = WATER[p.man_made] || WATER[p.waterway] || 'Pumping / sluice / lock / weir', n = nm(p);
+    return title(n || t, n ? t : (p.operator || p.pumping_station || p.water_works || 'Name not mapped in OSM')) + (n ? kv('Operator', esc(p.operator || '')) : ''); },
+  piers: p => title(nm(p) || 'Ferry pier (unnamed)', p.amenity === 'ferry_terminal' ? 'Ferry terminal / boat stop' : p.man_made === 'pier' ? 'Pier' : 'Ferry stop') + kv('Operator', esc(p.operator || '')) + kv('Route', esc(p.route_ref || p.ref || '')) + kv('Thai name', esc(p['name:th'] || '')),
+  parking: p => title(nm(p) || 'Car park (unnamed)', p.parking === 'underground' ? 'Car park, underground' : 'Car park, multi-storey') + kv('Capacity', esc(p.capacity || '')) + kv('Operator', esc(p.operator || '')) + kv('Fee', p.fee === 'yes' ? 'paid' : p.fee === 'no' ? 'free' : '')
+    + '<div class="pp-note">From OpenStreetMap. Multi-storey and underground car parks can flood: check before parking.</div>',
   fire: p => title(nm(p) || 'Fire station (unnamed)', 'Fire / rescue station') + kv('Operator', esc(p.operator || '')) + kv('Phone', esc(p.phone || p['contact:phone'] || '')),
   landmarks: p => title(nm(p) || 'Landmark', [p.tourism, p.historic].filter(Boolean).join(' · ').replace(/_/g, ' ')) + kv('Wikipedia', esc(p.wikipedia || '')),
-  raingrid: p => title('Rain forecast point', 'Open-Meteo, 0.15 deg grid') + kv('This hour', `${p.mm} mm`) + kv('Next 3 h', `${p.n3} mm`) + kv('Next 6 h', `${p.n6} mm`) + kv('Next 24 h', `${p.n24} mm`),
+  raingrid: p => title('Rain cell', 'Open-Meteo forecast, 0.15 deg grid') + kv('This hour', `${p.mm} mm`) + kv('Next 3 h', `${p.n3} mm`) + kv('Next 6 h', `${p.n6} mm`) + kv('Next 24 h', `${p.n24} mm`),
   roads: p => title(p.label, p.hw ? `${p.hw} road` : '') + kv('Sedan', VERDICT(p.sedan)) + kv('Motorbike', VERDICT(p.motorbike)) + kv('Pickup', VERDICT(p.pickup)) + kv('Truck', VERDICT(p.truck))
     + kv('Depth', p.depthCm ? depthText(+p.depthCm) : '') + kv('Sources', esc(p.srcs || '')) + kv('Updated', p.updated ? ago(+p.updated) : ''),
   stations: p => title(nm(p) || 'Station', ({ sky:'Sky train station (BTS)', metro:'Metro station (MRT)', monorail:'Monorail station', people:'People mover station' })[p.lkind] || STATION[p.subclass] || 'Station') + kv('Thai name', esc(p['name:th'] || ''))
@@ -93,7 +99,7 @@ const POPUPS = {
 // Sparse OSM / sensor points come before the thousand report dots so a hospital under a report is still clickable;
 // the wide, soft rain-grid circles come last so they never swallow a click meant for a road or rail line.
 const PICK = [['station-water','station-water'], ['raindist-label','raindist'], ['reports-cluster','cluster'], ['reports-cluster-count','cluster'], ['waterlevel','waterlevel'], ['waterlevel-label','waterlevel'], ['hospitals','hospitals'], ['hospitals-g','hospitals'], ['shelters','shelters'], ['shelters-g','shelters'],
-  ['fire','fire'], ['fire-g','fire'], ['pumping','pumping'], ['pumping-g','pumping'], ['stations','stations'], ['stations-label','stations'], ['airports','airports'], ['airports-label','airports'],
+  ['piers','piers'], ['piers-g','piers'], ['parking','parking'], ['parking-g','parking'], ['fire','fire'], ['fire-g','fire'], ['pumping','pumping'], ['pumping-g','pumping'], ['stations','stations'], ['stations-label','stations'], ['airports','airports'], ['airports-label','airports'],
   ['landmarks','landmarks'], ['landmarks-label','landmarks'], ['depth-dots','depth-labels'], ['depth-labels','depth-labels'], ['reports','reports'], ['roads','roads'], ['roads-ok','roads'], ['roads-hit','roads'],
   ['transit','transit'], ['rail','rail'], ['ferry','ferry'], ['canals','canals'], ['danger-grid','danger-grid'], ['raingrid','raingrid'], ['districts-fill','districts-fill']];
 const NOHOVER = new Set(['danger-grid', 'districts-fill', 'raingrid']);
@@ -112,7 +118,8 @@ export function bindPopups(map) {
         Promise.resolve(map.getSource('reports').getClusterExpansionZoom(f.properties.cluster_id)).then(z => map.easeTo({ center:c, zoom:Math.min(16, (z ?? map.getZoom()) + .3) })).catch(() => map.easeTo({ center:c, zoom:map.getZoom() + 1.5 }));
         return;
       }
-      let html; try { html = POPUPS[key](f.properties || {}); } catch (err) { warnOnce(`popup-${id}`, `popup ${id}: ${err.message}`); html = title(id, 'No details'); }
+      let html; try { html = POPUPS[key](f.properties || {});
+        if (key === 'danger-grid') { const rg = hits.find(h => h.layer.id === 'raingrid'); if (rg) html += POPUPS.raingrid(rg.properties || {}); } } catch (err) { warnOnce(`popup-${id}`, `popup ${id}: ${err.message}`); html = title(id, 'No details'); }
       pop.setLngLat(f.geometry.type === 'Point' ? f.geometry.coordinates : e.lngLat).setHTML(`<div class="pp-body">${html}</div>`).addTo(map); return;
     }
     pop.remove();
@@ -166,7 +173,7 @@ export function addLayers2D(map, d) {
   const L = map.getStyle().layers.map(l => l.id), firstRoad = L.includes('highway_path') ? 'highway_path' : undefined;
   const labelLayer = L.includes('highway_name_other') ? 'highway_name_other' : L.find(id => map.getLayer(id)?.type === 'symbol');
   // core layers are added synchronously; lazy data (snapshot / Open-Meteo) fills in after first paint
-  loadDistricts(d); ['landmarks', 'hospitals', 'shelters', 'pumping', 'fireStations'].forEach(loadPoints); loadForecastGrid();
+  loadDistricts(d); ['landmarks', 'hospitals', 'shelters', 'pumping', 'fireStations', 'piers', 'parking'].forEach(loadPoints); loadForecastGrid();
 
   // polygons under the basemap roads: danger hexes, then district outlines
   map.addSource('districts', { type:'geojson', data:empty });
@@ -283,12 +290,16 @@ export function addLayers2D(map, d) {
     map.getSource('landmarks')?.setData(fc); annotate('landmarks', `(${fc.features.length})`); });
   lazyPoints(map, 'pumping', 'pumping', 'P');
   map.addLayer(dotLayer('pumping', 'pumping', C.pump, 10.3)); map.addLayer(glyphLayer('pumping', 'pumping', ['get','g'], '#ffffff', 11));
+  lazyPoints(map, 'piers', 'piers', 'B');
+  map.addLayer(dotLayer('piers', 'piers', C.ferry, 11.5)); map.addLayer(glyphLayer('piers', 'piers', ['get','g'], '#0b0f14', 12.2));
+  lazyPoints(map, 'parking', 'parking', 'P');
+  map.addLayer(dotLayer('parking', 'parking', C.park, 12)); map.addLayer(glyphLayer('parking', 'parking', ['get','g'], '#ffffff', 12.5));
   lazyPoints(map, 'fireStations', 'fire', 'F');
   map.addLayer(dotLayer('fire', 'fire', C.fire, 10.3, 1.1)); map.addLayer(glyphLayer('fire', 'fire', ['get','g'], '#0b0f14', 11));
   lazyPoints(map, 'shelters', 'shelters', 'S');
   map.addLayer(dotLayer('shelters', 'shelters', C.shelter, 9.5)); map.addLayer(glyphLayer('shelters', 'shelters', ['get','g'], '#ffffff', 10.5));
   lazyPoints(map, 'hospitals', 'hospitals', 'H');
-  map.addLayer(dotLayer('hospitals', 'hospitals', C.hospital, 9.5, 1.1)); map.addLayer(glyphLayer('hospitals', 'hospitals', ['get','g'], '#ffffff', 10.5));
+  map.addLayer(dotLayer('hospitals', 'hospitals', C.hospital, 12.5, 1.1)); map.addLayer(glyphLayer('hospitals', 'hospitals', ['get','g'], '#ffffff', 13));
 
   // water level sensors (ThaiWater, % of bank): ring-style dots with a % label
   map.addSource('waterlevel', { type:'geojson', data:d.water || empty });
@@ -336,10 +347,10 @@ export function addLayers2D(map, d) {
     paint:{ 'text-color':'#cbd5e1', 'text-opacity':.7, 'text-halo-color':'#0b0f14', 'text-halo-width':1.8 } });
   // named rain chips at district centres (Open-Meteo, one batched call); above the district names so the chip wins the collision
   map.addSource('raindist', { type:'geojson', data:empty });
-  map.addLayer({ id:'raindist-label', type:'symbol', source:'raindist', minzoom:11.2,
+  map.addLayer({ id:'raindist-label', type:'symbol', source:'raindist', minzoom:11.2, maxzoom:12.3,
     layout:{ 'text-field':['get','label'], 'text-font':['Noto Sans Bold'], 'text-size':['interpolate',['linear'],['zoom'],11.2,9.5,14,11.5], 'text-padding':2, 'symbol-sort-key':['-',0,['get','n6']],
-      'icon-image':'chip-rain', 'icon-text-fit':'both', 'icon-text-fit-padding':[1,5,1,5], 'text-max-width':20 },
-    paint:{ 'text-color':'#e2e8f0' } });
+      'icon-image':'chip-rain', 'icon-text-fit':'both', 'icon-text-fit-padding':[1,5,1,5], 'text-max-width':20, 'text-allow-overlap':false, 'icon-allow-overlap':false },
+    paint:{ 'text-color':'#e2e8f0' } }, 'depth-dots');
   loadDistricts(d).then(async r => {
     if (!r) return annotate('districts', '(unavailable)', true);
     loadDistrictRain(r.labels).then(rows => { if (rows) { window.__distRain = rows; setDistrictRain(map, rows, d, 0); } });
@@ -375,8 +386,7 @@ function setDistrictRain(map, rows, d, offsetH) {
     const i0 = nowIndex([p], d), i = Math.min(i0 + offsetH, p.time.length - 1), n3 = sum(p.mm, i0, 3), n6 = sum(p.mm, i0, 6), n24 = sum(p.mm, i0, 24), mm = +(p.mm[i] ?? 0).toFixed(1);
     let label;
     if (offsetH > 0) { if (mm < .3) continue; label = `${p.name} · rain ${mm} mm/h`; }
-    else if (n6 >= .5) label = `${p.name} · rain ${fmtMm(n6)} mm in 6 h`;
-    else if (n24 >= 2) label = `${p.name} · rain ${fmtMm(n24)} mm in 24 h`;
+    else if (n6 >= 1) label = `${p.name} · rain ${fmtMm(n6)} mm in 6 h`;
     else continue;
     feats.push({ type:'Feature', geometry:{ type:'Point', coordinates:[p.lon, p.lat] }, properties:{ name:p.name, label, n3, n6: offsetH > 0 ? mm : n6, n24 } });
   }
@@ -393,7 +403,7 @@ export function mountTimeline(el, map, d) {
       <div class="tl-ends dim"><span id="fa"></span><span class="tl-nowlab" id="fn">now</span><span id="fb"></span></div>
       <div class="tl-key dim"><span><i class="k obs"></i>observed</span><span><i class="k fc"></i>forecast</span><span class="tl-btns"><button id="play" ${frames.length ? '' : 'disabled'}>Play</button><button id="nowb" ${frames.length ? '' : 'disabled'}>Latest</button></span></div>
       <div class="tl-int"><span class="dim">Intensity</span><span class="ramp"><em>light</em><em>moderate</em><em>heavy</em></span></div>
-      <div class="tl-note">Radar shows rain falling, not flood water.</div>
+      <div class="tl-note">Coloured areas are rainfall, not standing water.</div>
     </div>
     <div class="tl-chart"><div class="tl-head"><b>Rain at Bangkok centre</b><span class="dim">past 12 h, next 48 h · bars: mm/h (left) · line: chance % (right)</span></div><div id="chartwrap"></div></div>`;
   const fr = el.querySelector('#fr'), ft = el.querySelector('#ft'), fk = el.querySelector('#fk'), play = el.querySelector('#play');

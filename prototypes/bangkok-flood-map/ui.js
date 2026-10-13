@@ -20,12 +20,12 @@ let curDists = null, curData = null, curMap = null, flyOpts = { padding:100, max
 
 // ---- Thai / English: static labels only (numbers, road names and live sentences stay as they are) ----
 const TH = {
-  brand:'เฝ้าระวังน้ำท่วมกรุงเทพฯ', tag:'สถานการณ์ถนนและฝนแบบสด · ต้นแบบ', search:'ค้นหาเขตของคุณ', sources:'แหล่งข้อมูล',
+  brand:'เฝ้าระวังน้ำท่วมกรุงเทพฯ', tag:'สถานการณ์ถนนและฝนแบบสด · ต้นแบบ', search:'หาเขต', sources:'แหล่งข้อมูล',
   v_A:'แผนที่ 2 มิติ', v_B:'เมือง 3 มิติ', roads4:'ถนนสำหรับรถเก๋ง', blocked:'ผ่านไม่ได้', s_blocked:'ผ่านไม่ได้', s_risky:'เสี่ยง', s_caution:'ระวัง', s_ok:'ผ่านได้',
   moreRisky:'เสี่ยงเพิ่มอีก', tracked:'ช่วงถนนที่ติดตาม', rain:'ฝน', mmh:'มม./ชม.', now:'ตอนนี้', next6:'6 ชม.ข้างหน้า', peak:'โอกาสฝนสูงสุด 24 ชม.',
   worst:'ถนนที่แย่ที่สุด', clickZoom:'คลิกเพื่อซูม', clickFly:'คลิกเพื่อบิน', layers:'เลเยอร์', legend:'สัญลักษณ์', fresh:'ความสดของข้อมูล',
   t_districts:'เขตที่ควรเลี่ยง', t_deep:'น้ำลึกสุดที่รู้', t_reports:'รายงานสด', roadsH:'สถานะถนน', repH:'รายงานประชาชน', wxH:'พยากรณ์อากาศ', radH:'เรดาร์ฝน',
-  disc:'ไม่ใช่คำเตือนอย่างเป็นทางการ โปรดใช้วิจารณญาณของคุณ', more:'เลเยอร์เพิ่มเติม', hudtog:'ซ่อน/แสดง', unnamedH:'ถนนไม่มีชื่อ', g_flood:'น้ำท่วม', g_rain:'ฝน', g_places:'สถานที่', g_transit:'ขนส่ง', g_other:'อื่น ๆ', near:'ใกล้ฉัน', t_river:'ระดับน้ำสูงสุด (% ตลิ่ง)', wx:'อากาศ', zoomHint:'ซูมออกเพื่อดูเขตและกลุ่มรายงาน', 'L_Danger hexes':'พื้นที่อันตราย', 'L_Canal and river level (% of bank)':'ระดับน้ำคลองและแม่น้ำ (% ตลิ่ง)',
+  disc:'ข้อมูลจากชุมชนและแบบจำลอง ไม่ใช่ประกาศของทางราชการ ตรวจสอบก่อนเดินทาง', more:'เลเยอร์เพิ่มเติม', hudtog:'ซ่อน/แสดง', unnamedH:'ถนนไม่มีชื่อ', g_flood:'น้ำท่วม', g_rain:'ฝน', g_places:'สถานที่', g_transit:'ขนส่ง', g_other:'อื่น ๆ', near:'รอบตัวฉัน', t_river:'ระดับน้ำสูงสุด (% ตลิ่ง)', wx:'อากาศ', zoomHint:'ซูมออกเพื่อดูเขตและกลุ่มรายงาน', 'L_Danger hexes':'พื้นที่อันตราย', 'L_Canal and river level (% of bank)':'ระดับน้ำคลองและแม่น้ำ (% ตลิ่ง)',
   note:'ไม่ใช่คำเตือนอย่างเป็นทางการ ข้อมูลอาจไม่ครบ ตรวจสอบกับสำนักงานเขตหรือกรมอุตุนิยมวิทยา',
   'L_Flooded roads (for a sedan)':'ถนนน้ำท่วม (รถเก๋ง)', 'L_Live reports':'รายงานสด', 'L_Rain radar':'เรดาร์ฝน', 'L_Rain forecast (3x3 grid)':'พยากรณ์ฝน (กริด 3x3)',
   'L_District flood signals':'สัญญาณน้ำท่วมรายเขต', 'L_Hospitals (OSM)':'โรงพยาบาล (OSM)', 'L_Possible shelters (OSM, unofficial)':'จุดพักพิงที่เป็นไปได้ (OSM)',
@@ -44,8 +44,8 @@ function setLang(l) {
 }
 
 // One-line credit, never collapsed: every feed is named and linked; full licence text lives in the Sources popover.
-const SHORT_CREDIT = '<a href="https://floodboard.org">Floodboard</a> · <a href="https://open-meteo.com/">Open-Meteo</a> · <a href="https://www.rainviewer.com">RainViewer</a> · '
-  + '<a href="https://www.thaiwater.net">ThaiWater/HAII</a> (unconfirmed licence, prototype only)';
+const SHORT_CREDIT = '<a href="https://floodboard.org">Floodboard</a> CC BY 4.0 · <a href="https://open-meteo.com/">Open-Meteo</a> CC BY 4.0 · <a href="https://www.rainviewer.com">RainViewer</a> · '
+  + '<a class="nw" href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors (ODbL)</a> · <a href="https://www.thaiwater.net">ThaiWater/HAII</a> (licence unconfirmed, prototype)';
 const makeMap = (container, opts = {}) => new maplibregl.Map({ container, style: STYLE, center: BKK, zoom: 10.6, maxPitch: 75,
   attributionControl: { compact: false, customAttribution: SHORT_CREDIT }, ...opts });
 
@@ -105,6 +105,8 @@ const SRC = [
   ['Weather forecast', 'Open-Meteo', 'CC BY 4.0, free tier is non-commercial.', FEEDS.forecast.url, ''],
   ['Rain radar', 'RainViewer', 'Free API, attribution required.', FEEDS.radar.url, ''],
   ['River and canal water level', 'ThaiWater / HAII', 'Unconfirmed licence, prototype only. % of bank from station levels.', FEEDS.waterLevel.url, 'prototype only'],
+  ['River discharge (Chao Phraya, canal)', 'Open-Meteo flood API', 'CC BY 4.0, modelled discharge, not a gauge reading.', FEEDS.forecast.url, ''],
+  ['Ferry piers and car parks', 'OpenStreetMap contributors via Overpass', 'ODbL. Car park / multi-storey, not necessarily free.', 'https://www.openstreetmap.org/copyright', ''],
   ['Basemap and 3D buildings', 'OpenFreeMap / OpenStreetMap', 'Software MIT, data ODbL.', FEEDS.vectorTiles.url, ''],
   ['Hospitals, shelters, pumps, fire stations, districts, landmarks', 'OpenStreetMap contributors via Overpass', 'ODbL. Shelters are possible gathering sites, not an official list.', 'https://www.openstreetmap.org/copyright', ''],
 ];
@@ -168,7 +170,7 @@ const sevBar = d => { const total = LEVELS.reduce((a, k) => a + d.counts[k], 0) 
   return `<div class="sevbar" role="img" aria-label="Road status split">${LEVELS.map(k => `<i style="flex:${d.counts[k]};background:var(--${k})" title="${k}: ${d.counts[k]}"></i>`).join('')}</div>
   <div class="sevkey">${LEVELS.map(k => `<div><b style="color:var(--${k})">${d.counts[k]}</b><span data-t="s_${k}">${k === 'ok' ? 'Passable' : k[0].toUpperCase() + k.slice(1)}</span></div>`).join('')}</div>
   <div class="dim tot"><span>${total}</span> <span data-t="tracked">road segments tracked</span></div>`; };
-const DISC = `<p class="disc"><span data-t="disc">Not an official warning. Use your own judgement.</span> <button type="button" class="srclink lnk" data-t="sources">Sources</button></p>`;
+const DISC = `<p class="disc"><span data-t="disc">Community and model data, not a government alert. Check before you travel.</span> <button type="button" class="srclink lnk" data-t="sources">Sources</button></p>`;
 const rainStats = (r, wx) => `<div class="rainhead">${esc(rainLine(r, wx))}</div>
   <div class="stats3"><div><b>${mm(r.now)}<small data-t="mmh"> mm/h</small></b><span data-t="now">now</span></div>
   <div><b>${mm(r.next6)}<small> mm</small></b><span data-t="next6">next 6 h</span></div>
@@ -202,20 +204,24 @@ function groupRoads(d) {
 }
 const segText = g => [g.n4 && `${g.n4} blocked`, g.n3 && `${g.n3} risky`, g.n2 && `${g.n2} caution`].filter(Boolean).join(', ') + (g.n4 + g.n3 + g.n2 === 1 ? ' segment' : ' segments');
 const isUnnamed = g => /^unnamed/i.test(g.label);
-const roadRow = (g, i) => `<li tabindex="0" data-i="${i}" style="--c:var(--${g.sedan})">
-  <span class="rk">${i + 1}</span><span class="rn"><b title="${esc(g.label)}">${esc(g.label)}</b>
+const roadRow = (g, i, k = i) => `<li tabindex="0" data-i="${i}" style="--c:var(--${g.sedan})">
+  <span class="rk">${k + 1}</span><span class="rn"><b title="${esc(g.label)}">${esc(g.label)}</b>
   <span class="dim">${segText(g)}${g.depth ? ` · deepest ${g.depth} cm` : ''}${g.upd ? ` · ${ago(g.upd)}` : ''}</span></span><span class="pill ${g.sedan}">${g.sedan}</span></li>`;
 // Named roads first (they are what a person can act on); unnamed ones collapse into one summary row that expands on demand.
 function roadsBlock(list, max) {
   const named = list.map((g, i) => [g, i]).filter(([g]) => !isUnnamed(g)).slice(0, max), un = list.map((g, i) => [g, i]).filter(([g]) => isUnnamed(g));
   const n4 = un.reduce((a, [g]) => a + g.n4, 0), n3 = un.reduce((a, [g]) => a + g.n3, 0);
   const sum = un.length && (n4 + n3) ? `<li class="unsum"><button type="button" class="unbtn" aria-expanded="false"><span><span data-t="unnamedH">Unnamed roads</span>: <b>${n4}</b> blocked, <b>${n3}</b> risky segments</span><span class="car">Show</span></button></li>` : '';
-  return `<ol class="roads">${named.map(([g, i]) => roadRow(g, i)).join('')}${sum}</ol>${sum ? `<ol class="roads unlist" hidden>${un.slice(0, 15).map(([g, i]) => roadRow(g, i)).join('')}</ol>` : ''}`;
+  return `<ol class="roads">${named.map(([g, i], k) => roadRow(g, i, k)).join('')}${sum}</ol>${sum ? `<ol class="roads unlist" hidden>${un.slice(0, 15).map(([g, i], k) => roadRow(g, i, k)).join('')}</ol>` : ''}`;
 }
 function wireRoads(map, list, opts) {
   flyOpts = opts;
   app.querySelectorAll('.unbtn').forEach(b => b.onclick = () => { const u = app.querySelector('.unlist'), h = !u.hidden; u.hidden = h; b.setAttribute('aria-expanded', String(!h)); b.querySelector('.car').textContent = h ? 'Show' : 'Hide'; });
-  const fly = li => map.fitBounds(list[+li.dataset.i].box, opts);
+  const fly = li => { const box = list[+li.dataset.i].box;
+    if (!opts.minZoom) return map.fitBounds(box, opts);
+    // 3D: buildings only exist from z14, so never land shallower than that.
+    const cam = map.cameraForBounds(box, { padding:opts.padding, maxZoom:opts.maxZoom, bearing:map.getBearing(), pitch:opts.pitch });
+    map.flyTo({ center:cam?.center || map.getCenter(), zoom:Math.max(cam?.zoom || 0, opts.minZoom), pitch:opts.pitch, bearing:map.getBearing() }); };
   app.querySelectorAll('li[data-i]').forEach(li => { li.onclick = () => fly(li);
     li.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fly(li); } }; });
 }
@@ -254,8 +260,8 @@ function View2D(d) {
         <div><b>${d.reports.features.length}</b><span data-t="t_reports">live reports</span></div>${riverTile(d)}</div>
       <p id="dsum" class="dsum dim">Reading district boundaries…</p></section>
     <section><h2 data-t="rain">Rain</h2>${rainStats(r, d.wx)}${wxRow(d)}</section>
-    <section class="lay"><h2 data-t="layers">Layers</h2>${togglesHTML(LAYERS2D, d)}</section>
     <section class="roadsec"><h2><span data-t="worst">Worst roads now</span> <span class="hint"><span>${list.length} roads · </span><span data-t="clickZoom">click to zoom</span></span></h2><div class="rscroll">${roadsBlock(list, 25)}</div></section>
+    <details class="lay laysec" open><summary data-t="layers">Layers</summary>${togglesHTML(LAYERS2D, d)}</details>
     <details class="freshd"><summary data-t="fresh">Data freshness</summary>${dataRows(d)}<p class="note" data-t="note">This is not an official warning. Data may be incomplete or late. Check with your district office or the Thai Meteorological Department.</p></details>
   </aside><div class="mapwrap"><div class="mapbox"><div id="m" class="map"></div><details class="maplegend"><summary data-t="legend">Legend</summary>${legendHTML(LAYERS2D)}</details></div><footer id="timeline" class="timeline"></footer></div></div>`;
   const map = curMap = makeMap('m');
@@ -281,7 +287,7 @@ function View3D(d) {
         <div><b>${d.reports.features.length}</b><span data-t="t_reports">live reports</span></div>${riverTile(d)}</div>
       <p id="dsum" class="dsum dim">Reading district boundaries…</p>
       <div class="hudrain">${rainStats(r, d.wx)}${wxRow(d)}</div>
-      <h2 data-t="layers">Layers</h2>${togglesHTML(LAYERS3D, d)}<p class="zhint" data-t="zoomHint">Zoom out for districts and clusters</p>
+      <h2 data-t="layers">Layers</h2>${togglesHTML(LAYERS3D, d)}<p class="zhint" data-t="zoomHint">Zoom out for districts and clusters</p><p class="zhint bhint" id="bhint">Buildings show when zoomed in (zoom 14+)</p>
       <h2><span data-t="worst">Worst roads</span> <span class="hint" data-t="clickFly">click to fly</span></h2>${roadsBlock(list, 3)}
       </div></div><details class="maplegend"><summary data-t="legend">Legend</summary>${legendHTML(LAYERS3D)}</details>`;
   $('hudtog').onclick = () => { const c = app.querySelector('.hud').classList.toggle('collapsed'); $('hudtog').setAttribute('aria-expanded', String(!c)); $('hudtog').innerHTML = c ? '+' : '&minus;'; curMap.setPadding({ left: c ? 0 : 380, top:0, right:0, bottom:0 }); };
@@ -289,7 +295,10 @@ function View3D(d) {
   map.once('style.load', () => map.setPadding({ left:380, top:0, right:0, bottom:0 }));
   map.addControl(new maplibregl.NavigationControl({ visualizePitch:true }), 'top-right');
   map.once('style.load', () => { addLayers3D(map, d); startOrbit(map); });
-  wireRoads(map, list, { padding:80, maxZoom:15.5, pitch:62 });
+  const bchip = () => app.querySelector('input[data-k="buildings"]')?.closest('.tchip');
+  const bz = () => { const lo = map.getZoom() < 14; bchip()?.classList.toggle('zoomout', lo); $('bhint')?.classList.toggle('show', lo); };
+  map.on('zoom', bz); map.on('load', bz);
+  wireRoads(map, list, { padding:80, maxZoom:15.5, minZoom:14.4, pitch:62 });
   wireToggles(map);
   return map;
 }

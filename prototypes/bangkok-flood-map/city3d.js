@@ -7,10 +7,10 @@ export const LAYERS3D = [
   { key:'buildings', label:'Buildings', ids:['bld3d'], legend:[
     { shape:'swatch', color:'#3a4558', label:'low-rise (no OSM height: assumed 6-24 m); shown from zoom 14' },
     { shape:'swatch', color:'#c3cddb', label:'tall (lighter = taller, drawn at most 130 m)' }] },
-  { key:'roads', label:'Flooded roads', ids:['roads','roads-glow','roads-halo','roads-ribbon'], legend:[
-    { shape:'line', color:'#ef4444', label:'blocked (raised glowing ribbon above the street)' }, { shape:'line', color:'#fb923c', label:'risky (raised ribbon)' }, { shape:'line', color:'#facc15', label:'caution (lower ribbon)' }] },
-  { key:'danger', label:'Danger hexes', ids:['danger3d'], count: d => dangerGrid(d, null).features.filter(f => f.properties.level >= 2).length, legend:[
-    { shape:'swatch', color:'#ef4444', label:'danger: blocked roads (tallest)' }, { shape:'swatch', color:'#fb923c', label:'warning: risky roads, reports' }, { shape:'swatch', color:'#38bdf8', label:'watch (lowest)' }] },
+  { key:'roads', label:'Flooded roads', ids:['roads','roads-water','roads-glow','roads-halo','roads-ribbon'], legend:[
+    { shape:'line', color:'#38bdf8', label:'cyan water sheet under every blocked or risky road' }, { shape:'line', color:'#ef4444', label:'blocked (raised glowing ribbon above the street)' }, { shape:'line', color:'#fb923c', label:'risky (raised ribbon)' }, { shape:'line', color:'#facc15', label:'caution (lower ribbon)' }] },
+  { key:'danger', label:'Danger hexes', ids:['danger3d','danger3d-line'], count: d => dangerGrid(d, null).features.filter(f => f.properties.level >= 2).length, legend:[
+    { shape:'swatch', color:'#ef4444', label:'danger: blocked roads (outlined cell)' }, { shape:'swatch', color:'#fb923c', label:'warning: risky roads, reports' }, { shape:'swatch', color:'#38bdf8', label:'watch (thin outline only)' }] },
   { key:'reports', label:'Depth columns', ids:['reports','reports-cap','reports-ring','reports-label','reports-cl','reports-cl-n'], count: d => d.reports.features.length, legend:[
     { shape:'swatch', color:'#fde047', label:'ankle (under 35 cm)' }, { shape:'swatch', color:'#fb923c', label:'knee (35-70 cm)' },
     { shape:'swatch', color:'#ef4444', label:'waist (70-120 cm)' }, { shape:'swatch', color:'#a31245', label:'over head (120 cm+); taller = deeper' },
@@ -18,7 +18,7 @@ export const LAYERS3D = [
   { key:'districts', label:'District signals', ids:['dz3d'], legend:[
     { shape:'swatch', color:'#f43f5e', label:'khet block: redder and taller = more reports and blocked/risky roads (fades out by zoom 13.8 as buildings take over)' }] },
   { key:'transit', label:'Metro, rail, stations', ids:['transit3d','transit3d-osm','stations3d','stations3d-label','stn-flood-ring','stn-flood-label'], legend:[
-    { shape:'line', color:'#38bdf8', label:'metro / sky train / light rail (OSM)' }, { shape:'line', color:'#c4b5fd', label:'heavy rail' }, { shape:'dot', color:'#ffffff', label:'rail station (label)' }, { shape:'dot', color:'#ef4444', label:'red ring + chip: report of 30 cm+ or blocked road within 300 m of a station' }] },
+    { shape:'line', color:'#38bdf8', label:'metro / sky train / light rail (OSM)' }, { shape:'line', color:'#c4b5fd', label:'heavy rail' }, { shape:'dot', color:'#ffffff', label:'rail station (label)' }, { shape:'dot', color:'#ef4444', label:'red ring + chip: report of 30 cm+ or blocked road within 300 m of a station (none drawn = no station is flooded in view)' }] },
   { key:'hospitals', label:'Hospitals', ids:['hospitals3d','hospitals3d-gb','hospitals3d-g'], legend:[{ shape:'dot', color:'#2dd4bf', label:'hospital: pillar with an H badge' }] },
   { key:'shelters', label:'Shelters', ids:['shelters3d','shelters3d-gb','shelters3d-g'], legend:[{ shape:'dot', color:'#a3e635', label:'possible gathering site: pillar with an S badge, not an official evacuation list' }] },
   { key:'pumping', label:'Pumps and sluices', ids:['pumping3d','pumping3d-gb','pumping3d-g'], legend:[{ shape:'dot', color:'#818cf8', label:'pumping station or sluice gate: pillar with a P badge' }] },
@@ -50,10 +50,10 @@ function hotspot(d) {
     if (s > bs) { bs = s; best = [cx, cy]; }
   }
   // OSM buildings thin out east of Ratchada, where the flood is: sit between the core and the flood cluster so both are in frame
-  return best ? [DENSE[0] + .6 * (best[0] - DENSE[0]), DENSE[1] + .6 * (best[1] - DENSE[1])] : DENSE;
+  return best ? [DENSE[0] + .85 * (best[0] - DENSE[0]), DENSE[1] + .85 * (best[1] - DENSE[1])] : DENSE;
 }
 let ORBIT_CENTER = DENSE;
-export const camera3d = d => ({ center: (ORBIT_CENTER = hotspot(d)), zoom: 14.3, pitch: 60, bearing: -28 });
+export const camera3d = d => ({ center: (ORBIT_CENTER = hotspot(d)), zoom: 14.1, pitch: 52, bearing: -28 });
 
 const m2 = (y, m) => [m / 111320 / Math.cos(y * Math.PI / 180), m / 111320];
 const rect = (x, y, mx, my) => { const [dx, dy] = m2(y, mx); void my; return [[x-dx,y-dy],[x+dx,y-dy],[x+dx,y+dy],[x-dx,y+dy],[x-dx,y-dy]]; };
@@ -139,10 +139,12 @@ export function addLayers3D(map, d) {
 
   // danger hexes (same derived cells as 2D): translucent water-like prisms, taller = more dangerous
   map.addSource('danger3d', { type:'geojson', data:dangerGrid(d, null) });
-  map.addLayer({ id:'danger3d', type:'fill-extrusion', source:'danger3d',
-    paint:{ 'fill-extrusion-height':ZI(12, ['match',['get','level'], 3, 70, 2, 40, 16], 14, ['match',['get','level'], 3, 22, 2, 14, 6]), 'fill-extrusion-base':0,
-      'fill-extrusion-color':['match',['get','level'], 3,'#ef4444', 2,'#fb923c', '#38bdf8'],
-      'fill-extrusion-opacity':ZI(12, .26, 14, .1, 15, .05), 'fill-extrusion-vertical-gradient':false } }, firstSymbol);
+  const lvl = ['get','level'];
+  map.addLayer({ id:'danger3d', type:'fill', source:'danger3d', filter:['>=',lvl,2],
+    paint:{ 'fill-color':['match',lvl, 3,'#ef4444', '#fb923c'], 'fill-opacity':ZI(11, .22, 14, .14, 16, .08) } }, firstSymbol);
+  map.addLayer({ id:'danger3d-line', type:'line', source:'danger3d',
+    paint:{ 'line-color':['match',lvl, 3,'#ff6b6b', 2,'#ffb066', '#38bdf8'], 'line-width':['match',lvl, 3,2.2, 2,1.6, .8],
+      'line-opacity':['match',lvl, 3,.95, 2,.8, .35] } }, firstSymbol);
 
   // OpenFreeMap has building data only in z14 tiles (a tileSize-256 second source is rejected by MapLibre), so the default camera sits at zoom 14.3.
   map.addLayer({ id:'bld3d', type:'fill-extrusion', source:'openmaptiles', 'source-layer':'building', minzoom:13.9,
@@ -153,12 +155,14 @@ export function addLayers3D(map, d) {
   // flooded roads: wide ground glow (halo, glow, core) + raised ribbons for blocked/risky/caution
   map.addSource('roads', { type:'geojson', data:d.roads });
   const hot = ['>=',['get','sev'],2], w = (a, b, c) => ZI(10, a, 14, b, 17, c);
+  map.addLayer({ id:'roads-water', type:'line', source:'roads', filter:hot, layout:{ 'line-cap':'round', 'line-join':'round' },
+    paint:{ 'line-color':'#38bdf8', 'line-width':w(18, 60, 120), 'line-blur':w(6, 14, 30), 'line-opacity':0.4 } });
   map.addLayer({ id:'roads-halo', type:'line', source:'roads', filter:hot, layout:{ 'line-cap':'round', 'line-join':'round' },
-    paint:{ 'line-color':COLOR, 'line-width':w(14, 44, 90), 'line-blur':w(8, 22, 45), 'line-opacity':0.6 } });
+    paint:{ 'line-color':COLOR, 'line-width':w(16, 52, 100), 'line-blur':w(8, 22, 45), 'line-opacity':0.75 } });
   map.addLayer({ id:'roads-glow', type:'line', source:'roads', filter:hot, layout:{ 'line-cap':'round', 'line-join':'round' },
     paint:{ 'line-color':COLOR, 'line-width':w(7, 20, 38), 'line-blur':w(3, 7, 14), 'line-opacity':0.95 } });
   map.addLayer({ id:'roads', type:'line', source:'roads', layout:{ 'line-cap':'round', 'line-join':'round' },
-    paint:{ 'line-color':COLOR, 'line-width':w(3, 9, 16), 'line-opacity':['case',['==',['get','sev'],1],0.2,1] } });
+    paint:{ 'line-color':COLOR, 'line-width':w(4, 12, 20), 'line-opacity':['case',['==',['get','sev'],1],0.2,1] } });
   map.addSource('ribbons', { type:'geojson', data:ribbons(d.roads) });
   map.addLayer({ id:'roads-ribbon', type:'fill-extrusion', source:'ribbons',
     paint:{ 'fill-extrusion-height':ZH(['+',['get','lift'],6]), 'fill-extrusion-base':ZH(['get','lift']), 'fill-extrusion-opacity':0.95, 'fill-extrusion-vertical-gradient':false,
@@ -185,8 +189,8 @@ export function addLayers3D(map, d) {
     paint:{ 'fill-extrusion-height':ZH(['get','top']), 'fill-extrusion-base':ZH(['get','base']), 'fill-extrusion-color':BAND_CAP,
       'fill-extrusion-opacity':1, 'fill-extrusion-vertical-gradient':false } });
   map.addLayer({ id:'reports-label', type:'symbol', source:'report-labels', minzoom:12.5,
-    layout:{ 'text-field':['get','label'], 'text-font':['Noto Sans Bold'], 'text-size':ZI(12, 11, 16, 15), 'text-anchor':'bottom', 'text-offset':[0, -2.8],
-      'symbol-sort-key':['get','rank'], 'text-padding':3, 'text-allow-overlap':false, 'text-pitch-alignment':'viewport' },
+    layout:{ 'text-field':['get','label'], 'text-font':['Noto Sans Bold'], 'text-size':ZI(12, 11, 16, 15), 'text-variable-anchor':['bottom','top','left','right'], 'text-radial-offset':2.2, 'text-max-width':14,
+      'symbol-sort-key':['get','rank'], 'text-padding':6, 'text-allow-overlap':false, 'text-pitch-alignment':'viewport' },
     paint:{ 'text-color':'#ffffff', 'text-halo-color':['case',['get','closed'],'#b30026','#101826'], 'text-halo-width':2.2 } });
 
   // transit as spatial anchors: OSM rail/metro lines from the vector tiles (+ optional route snapshot), station dots with names

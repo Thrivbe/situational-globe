@@ -120,7 +120,9 @@ export const FEEDS = {
   floodRoads:   { url: 'https://floodboard.org/api/export/roads.geojson', licence: 'CC BY 4.0' },
   floodReports: { url: 'https://floodboard.org/api/export/reports.csv', licence: 'CC BY 4.0' },
   radar:        { url: 'https://api.rainviewer.com/public/weather-maps.json', licence: 'RainViewer free API, attribution' },
-  forecast:     { url: `https://api.open-meteo.com/v1/forecast?latitude=${BKK[1]}&longitude=${BKK[0]}&current=precipitation,rain&hourly=precipitation,precipitation_probability&past_hours=12&forecast_hours=48&timezone=Asia/Bangkok`,
+  // `current` also carries temperature_2m, relative_humidity_2m, wind_speed_10m, uv_index: the weather tiles read them from
+  // this one call (no second request, so no extra 503 risk). data.js caches it 20 min and retries once.
+  forecast:     { url: `https://api.open-meteo.com/v1/forecast?latitude=${BKK[1]}&longitude=${BKK[0]}&current=precipitation,rain,temperature_2m,relative_humidity_2m,wind_speed_10m,uv_index&hourly=precipitation,precipitation_probability&past_hours=12&forecast_hours=48&timezone=Asia/Bangkok`,
                   licence: 'CC BY 4.0, free tier non-commercial' },
   // 3x3 grid of hourly precipitation for a "rain coming" map layer: one call, JSON array of 9 results
   // in the order of the lat/lon lists (pair i = lat[i], lon[i]). Same licence as `forecast`.
