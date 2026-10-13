@@ -50,8 +50,10 @@ export const LAYERS2D = [
 ];
 
 // ---------- popups (one click handler picks the most useful thing under the cursor) ----------
-const VERDICT = v => v ? `<span class="pill ${v}">${v}</span>` : '<span class="dim">n/a</span>';
-const kv = (k, v) => v ? `<div class="pp-row"><span>${k}</span><b>${v}</b></div>` : '';
+const VERDICT = v => raw(v ? `<span class="pill ${esc(v)}">${esc(v)}</span>` : '<span class="dim">n/a</span>');
+// kv escapes its value; wrap markup built here (never feed text) in raw().
+const raw = html => ({ html });
+const kv = (k, v) => v ? `<div class="pp-row"><span>${k}</span><b>${v.html ?? esc(v)}</b></div>` : '';
 const title = (t, sub) => `<div class="pp-t">${esc(t)}</div>${sub ? `<div class="pp-s">${esc(sub)}</div>` : ''}`;
 const nm = p => p['name:en'] || p.name || p.name_en || p['name:latin'] || '';
 const DEPTHC = cm => cm < 35 ? '#7dd3fc' : cm < 70 ? '#facc15' : cm < 120 ? '#fb923c' : '#ef4444';
@@ -61,39 +63,39 @@ const POPUPS = {
   reports: p => title('Flood report', `${p.source}${p.tier ? ' · ' + p.tier : ''}`) + kv('Status', ({ verified:'verified (official source)', unverified:'unverified crowd report', traffy:'Traffy (citizen app), unverified' })[p.ver] || '')
     + kv('Depth', p.depth ? `${depthText(+p.depth)}` : 'not stated') + kv('Road', (p.closed === true || p.closed === 'true') ? 'closed' : '') + kv('Reported', p.time ? ago(Date.parse(p.time)) : '')
     + (p.text ? `<div class="pp-note">${esc(p.text)}</div>` : ''),
-  hospitals: p => title(nm(p) || 'Hospital (unnamed)', p.healthcare === 'clinic' ? 'Clinic' : 'Hospital') + kv('Emergency', p.emergency === 'yes' ? 'yes' : '') + kv('Operator', esc(p.operator || '')) + kv('Phone', esc(p.phone || p['contact:phone'] || '')) + kv('Hours', esc(p.opening_hours || '')),
+  hospitals: p => title(nm(p) || 'Hospital (unnamed)', p.healthcare === 'clinic' ? 'Clinic' : 'Hospital') + kv('Emergency', p.emergency === 'yes' ? 'yes' : '') + kv('Operator', p.operator || '') + kv('Phone', p.phone || p['contact:phone'] || '') + kv('Hours', p.opening_hours || ''),
   shelters: p => title(nm(p) || 'Unnamed site', p.emergency === 'assembly_point' ? 'Assembly point' : p.social_facility === 'shelter' ? 'Social shelter' : p.amenity === 'community_centre' ? 'Community centre' : 'Emergency shelter')
     + '<div class="pp-note">Possible gathering site from OpenStreetMap. Not an official evacuation list: check with the district office.</div>',
   pumping: p => { const t = WATER[p.man_made] || WATER[p.waterway] || 'Pumping / sluice / lock / weir', n = nm(p);
-    return title(n || t, n ? t : (p.operator || p.pumping_station || p.water_works || 'Name not mapped in OSM')) + (n ? kv('Operator', esc(p.operator || '')) : ''); },
-  piers: p => title(nm(p) || 'Ferry pier (unnamed)', p.amenity === 'ferry_terminal' ? 'Ferry terminal / boat stop' : p.man_made === 'pier' ? 'Pier' : 'Ferry stop') + kv('Operator', esc(p.operator || '')) + kv('Route', esc(p.route_ref || p.ref || '')) + kv('Thai name', esc(p['name:th'] || '')),
-  parking: p => title(nm(p) || 'Car park (unnamed)', p.parking === 'underground' ? 'Car park, underground' : 'Car park, multi-storey') + kv('Capacity', esc(p.capacity || '')) + kv('Operator', esc(p.operator || '')) + kv('Fee', p.fee === 'yes' ? 'paid' : p.fee === 'no' ? 'free' : '')
+    return title(n || t, n ? t : (p.operator || p.pumping_station || p.water_works || 'Name not mapped in OSM')) + (n ? kv('Operator', p.operator || '') : ''); },
+  piers: p => title(nm(p) || 'Ferry pier (unnamed)', p.amenity === 'ferry_terminal' ? 'Ferry terminal / boat stop' : p.man_made === 'pier' ? 'Pier' : 'Ferry stop') + kv('Operator', p.operator || '') + kv('Route', p.route_ref || p.ref || '') + kv('Thai name', p['name:th'] || ''),
+  parking: p => title(nm(p) || 'Car park (unnamed)', p.parking === 'underground' ? 'Car park, underground' : 'Car park, multi-storey') + kv('Capacity', p.capacity || '') + kv('Operator', p.operator || '') + kv('Fee', p.fee === 'yes' ? 'paid' : p.fee === 'no' ? 'free' : '')
     + '<div class="pp-note">From OpenStreetMap. Multi-storey and underground car parks can flood: check before parking.</div>',
-  fire: p => title(nm(p) || 'Fire station (unnamed)', 'Fire / rescue station') + kv('Operator', esc(p.operator || '')) + kv('Phone', esc(p.phone || p['contact:phone'] || '')),
-  landmarks: p => title(nm(p) || 'Landmark', [p.tourism, p.historic].filter(Boolean).join(' · ').replace(/_/g, ' ')) + kv('Wikipedia', esc(p.wikipedia || '')),
+  fire: p => title(nm(p) || 'Fire station (unnamed)', 'Fire / rescue station') + kv('Operator', p.operator || '') + kv('Phone', p.phone || p['contact:phone'] || ''),
+  landmarks: p => title(nm(p) || 'Landmark', [p.tourism, p.historic].filter(Boolean).join(' · ').replace(/_/g, ' ')) + kv('Wikipedia', p.wikipedia || ''),
   raingrid: p => title('Rain cell', 'Open-Meteo forecast, 0.15 deg grid') + kv('This hour', `${p.mm} mm`) + kv('Next 3 h', `${p.n3} mm`) + kv('Next 6 h', `${p.n6} mm`) + kv('Next 24 h', `${p.n24} mm`),
   roads: p => title(p.label, p.hw ? `${p.hw} road` : '') + kv('Sedan', VERDICT(p.sedan)) + kv('Motorbike', VERDICT(p.motorbike)) + kv('Pickup', VERDICT(p.pickup)) + kv('Truck', VERDICT(p.truck))
-    + kv('Depth', p.depthCm ? depthText(+p.depthCm) : '') + kv('Sources', esc(p.srcs || '')) + kv('Updated', p.updated ? ago(+p.updated) : ''),
-  stations: p => title(nm(p) || 'Station', ({ sky:'Sky train station (BTS)', metro:'Metro station (MRT)', monorail:'Monorail station', people:'People mover station' })[p.lkind] || STATION[p.subclass] || 'Station') + kv('Thai name', esc(p['name:th'] || ''))
-    + kv('Line', p.line ? `<span class="swd" style="background:${esc(p.lc || '#888')}"></span>${esc(p.line)}` : '') + kv('Operator', esc((p.lop || p.operator || '').split(';')[0]))
-    + (Number(p.cm) >= 10 ? kv('Water within 500 m', `<b style="color:${DEPTHC(+p.cm)}">${depthText(+p.cm)}</b>`) : '')
+    + kv('Depth', p.depthCm ? depthText(+p.depthCm) : '') + kv('Sources', p.srcs || '') + kv('Updated', p.updated ? ago(+p.updated) : ''),
+  stations: p => title(nm(p) || 'Station', ({ sky:'Sky train station (BTS)', metro:'Metro station (MRT)', monorail:'Monorail station', people:'People mover station' })[p.lkind] || STATION[p.subclass] || 'Station') + kv('Thai name', p['name:th'] || '')
+    + kv('Line', p.line ? raw(`<span class="swd" style="background:${/^#[0-9a-f]{3,8}$/i.test(p.lc) ? p.lc : '#888'}"></span>${esc(p.line)}`) : '') + kv('Operator', (p.lop || p.operator || '').split(';')[0])
+    + (Number(p.cm) >= 10 ? kv('Water within 500 m', raw(`<b style="color:${DEPTHC(+p.cm)}">${esc(depthText(+p.cm))}</b>`)) : '')
     + (p.line ? '' : '<div class="pp-note">Not within 100 m of a metro or sky train line. Source: OpenFreeMap / OpenStreetMap.</div>'),
-  'station-water': p => title(`${p.name}`, `${p.line || 'Station'} · water nearby`) + kv('Deepest report within 500 m', `<b style="color:${DEPTHC(+p.cm)}">${depthText(+p.cm)}</b>`) + kv('Depth points nearby', p.n)
+  'station-water': p => title(`${p.name}`, `${p.line || 'Station'} · water nearby`) + kv('Deepest report within 500 m', raw(`<b style="color:${DEPTHC(+p.cm)}">${esc(depthText(+p.cm))}</b>`)) + kv('Depth points nearby', p.n)
     + '<div class="pp-note">Derived in the browser from Floodboard reports and road depths. It says water is near the station, not that the station is closed.</div>',
   raindist: p => title(`${p.name} district`, 'Open-Meteo at the district centre') + kv('Next 3 h', `${p.n3} mm`) + kv('Next 6 h', `${p.n6} mm`) + kv('Next 24 h', `${p.n24} mm`),
-  rail: p => title(p.name || 'Railway line', p.subclass ? String(p.subclass).replace(/_/g, ' ') : 'rail') + kv('Ref', esc(p.ref || '')) + kv('Operator', esc(p.operator || ''))
-    + kv('Structure', esc(p.brunnel || '')) + '<div class="pp-note">Source: OpenFreeMap / OpenStreetMap. Line names are not in the tile.</div>',
-  transit: p => title(p.name || 'Transit line', ({ metro:'Metro line (MRT)', sky:'Sky train line (BTS)', monorail:'Monorail line', people:'Airport people mover' })[p.kind] || 'Transit line') + kv('Ref', esc(p.ref || '')) + kv('Operator', esc(p.operator || '')) + '<div class="pp-note">Source: OpenStreetMap.</div>',
+  rail: p => title(p.name || 'Railway line', p.subclass ? String(p.subclass).replace(/_/g, ' ') : 'rail') + kv('Ref', p.ref || '') + kv('Operator', p.operator || '')
+    + kv('Structure', p.brunnel || '') + '<div class="pp-note">Source: OpenFreeMap / OpenStreetMap. Line names are not in the tile.</div>',
+  transit: p => title(p.name || 'Transit line', ({ metro:'Metro line (MRT)', sky:'Sky train line (BTS)', monorail:'Monorail line', people:'Airport people mover' })[p.kind] || 'Transit line') + kv('Ref', p.ref || '') + kv('Operator', p.operator || '') + '<div class="pp-note">Source: OpenStreetMap.</div>',
   waterlevel: p => title(p.name, p.river ? `Water level station · ${p.river}` : 'Water level station')
-    + kv('Level', p.pct >= 0 ? `<b style="color:${[C.wl0, C.wl1, C.wl2, C.wl3][p.band]}">${p.pct}% of bank</b>` : 'bank level unknown')
+    + kv('Level', p.pct >= 0 ? raw(`<b style="color:${[C.wl0, C.wl1, C.wl2, C.wl3][p.band] || '#888'}">${esc(p.pct)}% of bank</b>`) : 'bank level unknown')
     + kv('Water surface', p.msl != null ? `${(+p.msl).toFixed(2)} m MSL` : '') + kv('Bank (lowest)', p.bank != null ? `${(+p.bank).toFixed(2)} m MSL` : '') + kv('Status level', p.situation !== '' ? `${p.situation} of 5` : '')
-    + kv('Measured', esc(String(p.time).replace('T', ' '))) + '<div class="pp-note">ThaiWater, unconfirmed licence, prototype only. Gate stations follow the tide.</div>',
+    + kv('Measured', String(p.time).replace('T', ' ')) + '<div class="pp-note">ThaiWater, unconfirmed licence, prototype only. Gate stations follow the tide.</div>',
   canals: p => title(nm(p) || `Unnamed ${p.class}`, p.class === 'river' ? 'River' : 'Canal') + '<div class="pp-note">Source: OpenFreeMap / OpenStreetMap.</div>',
   ferry: () => title('Ferry route', 'Boat service') + '<div class="pp-note">Source: OpenFreeMap / OpenStreetMap. Check operator for service hours.</div>',
-  airports: p => title(nm(p) || 'Airport', 'Airport') + kv('IATA', esc(p.iata || '')) + kv('ICAO', esc(p.icao || '')),
+  airports: p => title(nm(p) || 'Airport', 'Airport') + kv('IATA', p.iata || '') + kv('ICAO', p.icao || ''),
   'danger-grid': p => title(`${p.name} cell`, 'Derived from Floodboard roads and reports, plus Open-Meteo rain') + kv('Blocked roads', p.blocked) + kv('Risky roads', p.risky) + kv('Open reports', p.reports) + kv('Roads closed (reports)', p.closed) + kv('Rain next 6 h', p.rain6 ? `${p.rain6} mm` : '') + kv('Score', p.score),
   'districts-fill': p => title(`${p.name} district`, p.nameTh) + kv('Flood signals', `${p.signals} (open reports + risky/blocked roads)`) + kv('Population', p.population ? Number(p.population).toLocaleString('en') : ''),
-  'depth-labels': p => title('Flood depth', p.text) + kv('Road', esc(p.road || '')) + kv('Depth', `${Math.round(p.cm)} cm`) + kv('Seen in', p.src === 'road' ? 'Floodboard road verdict' : 'live report'),
+  'depth-labels': p => title('Flood depth', p.text) + kv('Road', p.road || '') + kv('Depth', `${Math.round(p.cm)} cm`) + kv('Seen in', p.src === 'road' ? 'Floodboard road verdict' : 'live report'),
 };
 // Layer id -> popup key. Order = priority (points first, then lines, then areas).
 // Sparse OSM / sensor points come before the thousand report dots so a hospital under a report is still clickable;
