@@ -1,0 +1,153 @@
+{
+  "generatedAt": "2026-10-14T11:51:00.686Z",
+  "baseUrl": "http://127.0.0.1:8792/prototypes/bangkok-flood-map/?variant=B&orbit=0",
+  "rows": [
+    {
+      "case": "pack-3-still",
+      "url": "http://127.0.0.1:8792/prototypes/bangkok-flood-map/?variant=B&orbit=0&fx=3",
+      "elapsedSeconds": 8.001191584000003,
+      "mainThreadBusyPct": 43.05160005027571,
+      "scriptPct": 38.33062822958644,
+      "fps": 60.001008420309496,
+      "p95FrameMs": 17.099999999998545,
+      "repaintsPerSec": 60,
+      "threeMsPerFrame": 0.24916666547457378,
+      "shadowRebuildMs": 84.19999998807907,
+      "threeLoaded": "yes",
+      "osirisMainThreadPct": 100,
+      "anim": "raf",
+      "pack": 3,
+      "enabled": [
+        "water-sheen",
+        "bloom-real",
+        "shadows-real",
+        "water-shader"
+      ],
+      "errors": []
+    },
+    {
+      "case": "none-panning",
+      "url": "http://127.0.0.1:8792/prototypes/bangkok-flood-map/?variant=B&orbit=0&fx=0&on=none&anim=off",
+      "elapsedSeconds": 8.081193500000001,
+      "mainThreadBusyPct": 31.782211377564458,
+      "scriptPct": 29.191356450009508,
+      "fps": 59.99999999999999,
+      "p95FrameMs": 17.5,
+      "repaintsPerSec": 60,
+      "threeMsPerFrame": 0,
+      "shadowRebuildMs": 0,
+      "threeLoaded": "no",
+      "osirisMainThreadPct": 100,
+      "anim": "off",
+      "pack": 0,
+      "enabled": [],
+      "errors": []
+    },
+    {
+      "case": "only-bloom-real-panning",
+      "url": "http://127.0.0.1:8792/prototypes/bangkok-flood-map/?variant=B&orbit=0&fx=0&on=bloom-real&anim=off",
+      "elapsedSeconds": 8.044388042000007,
+      "mainThreadBusyPct": 54.150868621163376,
+      "scriptPct": 50.04175555657509,
+      "fps": 119.99999999999999,
+      "p95FrameMs": 8.700000000000728,
+      "repaintsPerSec": 120,
+      "threeMsPerFrame": 0.1019047615073976,
+      "shadowRebuildMs": 0,
+      "threeLoaded": "yes",
+      "osirisMainThreadPct": 100,
+      "anim": "off",
+      "pack": 0,
+      "enabled": [
+        "bloom-real"
+      ],
+      "errors": []
+    },
+    {
+      "case": "only-shadows-real-panning",
+      "url": "http://127.0.0.1:8792/prototypes/bangkok-flood-map/?variant=B&orbit=0&fx=0&on=shadows-real&anim=off",
+      "elapsedSeconds": 8.079020499999999,
+      "mainThreadBusyPct": 58.17122261293928,
+      "scriptPct": 53.85201089661798,
+      "fps": 119.9979916654114,
+      "p95FrameMs": 8.5,
+      "repaintsPerSec": 120,
+      "threeMsPerFrame": 0.11789473859887374,
+      "shadowRebuildMs": 73.10000002384186,
+      "threeLoaded": "yes",
+      "osirisMainThreadPct": 100,
+      "anim": "off",
+      "pack": 0,
+      "enabled": [
+        "shadows-real"
+      ],
+      "errors": []
+    },
+    {
+      "case": "only-water-shader-panning",
+      "url": "http://127.0.0.1:8792/prototypes/bangkok-flood-map/?variant=B&orbit=0&fx=0&on=water-shader&anim=off",
+      "elapsedSeconds": 8.097750333999997,
+      "mainThreadBusyPct": 53.32690959696364,
+      "scriptPct": 49.16497589810728,
+      "fps": 118.99382437114019,
+      "p95FrameMs": 8.900000000001455,
+      "repaintsPerSec": 118,
+      "threeMsPerFrame": 0.04223300762546873,
+      "shadowRebuildMs": 0,
+      "threeLoaded": "yes",
+      "osirisMainThreadPct": 100,
+      "anim": "off",
+      "pack": 0,
+      "enabled": [
+        "water-shader"
+      ],
+      "errors": []
+    },
+    {
+      "case": "pack-3-panning",
+      "url": "http://127.0.0.1:8792/prototypes/bangkok-flood-map/?variant=B&orbit=0&fx=3",
+      "elapsedSeconds": 8.04889433299999,
+      "mainThreadBusyPct": 73.15796128491688,
+      "scriptPct": 66.68205318580131,
+      "fps": 119.9940002999851,
+      "p95FrameMs": 8.600000000002183,
+      "repaintsPerSec": 120,
+      "threeMsPerFrame": 0.2903225819269816,
+      "shadowRebuildMs": 68.19999998807907,
+      "threeLoaded": "yes",
+      "osirisMainThreadPct": 100,
+      "anim": "raf",
+      "pack": 3,
+      "enabled": [
+        "water-sheen",
+        "bloom-real",
+        "shadows-real",
+        "water-shader"
+      ],
+      "errors": []
+    },
+    {
+      "case": "pack-3-still-cpu4x",
+      "url": "http://127.0.0.1:8792/prototypes/bangkok-flood-map/?variant=B&orbit=0&fx=3",
+      "elapsedSeconds": 8.001139750000002,
+      "mainThreadBusyPct": 99.79208274671115,
+      "scriptPct": 90.158380248264,
+      "fps": 26.67350602718646,
+      "p95FrameMs": 58.599999999998545,
+      "repaintsPerSec": 26,
+      "threeMsPerFrame": 1.4377358499562964,
+      "shadowRebuildMs": 318.10000002384186,
+      "threeLoaded": "yes",
+      "osirisMainThreadPct": 100,
+      "anim": "raf",
+      "pack": 3,
+      "enabled": [
+        "water-sheen",
+        "bloom-real",
+        "shadows-real",
+        "water-shader"
+      ],
+      "errors": []
+    }
+  ]
+}

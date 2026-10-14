@@ -5,6 +5,7 @@ import { STYLE, BKK, CREDIT, FEEDS } from './feeds.js';
 import { loadData, loadDistricts, esc, ago as agoRaw, hhmm, rainSummary, worst, bbox } from './data.js';
 import { LAYERS2D, addLayers2D, mountTimeline } from './layers2d.js';
 import { LAYERS3D, camera3d, addLayers3D, startOrbit } from './city3d.js';
+import { mountFx } from './fx.js';
 
 // ponytail: worker must be same-origin; reuse the copy Osiris already commits. Serve the repo root.
 maplibregl.setWorkerUrl('/public/vendor/maplibre/6.7.0/maplibre-gl-worker.mjs');
@@ -294,7 +295,7 @@ function View3D(d) {
   const map = curMap = makeMap('m', camera3d(d));
   map.once('style.load', () => map.setPadding({ left:380, top:0, right:0, bottom:0 }));
   map.addControl(new maplibregl.NavigationControl({ visualizePitch:true }), 'top-right');
-  map.once('style.load', () => { addLayers3D(map, d); startOrbit(map); });
+  map.once('style.load', () => { addLayers3D(map, d); mountFx(map, d); startOrbit(map); });
   const bchip = () => app.querySelector('input[data-k="buildings"]')?.closest('.tchip');
   const bz = () => { const lo = map.getZoom() < 14; bchip()?.classList.toggle('zoomout', lo); $('bhint')?.classList.toggle('show', lo); };
   map.on('zoom', bz); map.on('load', bz);

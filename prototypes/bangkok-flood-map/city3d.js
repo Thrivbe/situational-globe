@@ -248,8 +248,7 @@ function hud(el) {
   el.appendChild(v);
 }
 
-// One rAF loop: buildings rise on first load (1.2 s), report glows pulse, blocked roads get flowing dashes, danger hexes breathe.
-// ponytail: setPaintProperty per frame; move to a custom WebGL layer if this ever costs frames on phones.
+// One rAF loop: buildings rise once; after that the shared FX clock gates every paint mutation.
 const DASH = [[0,4,3],[.5,4,2.5],[1,4,2],[1.5,4,1.5],[2,4,1],[2.5,4,.5],[3,4,0],[0,.5,3,3.5],[0,1,3,3],[0,1.5,3,2.5],[0,2,3,2],[0,2.5,3,1.5],[0,3,3,1],[0,3.5,3,.5]];
 function animate(map) {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -257,8 +256,10 @@ function animate(map) {
   const rise = k => { const h = ['*', HC, k]; map.setPaintProperty('bld3d', 'fill-extrusion-height', h); map.setPaintProperty('bld3d', 'fill-extrusion-base', ['min',['coalesce',['get','render_min_height'],0], h]); };
   const frame = now => {
     if (!map.getLayer('bld3d')) return;
+    if (document.hidden) { requestAnimationFrame(frame); return; }
     const t = (now - t0) / 1000;
     if (!risen) { const k = Math.min(1, t / 1.2); rise(1 - (1 - k) ** 3); risen = k >= 1; }
+    if (!(window.__fx?.shouldTick(now) ?? true)) { requestAnimationFrame(frame); return; }
     const p = (t % 1.6) / 1.6;
     map.setPaintProperty('reports-glow', 'circle-radius', ZI(12, 4 + 6 * p, 14, 10 + 22 * p, 17, 36 + 60 * p));
     map.setPaintProperty('reports-glow', 'circle-opacity', .55 * (1 - p));
@@ -296,20 +297,23 @@ function stationChips(map, d) {
 }
 
 export function startOrbit(map) {
-  let on = true, held = false, timer = null;
+  const startsOn = new URLSearchParams(location.search).get('orbit') !== '0';
+  let on = startsOn, held = !startsOn, timer = null;
   let last = 0;
-  const tick = now => { if (on && !held && last && !map.isMoving()) map.setBearing(map.getBearing() + 1.5 * Math.min(now - last, 100) / 1000); last = now; requestAnimationFrame(tick); };
+  const orbitState = () => { map.__fxOrbiting = on && !held; };
+  const tick = now => { orbitState(); if (!document.hidden && on && !held && last && !map.isMoving()) map.setBearing(map.getBearing() + 1.5 * Math.min(now - last, 100) / 1000); last = now; requestAnimationFrame(tick); };
   const spin = () => { last = 0; };
   const btn = document.createElement('button');
-  btn.type = 'button'; btn.className = 'orbit-toggle'; btn.textContent = 'Orbit: on'; btn.setAttribute('aria-pressed', 'true');
+  btn.type = 'button'; btn.className = 'orbit-toggle'; btn.textContent = held ? 'Orbit: paused' : 'Orbit: on'; btn.setAttribute('aria-pressed', String(!held));
   btn.style.cssText = 'position:absolute;right:12px;bottom:42px;z-index:5;padding:6px 12px;border-radius:999px;border:1px solid #3b4a68;background:#0f1a2c;color:#e5edf9;font:600 12px system-ui,sans-serif;cursor:pointer';
   const cont = map.getContainer(); cont.appendChild(btn);
-  const halt = () => { if (held) return; on = false; map.stop(); clearTimeout(timer); timer = setTimeout(() => { if (!held) { on = true; spin(); } }, 10000); };
+  const halt = () => { if (held) return; on = false; orbitState(); map.stop(); clearTimeout(timer); timer = setTimeout(() => { if (!held) { on = true; orbitState(); spin(); } }, 10000); };
   btn.addEventListener('click', e => {
     e.stopPropagation(); held = !held; clearTimeout(timer);
-    if (held) { on = false; map.stop(); } else { on = true; spin(); }
+    if (held) { on = false; map.stop(); } else { on = true; spin(); } orbitState();
     btn.textContent = held ? 'Orbit: paused' : 'Orbit: on'; btn.setAttribute('aria-pressed', String(!held));
   });
   ['pointerdown','touchstart','wheel','keydown'].forEach(ev => map.getCanvas().addEventListener(ev, halt, { passive:true }));
+  orbitState();
   requestAnimationFrame(tick);
 }

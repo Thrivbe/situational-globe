@@ -130,3 +130,46 @@ Layer list taken from the Augma teardown README (names only). Status words:
 - Floodboard "no colour" means no data, not dry.
 - First load takes a few seconds (two remote styles + several feeds; Overpass calls are queued).
 - Open-Meteo free tier, RainViewer and Floodboard terms are non-commercial or unconfirmed: fine for this throwaway, re-check before any public product.
+
+## Game-like effects (ticket #10)
+
+Open variant B with `?variant=B&fx=0`, `fx=1`, `fx=2`, or `fx=3` for the Today, MapLibre still, MapLibre alive, and three.js game packs. Add `&orbit=0` for a still camera. Reproducible overrides use `&on=key,key&anim=off|move|10hz|raf`.
+
+MapLibre-only effect keys: `shadows-fake`, `water-sheen`, `glow-plus`, `water-ripple`, `glow-pulse`. Lazy-loaded three.js keys: `bloom-real`, `shadows-real`, `water-shader`.
+
+`?fade=1` keeps MapLibre's default 300 ms paint fade (to measure it); without it the fx lab turns the fade off.
+
+Measure (serve the worktree root first, e.g. `python3 -m http.server 8792 --bind 127.0.0.1 -d <repo root>`):
+
+```sh
+URL_='http://127.0.0.1:8792/prototypes/bangkok-flood-map/?variant=B&orbit=0' CASES='still' OUT_=fx-results-still.json node prototypes/bangkok-flood-map/measure-fx.mjs
+URL_=... CASES='10hz|panning' OUT_=fx-results-moving.json node prototypes/bangkok-flood-map/measure-fx.mjs
+```
+
+`CASES` is a regex over case names; one full run is over 10 minutes, so split it. `HEADED=1` shows Chromium. Shots land in `fx-shots/`.
+
+### Results (2026-10-14, Chromium 1148 headless, Apple M2 Max via ANGLE Metal, 1440x900, standalone page, not Osiris)
+
+Raw rows: `fx-results-still.json`, `fx-results-moving.json`, `fx-results-three.json` (three.js rows after the fixes below).
+Headless Chromium switched between 60 and 120 Hz between runs, so compare **busy % per repaint**, not raw busy %.
+
+| Case | Main thread busy | Repaints/s | Note |
+|---|---:|---:|---|
+| No effects, animation off, still | 0.8-2 % | 0 | floor |
+| Any single effect, animation off, still (all 8) | 0.8-2 % | 0 | every effect is free when nothing moves |
+| Pack 1 "MapLibre still" (fake shadows + water sheen + stronger glow, animate only while moving) | 0.8-2 % | 0 | |
+| Pack 0 "Today" (be7e6f6 loop, every frame) | 63 % | 120 | |
+| Animation at 10 Hz, any effect or none | 31-35 % | 26-30 | the clock costs, not the effect |
+| Same at 10 Hz with MapLibre's 300 ms paint fade on (`fade=1`) | 50 % | 120 | the fade turns "10 Hz" into every frame |
+| Panning, no effects | 0.46-0.53 % per repaint | 60-120 | |
+| Panning, each single effect | 0.42-0.49 % per repaint | 92-120 | static effects add nothing measurable per frame |
+| Panning, pack 3 (all three.js) | 0.61 % per repaint | 120 | three.js render 0.3 ms CPU per frame |
+| Real shadows: rebuild on every camera stop | 66-133 ms (318-396 ms at 4x slower CPU) | | a visible hitch each time the map stops |
+| 4x slower CPU, pack 0 or pack 3, still | 100 % | 26-32 fps | any every-frame animation pins a slow CPU |
+
+Findings:
+1. **Static effects are free.** Fake shadows, water sheen, stronger glow, real bloom and shader water cost nothing while still and ~nothing extra per frame while moving. The cost is how often the map repaints, not what it draws.
+2. **One paint change = 2 repaints; one dash-pattern change = 6.** So a 10 Hz animation is ~30-40 repaints/s, not 10. With MapLibre's default 300 ms paint fade it is every frame. This is very likely why the Osiris spike's "10 Hz" glow cost 71 %. Fix in Osiris: style `transition: {duration: 0}` for animated layers, and do not animate `line-dasharray`.
+3. **three.js route works** (pinned `three@0.169.0`, one shared renderer, lazy import) and its CPU cost is small (0.1-0.3 ms/frame). GPU time not measured.
+4. **Real shadows do not work in this prototype.** Casters are built and placed right (checked with `&shadowdebug=1`, magenta), but no shadow shows on the ground after 3 fixes. Its rebuild hitch (66-133 ms per camera stop, ~400 ms on a slow CPU) is real either way.
+5. Bugs fixed during verify: `fx3d.js` used a global `maplibregl` (now imported); the three.js transform mirrored north/south (water drew in the wrong place); the shadow ground was back-face culled; bloom was too thin to see (wider ribbons, quarter-res two-pass blur).
