@@ -82,7 +82,7 @@ type Snapshot = {
   situation: string;             // "bangkok-flood-2026"
   builtAt: string;               // ISO time of this build
   feedsAt: Record<string, string>; // ISO time each feed was last fetched OK
-  level: 0 | 1 | 2 | 3 | 4;      // worst danger-hex level; Step 2 colours the globe marker from it
+  level: 0 | 1 | 2 | 3;          // worst danger-hex level; Step 2 colours the globe marker from it
   credits: { feed: string; text: string; url: string; licence: string; note?: string }[];
   flood: {
     roads: GeoJSON.FeatureCollection;    // Floodboard roads.geojson, clipped to bbox
