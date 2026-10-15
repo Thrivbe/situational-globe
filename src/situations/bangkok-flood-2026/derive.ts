@@ -322,7 +322,7 @@ export function stationWater(
   const features: Feature<Point>[] = [];
   // ponytail: stations x water points scan, grid-index points if it gets slow
   for (const feature of transit.features) {
-    if (feature.geometry?.type !== 'Point') continue;
+    if (feature.geometry?.type !== 'Point' || feature.properties?.kind !== 'station') continue;
     let n = 0, maxDepthCm = 0;
     for (const sample of water) if (distM(sample.position, feature.geometry.coordinates) < 500) {
       n += 1; maxDepthCm = Math.max(maxDepthCm, sample.depth);

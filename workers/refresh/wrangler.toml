@@ -1,0 +1,17 @@
+name = "situational-globe-refresh"
+main = "src/index.ts"
+compatibility_date = "2026-10-01"
+compatibility_flags = ["nodejs_compat"]
+
+[triggers]
+crons = ["*/15 * * * *"]
+
+# Workers Paid plan required (spec section 8)
+[limits]
+cpu_ms = 30000
+
+[[r2_buckets]]
+binding = "SNAPSHOTS"
+bucket_name = "situational-globe"
+
+# SENTRY_DSN is a secret: wrangler secret put SENTRY_DSN
