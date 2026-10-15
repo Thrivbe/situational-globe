@@ -1,0 +1,236 @@
+/* Ported from prototypes/bangkok-flood-map @ 085a152. */
+.bangkok-root {
+  --bg:#0a0e13; --panel:#111720; --raised:#171f2a; --line:#222d3a; --text:#e8eef4; --dim:#9aa7b4;
+  --ok:#4ade80; --caution:#facc15; --risky:#fb923c; --blocked:#ef4444; --water:#38bdf8; --hdr:52px;
+  width:100%; height:100dvh; display:flex; flex-direction:column; overflow:hidden;
+  background:var(--bg); color:var(--text); font:14px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+.bangkok-root,.bangkok-root * { box-sizing:border-box; transition:none; }
+.bangkok-root b { font-weight:650; font-variant-numeric:tabular-nums; }
+.bangkok-root #app { flex:1; min-height:0; position:relative; }
+.bangkok-root .map { position:absolute; inset:0; }
+.bangkok-root .dim { color:var(--dim); font-size:12px; }
+.bangkok-root .loading { position:absolute; inset:0; display:grid; place-items:center; color:var(--dim); }
+.bangkok-root .loaderror { display:flex; flex-direction:column; align-items:center; gap:8px; }
+.bangkok-root .pill { display:inline-block; padding:2px 9px; border-radius:99px; font-size:11px; font-weight:650; color:#0a0e13; text-transform:capitalize; white-space:nowrap; }
+.bangkok-root .ok{background:var(--ok)} .bangkok-root .caution{background:var(--caution)} .bangkok-root .risky{background:var(--risky)} .bangkok-root .blocked{background:var(--blocked)}
+.bangkok-root .lg { display:inline-block; width:16px; height:4px; border-radius:2px; vertical-align:middle; margin-right:6px; flex:none; }
+.bangkok-root .lg.dot { width:9px; height:9px; border-radius:50%; margin-right:5px; }
+.bangkok-root .lg.swatch { width:11px; height:11px; border-radius:3px; margin-right:5px; }
+.bangkok-root :focus-visible { outline:2px solid var(--water); outline-offset:2px; }
+.bangkok-root .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+
+/* header */
+.bangkok-root #top { height:var(--hdr); flex:none; display:flex; align-items:center; gap:20px; padding:0 16px; background:var(--panel); border-bottom:1px solid var(--line); z-index:10; }
+.bangkok-root .brand { display:flex; align-items:center; gap:10px; min-width:0; }
+.bangkok-root .brand > div { display:flex; flex-direction:column; line-height:1.2; }
+.bangkok-root .brand b { font-size:15px; letter-spacing:-.005em; }
+.bangkok-root .mark { width:22px; height:22px; border-radius:7px; flex:none; background:linear-gradient(160deg,var(--water),#1d4ed8); position:relative; }
+.bangkok-root .mark::after { content:""; position:absolute; left:5px; right:5px; bottom:6px; height:3px; border-radius:2px; background:rgba(255,255,255,.85); box-shadow:0 -5px 0 rgba(255,255,255,.55); }
+.bangkok-root .status { display:flex; align-items:center; gap:10px; font-size:13px; white-space:nowrap; overflow:hidden; margin-left:auto; }
+.bangkok-root .status b { color:var(--text); font-weight:600; }
+.bangkok-root .status .sep { width:1px; height:14px; background:var(--line); flex:none; }
+.bangkok-root .live { width:8px; height:8px; border-radius:50%; background:var(--ok); box-shadow:0 0 0 3px rgba(74,222,128,.2); flex:none; }
+.bangkok-root .live.stale { background:var(--caution); box-shadow:0 0 0 3px rgba(250,204,21,.2); }
+.bangkok-root .live.missing { background:var(--blocked); box-shadow:0 0 0 3px rgba(239,68,68,.2); }
+.bangkok-root .search { display:flex; gap:8px; flex:0 1 320px; min-width:120px; position:relative; }
+.bangkok-root .search input { flex:1; min-width:0; height:32px; background:var(--bg); border:1px solid var(--line); border-radius:8px; color:var(--text); padding:0 10px; font:13px system-ui; }
+.bangkok-root .search input.nomatch { border-color:var(--blocked); }
+.bangkok-root .searcherror { position:absolute; left:8px; top:34px; z-index:12; padding:2px 6px; border-radius:4px; background:var(--blocked); color:#fff; font-size:11px; white-space:nowrap; }
+.bangkok-root .tools { display:flex; align-items:center; gap:10px; flex:none; }
+.bangkok-root .tbtn { height:32px; padding:0 12px; background:var(--bg); border:1px solid var(--line); border-radius:8px; color:var(--text); font:600 13px system-ui; cursor:pointer; }
+.bangkok-root .tbtn:hover,.bangkok-root .tbtn[aria-expanded=true] { border-color:var(--water); }
+.bangkok-root button:disabled,.bangkok-root input:disabled { opacity:.45; cursor:not-allowed; }
+.bangkok-root .seg { display:flex; padding:3px; gap:2px; background:var(--bg); border:1px solid var(--line); border-radius:9px; flex:none; }
+.bangkok-root .seg button { border:0; background:transparent; color:var(--dim); border-radius:6px; padding:4px 12px; cursor:pointer; font:600 13px system-ui; }
+.bangkok-root .seg button:hover { color:var(--text); }
+.bangkok-root .seg button.on { background:var(--raised); color:var(--text); box-shadow:inset 0 0 0 1px var(--line); }
+
+/* shared panel pieces */
+.bangkok-root h2 { font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--dim); font-weight:650; margin:0 0 7px; display:flex; justify-content:space-between; align-items:baseline; }
+.bangkok-root h2 .hint { text-transform:none; letter-spacing:0; font-weight:400; }
+.bangkok-root .hero { display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+.bangkok-root .hero b { font-size:34px; line-height:1; letter-spacing:-.02em; }
+.bangkok-root .hero span { font-size:14px; line-height:1.3; }
+.bangkok-root .hero em { font-style:normal; color:var(--dim); font-size:12px; }
+.bangkok-root .sevbar { display:flex; height:8px; border-radius:99px; overflow:hidden; gap:2px; background:var(--bg); }
+.bangkok-root .sevbar i { display:block; min-width:2px; }
+.bangkok-root .sevkey { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-top:6px; }
+.bangkok-root .sevkey div { display:flex; flex-direction:column; }
+.bangkok-root .sevkey b { font-size:16px; line-height:1.15; }
+.bangkok-root .sevkey span { font-size:12px; color:var(--dim); }
+.bangkok-root .rainhead { font-size:14px; margin-bottom:6px; }
+.bangkok-root .stats3 { display:grid; grid-template-columns:1fr 1fr 1.2fr; gap:6px; }
+.bangkok-root .stats3 > div { background:var(--bg); border:1px solid var(--line); border-radius:8px; padding:3px 8px; display:flex; flex-direction:column; }
+.bangkok-root .stats3 b { font-size:16px; line-height:1.2; }
+.bangkok-root .stats3 small { font-size:12px; color:var(--dim); font-weight:400; }
+.bangkok-root .stats3 span { font-size:12px; color:var(--dim); }
+.bangkok-root ol { list-style:none; padding:0; margin:0; }
+.bangkok-root li[data-i] { display:grid; grid-template-columns:24px 1fr auto; align-items:center; gap:8px; padding:7px 8px 7px 10px; margin-bottom:3px; border-radius:8px; border-left:3px solid var(--c); background:var(--bg); cursor:pointer; }
+.bangkok-root .rk { color:var(--text); font-size:13px; font-weight:650; text-align:right; font-variant-numeric:tabular-nums; }
+.bangkok-root .rn { display:flex; flex-direction:column; min-width:0; }
+.bangkok-root .rn b { font-weight:600; font-size:13px; white-space:normal; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; line-height:1.3; }
+.bangkok-root .rn .dim { line-height:1.3; }
+.bangkok-root .roadbtn { display:grid; grid-template-columns:24px 1fr auto; align-items:center; gap:8px; width:100%; padding:7px 8px 7px 7px; border:0; background:transparent; color:inherit; font:inherit; text-align:left; cursor:pointer; }
+.bangkok-root .roadbtn:disabled { cursor:not-allowed; }
+.bangkok-root .roads li { margin-bottom:3px; border-radius:8px; border-left:3px solid var(--c); background:var(--bg); list-style:none; }
+.bangkok-root .roads li:hover { background:var(--raised); }
+.bangkok-root .fresh { display:block; margin:0; font-size:12px; }
+.bangkok-root .freshrow { display:grid; grid-template-columns:auto 1fr; gap:12px; }
+.bangkok-root .fresh dt { color:var(--dim); }
+.bangkok-root .fresh dd { margin:0; text-align:right; font-variant-numeric:tabular-nums; }
+
+/* 2D view */
+.bangkok-root .a { display:grid; grid-template-columns:380px 1fr; height:100%; }
+.bangkok-root .a aside { background:var(--panel); border-right:1px solid var(--line); display:flex; flex-direction:column; overflow-y:auto; padding:0 16px; min-height:0; }
+.bangkok-root .a aside > section { flex:none; padding:7px 0; border-bottom:1px solid var(--line); }
+.bangkok-root .a .mapwrap { display:grid; grid-template-rows:minmax(0,1fr) 196px; min-width:0; min-height:0; }
+.bangkok-root .a .mapbox { position:relative; min-height:0; }
+.bangkok-root .maperror { position:absolute; inset:50% auto auto 50%; z-index:9; transform:translate(-50%,-50%); width:min(360px,calc(100% - 32px)); padding:14px 18px; border:1px solid var(--blocked); border-radius:10px; background:rgba(17,23,32,.96); color:var(--text); text-align:center; box-shadow:0 10px 32px rgba(0,0,0,.45); }
+.bangkok-root .timeline { background:var(--panel); border-top:1px solid var(--line); padding:12px 18px; display:grid; grid-template-columns:300px minmax(0,1fr); gap:28px; align-items:start; overflow:hidden; font-size:13px; }
+.bangkok-root .timeline > div { min-width:0; }
+.bangkok-root .timeline button { background:var(--raised); color:var(--text); border:1px solid var(--line); border-radius:7px; padding:2px 10px; cursor:pointer; font:600 11.5px system-ui; }
+.bangkok-root .timeline button:hover { border-color:var(--water); }
+.bangkok-root .timeline button:disabled { opacity:.4; cursor:default; }
+.bangkok-root .timeline svg { display:block; width:100%; height:128px; margin-top:2px; }
+
+/* sources and around-me cards */
+.bangkok-root .sources { position:absolute; top:calc(var(--hdr) + 8px); right:14px; width:min(460px,calc(100% - 28px)); max-height:calc(100% - var(--hdr) - 24px); overflow:auto; z-index:30; background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:16px; box-shadow:0 12px 40px rgba(0,0,0,.5); }
+.bangkok-root .sources ul { list-style:none; margin:0 0 12px; padding:0; }
+.bangkok-root .sources li { padding:8px 0; border-bottom:1px solid var(--line); display:flex; flex-direction:column; gap:2px; font-size:13px; }
+.bangkok-root .sources li a { color:var(--text); text-decoration:none; }
+.bangkok-root .sources li span { color:var(--dim); font-size:12px; }
+.bangkok-root .sources li em { font-style:normal; color:var(--caution); }
+.bangkok-root .sources .warn { color:var(--caution); font-size:12px; margin:10px 0 0; }
+.bangkok-root .near { position:absolute; top:calc(var(--hdr) + 8px); left:16px; width:340px; z-index:25; background:rgba(17,23,32,.96); border:1px solid var(--line); border-radius:12px; padding:14px; box-shadow:0 12px 40px rgba(0,0,0,.5); font-size:13px; }
+.bangkok-root .near h2 { margin-bottom:6px; }
+.bangkok-root .near .dsum { margin:6px 0 0; font-size:13px; }
+.bangkok-root .nlist { list-style:none; margin:8px 0 0; padding:0; font-size:13px; }
+.bangkok-root .nlist li { padding:4px 0; border-top:1px solid var(--line); }
+
+/* layer chips + legend */
+.bangkok-root .tchips { display:flex; flex-wrap:wrap; gap:4px; }
+.bangkok-root .tchip { display:inline-flex; align-items:center; gap:5px; padding:2px 7px; border:1px solid var(--line); border-radius:99px; background:var(--bg); cursor:pointer; font-size:11.5px; font-weight:600; line-height:1.2; }
+.bangkok-root .tchip:has(input:checked) { border-color:#3a4d63; background:var(--raised); }
+.bangkok-root .tchip:not(:has(input:checked)) { opacity:.55; }
+.bangkok-root .tchip input { position:absolute; opacity:0; width:0; height:0; margin:0; }
+.bangkok-root .tchip:has(input:focus-visible) { outline:2px solid var(--water); }
+.bangkok-root .tchip .lg { margin:0; }
+.bangkok-root .tchip .ct { color:var(--dim); font-weight:500; font-variant-numeric:tabular-nums; }
+.bangkok-root .legend { display:flex; flex-direction:column; gap:6px; min-height:0; overflow:auto; padding-right:4px; }
+.bangkok-root .lrow { display:flex; flex-direction:column; gap:1px; }
+.bangkok-root .lt { font-size:11px; font-weight:650; color:var(--text); }
+.bangkok-root .chips { display:flex; flex-wrap:wrap; gap:2px 12px; margin:0; font-size:12px; color:var(--dim); }
+.bangkok-root .chips span { display:inline-flex; align-items:center; }
+.bangkok-root .laysec { flex:none; border-top:1px solid var(--line); padding:8px 0 9px; }
+.bangkok-root .laysec summary,.bangkok-root .freshd summary,.bangkok-root .flowpanel summary { cursor:pointer; font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:var(--dim); font-weight:650; margin-bottom:7px; }
+.bangkok-root .laysec:not([open]) summary,.bangkok-root .freshd:not([open]) summary,.bangkok-root .flowpanel:not([open]) summary { margin-bottom:0; }
+.bangkok-root .layergroups { display:grid; grid-template-columns:1fr; gap:4px; }
+.bangkok-root .grp { display:grid; grid-template-columns:46px 1fr; gap:5px; align-items:start; }
+.bangkok-root .grp h3,.bangkok-root .rainextras h3 { margin:2px 0 0; font-size:10px; text-transform:uppercase; letter-spacing:.08em; color:var(--dim); font-weight:650; }
+
+/* summary tiles and compact panel */
+.bangkok-root .tiles { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin-top:8px; }
+.bangkok-root .tiles4 { grid-template-columns:1fr 1fr; }
+.bangkok-root .tiles div { background:var(--bg); border:1px solid var(--line); border-radius:8px; padding:4px 8px; display:flex; flex-direction:column; }
+.bangkok-root .tiles b { font-size:17px; line-height:1.2; }
+.bangkok-root .tiles small { font-size:12px; color:var(--dim); font-weight:400; }
+.bangkok-root .tiles span { font-size:12px; line-height:1.25; color:var(--dim); }
+.bangkok-root .dsum { margin:6px 0 0; font-size:13px; line-height:1.4; color:var(--text); }
+.bangkok-root .dsum.dim { color:var(--dim); }
+.bangkok-root .disc { margin:4px 0 0; font-size:12px; color:var(--dim); line-height:1.35; }
+.bangkok-root .unavailable { margin:6px 0 12px; padding:10px; border:1px solid var(--line); border-radius:8px; background:var(--bg); color:var(--dim); }
+.bangkok-root .lnk { background:none; border:0; padding:0; color:var(--water); font:inherit; text-decoration:underline; cursor:pointer; }
+.bangkok-root .weather4 { grid-template-columns:repeat(4,1fr); gap:4px; }
+.bangkok-root .weather4 div { padding:3px 5px; }
+.bangkok-root .weather4 b { font-size:14px; }
+.bangkok-root .weather4 span { font-size:10px; }
+.bangkok-root .rainextras { display:grid; grid-template-columns:116px 1fr; gap:8px; margin-top:7px; }
+.bangkok-root .grid9 { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
+.bangkok-root .grid9 span { padding:2px; border-radius:3px; background:#0e293b; color:#b9e7fa; font-size:9px; text-align:center; }
+.bangkok-root .districtchips { display:flex; gap:3px; overflow-x:auto; padding-bottom:3px; }
+.bangkok-root .districtchips span { flex:none; padding:3px 6px; border-radius:99px; background:#1e293b; color:#cbd5e1; font-size:9px; }
+.bangkok-root .a aside > section.roadsec { flex:1 1 120px; display:flex; flex-direction:column; min-height:100px; border-bottom:0; padding-bottom:0; position:relative; }
+.bangkok-root .roadsec h2 { flex:none; margin-bottom:8px; }
+.bangkok-root .rscroll { flex:1; min-height:0; overflow-y:auto; padding-bottom:26px; overscroll-behavior:contain; }
+.bangkok-root .roadsec::after { content:""; position:absolute; left:0; right:0; bottom:0; height:30px; pointer-events:none; background:linear-gradient(transparent,var(--panel)); }
+.bangkok-root .freshd,.bangkok-root .flowpanel { flex:none; border-top:1px solid var(--line); padding:6px 0 8px; font-size:12px; }
+.bangkok-root .flowpanel { max-height:142px; overflow:auto; }
+.bangkok-root .riverrows { display:flex; flex-direction:column; }
+.bangkok-root .riverrow { display:grid; grid-template-columns:1fr 84px 74px; gap:6px; align-items:center; padding:2px 0; border-top:1px solid #1f2a36; font-size:10px; }
+.bangkok-root .riverrow svg { display:block; }
+.bangkok-root .riverrow small { display:block; color:var(--dim); }
+.bangkok-root .riverrow small.rising { color:var(--risky); }
+.bangkok-root .riverrow small.falling { color:var(--ok); }
+
+/* map legend, credit and discharge */
+.bangkok-root .maplegend { position:absolute; left:12px; bottom:12px; width:auto; max-width:min(400px,calc(100% - 24px)); max-height:calc(100% - 24px); min-height:0; overflow:visible; z-index:6; padding:7px 12px; border-radius:12px; background:rgba(14,19,26,.88); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,.1); display:flex; flex-direction:column; }
+.bangkok-root .maplegend summary { cursor:pointer; font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--dim); font-weight:650; }
+.bangkok-root .maplegend[open] { width:min(900px,calc(100% - 24px)); max-height:calc(100% - 70px); overflow:hidden; }
+.bangkok-root .maplegend[open] summary { margin-bottom:8px; }
+.bangkok-root .maplegend[open] .legend { display:grid; grid-template-columns:repeat(4,1fr); gap:8px 14px; max-height:calc(100% - 24px); overflow-y:auto; overscroll-behavior:contain; scrollbar-width:thin; scrollbar-color:#6b7b8c transparent; padding:0 6px 14px 0; }
+.bangkok-root .maplegend .legend::-webkit-scrollbar { width:8px; }
+.bangkok-root .maplegend .legend::-webkit-scrollbar-thumb { background:#6b7b8c; border-radius:4px; }
+.bangkok-root .mapcredit { position:absolute; right:0; bottom:0; z-index:5; max-width:min(72%,900px); padding:3px 9px; border-radius:8px 0 0 0; background:rgba(10,14,19,.88); color:var(--dim); font-size:10.5px; line-height:1.4; text-align:right; }
+.bangkok-root .mapcredit a { color:#c3cfdb; }
+.bangkok-root .flowcard { position:absolute; left:10px; top:10px; z-index:2; width:300px; background:rgba(18,24,33,.9); border:1px solid #2a3644; border-radius:10px; padding:6px 10px 7px; font-size:11px; backdrop-filter:blur(6px); }
+.bangkok-root .flowcard summary { cursor:pointer; font-weight:700; font-size:12px; }
+.bangkok-root .flowcard .fl-sub { font-size:10px; margin:2px 0 4px; }
+.bangkok-root .flowcard .fl-row { display:grid; grid-template-columns:1fr auto; gap:8px; align-items:center; padding:2px 0; border-top:1px solid #1f2a36; }
+.bangkok-root .fl-n { color:#cbd5e1; line-height:1.15; }
+.bangkok-root .fl-v b { font-size:13px; font-variant-numeric:tabular-nums; }
+
+/* radar footer */
+.bangkok-root .tl-radar,.bangkok-root .tl-chart { min-width:0; }
+.bangkok-root .tl-head { display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
+.bangkok-root .tl-time { font-size:20px; font-weight:700; font-variant-numeric:tabular-nums; letter-spacing:-.01em; }
+.bangkok-root .tl-track { position:relative; }
+.bangkok-root .timeline input[type=range] { appearance:none; width:100%; height:8px; border-radius:99px; margin:6px 0 2px; background:#2b6f93; outline-offset:3px; }
+.bangkok-root .timeline input[type=range]::-webkit-slider-thumb { appearance:none; width:18px; height:18px; border-radius:50%; background:#fff; border:2px solid #0b0f14; box-shadow:0 0 0 2px #38bdf8; cursor:pointer; }
+.bangkok-root .tl-ends { display:flex; justify-content:space-between; font-variant-numeric:tabular-nums; }
+.bangkok-root .tl-key { display:flex; gap:14px; align-items:center; font-size:11px; margin-top:2px; }
+.bangkok-root .tl-key span { display:inline-flex; align-items:center; gap:5px; }
+.bangkok-root .tl-key .k { width:14px; height:5px; border-radius:99px; display:inline-block; }
+.bangkok-root .tl-key .k.obs { background:#38bdf8; }
+.bangkok-root .tl-key .tl-btns { margin:0 0 0 auto; display:flex; gap:6px; }
+.bangkok-root .tl-int { display:grid; grid-template-columns:auto 1fr; gap:2px 8px; align-items:center; margin-top:3px; font-size:11px; }
+.bangkok-root .tl-int .ramp { display:flex; justify-content:space-between; align-items:center; height:14px; padding:0 8px; border-radius:99px; background:linear-gradient(90deg,#88ddee,#0077ee 50%,#ffaa00); }
+.bangkok-root .tl-int .ramp em { font-style:normal; font-size:9.5px; font-weight:700; color:#fff; text-shadow:0 0 3px #000,0 0 3px #000; }
+.bangkok-root .tl-note { margin-top:3px; font-size:11px; font-weight:600; color:#7dd3fc; }
+.bangkok-root .chartempty { display:grid; height:128px; place-items:center; }
+
+/* MapLibre popups: DOM nodes only, never HTML strings. */
+.bangkok-root .maplibregl-popup { z-index:8; }
+/* !important: Osiris globals.css makes every popup transparent with !important. */
+.bangkok-root .maplibregl-popup.pp .maplibregl-popup-content { background:#121821 !important; color:#e6edf3; border:1px solid #2a3644 !important; border-radius:10px; padding:10px 12px !important; box-shadow:0 8px 28px rgba(0,0,0,.55) !important; }
+.bangkok-root .maplibregl-popup.pp .maplibregl-popup-tip { display:block !important; border-top-color:#121821; border-bottom-color:#121821; }
+.bangkok-root .pp-body { font-size:12.5px; min-width:190px; }
+.bangkok-root .pp-t { font-weight:700; font-size:14px; line-height:1.25; }
+.bangkok-root .pp-s { color:#8b98a5; margin:1px 0 6px; }
+.bangkok-root .pp-row { display:flex; justify-content:space-between; gap:14px; padding:2px 0; border-top:1px solid #1f2a36; }
+.bangkok-root .pp-row span { color:#8b98a5; }
+.bangkok-root .pp-row b { font-weight:600; text-align:right; }
+.bangkok-root .pp-note { margin-top:6px; padding-top:6px; border-top:1px solid #1f2a36; color:#b6c2cf; font-size:12px; line-height:1.35; }
+
+@media (max-width:1100px) {
+  .bangkok-root .status .sep,.bangkok-root .status .dim { display:none; }
+  .bangkok-root #top { gap:10px; }
+  .bangkok-root .a { grid-template-columns:340px 1fr; }
+  .bangkok-root .timeline { grid-template-columns:260px minmax(0,1fr); gap:14px; }
+  .bangkok-root .maplegend[open] .legend { grid-template-columns:repeat(2,1fr); }
+}
+
+@media (max-width:760px) {
+  .bangkok-root { overflow:auto; }
+  .bangkok-root #top { height:auto; min-height:var(--hdr); flex-wrap:wrap; padding:8px; }
+  .bangkok-root .brand .dim,.bangkok-root .status,.bangkok-root nav.seg { display:none; }
+  .bangkok-root .search { order:3; flex-basis:100%; }
+  .bangkok-root #app { min-height:900px; }
+  .bangkok-root .a { grid-template-columns:1fr; grid-template-rows:480px 640px; }
+  .bangkok-root .a aside { order:2; }
+  .bangkok-root .a .mapwrap { order:1; grid-template-rows:minmax(0,1fr) 190px; }
+  .bangkok-root .timeline { grid-template-columns:1fr; }
+  .bangkok-root .tl-chart { display:none; }
+  .bangkok-root .flowcard { display:none; }
+  .bangkok-root .mapcredit { max-width:80%; max-height:45px; overflow:auto; }
+}

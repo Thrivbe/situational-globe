@@ -1,0 +1,13 @@
+# App Worker. Slice 5 adds deploy settings (PUBLIC_DEMO, rate limit, Sentry).
+name = "situational-globe"
+main = ".open-next/worker.js"
+compatibility_date = "2026-10-01"
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = ".open-next/assets"
+binding = "ASSETS"
+
+[[r2_buckets]]
+binding = "SNAPSHOTS"
+bucket_name = "situational-globe"

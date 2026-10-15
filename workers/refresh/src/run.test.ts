@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import type { Feature, FeatureCollection, LineString, Point } from 'geojson';
 import type { Situation, Snapshot } from '../../../src/situations/types';
+import { SITUATIONS } from '../../../src/situations/registry';
 import {
   stationWater,
   type FloodData,
@@ -18,7 +19,6 @@ import {
 } from './feeds';
 import {
   runRefresh,
-  SITUATIONS,
   type Env,
   type Reporter,
   type RunOptions,
