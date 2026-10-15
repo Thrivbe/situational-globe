@@ -197,7 +197,7 @@ describe('stationWater', () => {
 });
 
 function station(id: string, coordinates: Position): Feature<Point> {
-  return { type: 'Feature', id, geometry: { type: 'Point', coordinates }, properties: {} };
+  return { type: 'Feature', id, geometry: { type: 'Point', coordinates }, properties: { kind: 'station' } };
 }
 
 function blockedRoad(coordinates: Position[]): Feature<LineString, RoadProps> {
