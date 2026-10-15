@@ -1,0 +1,42 @@
+{
+  "id": "bangkok-flood-2026",
+  "title": "Bangkok floods, October 2026",
+  "story": "This situation presents Bangkok flood information from Floodboard data. It also includes Open-Meteo weather data.",
+  "hazard": "flood",
+  "status": "live",
+  "defaultGlobalLayers": ["radar"],
+  "situationLayers": [],
+  "fallbackLevel": null,
+  "localMaps": [
+    {
+      "id": "bangkok-flood",
+      "name": "Bangkok · flood",
+      "bbox": [100.3, 13.5, 100.95, 14.05],
+      "feeds": ["floodboard", "open-meteo", "open-meteo-flood", "rainviewer", "osm", "openfreemap"],
+      "layers2d": [
+        "flood-roads",
+        "flood-reports",
+        "radar",
+        "danger-hexes",
+        "depth-labels",
+        "rain",
+        "river",
+        "weather",
+        "hospitals",
+        "shelters",
+        "pumping",
+        "fire-stations",
+        "districts",
+        "transit",
+        "station-water",
+        "waterways",
+        "airports",
+        "landmarks"
+      ],
+      "cityPack": {
+        "buildings": "openfreemap",
+        "minZoom": 14
+      }
+    }
+  ]
+}
