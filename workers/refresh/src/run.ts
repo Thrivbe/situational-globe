@@ -1,8 +1,7 @@
 import type { FeatureCollection } from 'geojson';
 import type { LocalMap, Situation, Snapshot } from '../../../src/situations/types';
-import { validateSituation } from '../../../src/situations/validate';
 import { stationWater, type FloodData } from '../../../src/situations/bangkok-flood-2026/derive';
-import bangkokDefinition from '../../../src/situations/bangkok-flood-2026/situation.json';
+import { SITUATIONS } from '../../../src/situations/registry';
 import { buildSnapshot, type BuildFeeds } from './build';
 import {
   fetchDistrictRain,
@@ -39,8 +38,6 @@ export interface RunOptions {
   situations?: readonly Situation[];
   builder?: typeof buildSnapshot;
 }
-
-export const SITUATIONS: readonly Situation[] = [validateSituation(bangkokDefinition)];
 
 const SNAPSHOT_KEYS = [
   'localMap', 'situation', 'builtAt', 'feedsAt', 'level', 'credits', 'flood', 'weather', 'osm', 'stationWater',

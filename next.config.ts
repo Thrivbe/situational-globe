@@ -74,3 +74,10 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+
+if (process.env.NODE_ENV === 'development') {
+  // Local R2 starts empty; seed it with: npx wrangler r2 object put situational-globe/snapshots/bangkok-flood.json --local --file <snapshot.json> --content-type application/json
+  void import('@opennextjs/cloudflare')
+    .then(({ initOpenNextCloudflareForDev }) => initOpenNextCloudflareForDev())
+    .catch((error: unknown) => console.error('[dev] Cloudflare bindings init failed', error));
+}
