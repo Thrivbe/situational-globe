@@ -14,15 +14,15 @@ Every layer added by the city module uses the `c3-` prefix. The shared `radar` l
 
 ## View switching
 
-`addCityLayers` adds sources and initially hidden layers once during `style.load`. `applyView` selects the IDs for the current view without rebuilding the map. Entering 3D targets the highest-score level-3 danger hex and applies the night base style; leaving restores every captured base paint/layout value plus the original sky and light.
+`addCityLayers` adds sources and initially hidden layers once during `style.load`. `applyView` selects the IDs for the current view without rebuilding the map. Entering 3D targets the highest-score level-3 danger hex, applies the night base style, and lowers radar opacity to 0.45; leaving restores base paint/layout, sky, light, and radar opacity.
 
-The 3D city checkbox controls only buildings and parks. Data-layer chips retain one checked state across both views; 2D-only chips are disabled and dimmed while in 3D.
+The 3D city checkbox controls only buildings and parks. It is unavailable when the base style has no OpenStreetMap building source. A city-layer setup failure removes the partial `c3-` pack and leaves the working 2D map in place. Data-layer chips retain one checked state across both views; 2D-only chips are disabled and dimmed while in 3D.
 
 ## Animation clock
 
-Animation defaults on, or off when `prefers-reduced-motion` is set. The rAF loop exists only while animation is enabled, the view is 3D, the document is visible, and Bangkok intersects the viewport. Paint mutation is gated to 100 ms (10 Hz); orbit bearing is updated per frame at 1.5°/s and pauses for 10 seconds after map input.
+Animation defaults on, or off when `prefers-reduced-motion` is set. The rAF loop exists only while animation is enabled, the view is 3D, the document is visible, Bangkok intersects the map bounds, and the map container is on screen. Paint changes are capped at 10 Hz. The smooth orbit is a camera move and renders every frame while enabled; it remains at 1.5°/s and pauses for 10 seconds after map input.
 
-Only danger opacity and report-ring radius/opacity pulse. Buildings rise once over about 1.2 seconds. Animated paint properties have zero-duration transitions, and blocked-road dash arrays are static.
+Only danger opacity and report-ring radius/opacity pulse. Buildings rise once over about 1.2 seconds. The map style sets a zero-duration transition so paint changes keep the 10 Hz budget, and blocked-road dash arrays are static.
 
 ## Checking zero repaints
 

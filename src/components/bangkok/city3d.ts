@@ -7,20 +7,25 @@ import type {
   SkySpecification,
 } from 'maplibre-gl';
 import type { Snapshot } from '@/situations/types';
-import { BANGKOK_CENTRE, districtsWithSignals, featureCentre, numberValue, propertiesOf } from './helpers';
-import { C3, LAYERS, type LayerKey } from './layers';
+import { BANGKOK_CENTRE, districtsWithSignals, featureCentre, numberValue, propertiesOf, validPosition } from './helpers';
+import { C, CITY_PACK_LAYER_IDS, isDataLayer, LAYERS, type LayerKey } from './layers';
 import type { BangkokView } from './types';
 
-export const ROAD_COLOURS_3D = [C3.roadWater, C3.roadBlocked, C3.roadRisky, C3.roadCaution, C3.roadOk] as const;
-export const DEPTH_COLOURS_3D = [C3.ankle, C3.knee, C3.waist, C3.head, C3.closed] as const;
-export const TRANSIT_COLOURS_3D = [C3.metro, C3.rail] as const;
+export const ROAD_COLOURS_3D = [C.roadWater, C.blocked, C.risky, C.caution, C.ok] as const;
+export const DEPTH_COLOURS_3D = [C.ankle, C.knee, C.waist, C.head, C.closed] as const;
+export const TRANSIT_COLOURS_3D = [C.metro3d, C.rail3d] as const;
+export const DEPTH_STOPS = [35, 70, 120] as const;
 
 const hidden = { visibility: 'none' as const };
-const transition = { duration: 0, delay: 0 };
 const interpolate = (...stops: unknown[]): ExpressionSpecification =>
   ['interpolate', ['linear'], ['zoom'], ...stops] as ExpressionSpecification;
 const featureCollection = <G extends Point | Polygon>(features: Feature<G>[]): FeatureCollection<G> =>
   ({ type: 'FeatureCollection', features });
+const collectionFeatures = (collection: FeatureCollection | null | undefined): Feature[] =>
+  (Array.isArray(collection?.features) ? collection.features : []).filter((feature): feature is Feature =>
+    typeof feature === 'object' && feature !== null && !Array.isArray(feature));
+const safeCollection = (collection: FeatureCollection | null | undefined): FeatureCollection =>
+  ({ type: 'FeatureCollection', features: collectionFeatures(collection) });
 
 const metres = (latitude: number, value: number): [number, number] =>
   [value / 111_320 / Math.cos(latitude * Math.PI / 180), value / 111_320];
@@ -34,85 +39,89 @@ function rectangle(longitude: number, latitude: number, halfMetres: number): Pos
   ];
 }
 
-export function columns(reports: FeatureCollection): FeatureCollection<Polygon> {
-  return featureCollection(reports.features.flatMap((feature): Feature<Polygon>[] => {
-    if (feature.geometry?.type !== 'Point') return [];
+export function pointSquares(points: FeatureCollection | null | undefined, halfWidth: number): FeatureCollection<Polygon> {
+  const width = Number.isFinite(halfWidth) ? Math.max(0, halfWidth) : 0;
+  return featureCollection(collectionFeatures(points).flatMap((feature): Feature<Polygon>[] => {
+    if (feature.geometry?.type !== 'Point' || !validPosition(feature.geometry.coordinates)) return [];
     const properties = propertiesOf(feature);
-    const depth = Math.min(numberValue(properties.depth, numberValue(properties.cm)), 150);
+    const depth = Math.max(0, Math.min(numberValue(properties.depth, numberValue(properties.cm)), 150));
     const base = 45 + depth * 3.5;
     const [longitude, latitude] = feature.geometry.coordinates;
-    if (!Number.isFinite(longitude) || !Number.isFinite(latitude)) return [];
     return [{
       type: 'Feature',
       properties: { ...properties, depth, cm: depth, base, top: base + 10 },
-      geometry: { type: 'Polygon', coordinates: [rectangle(longitude, latitude, 16)] },
+      geometry: { type: 'Polygon', coordinates: [rectangle(longitude, latitude, width)] },
     }];
   }));
 }
 
-export function pillars(points: FeatureCollection): FeatureCollection<Polygon> {
-  return featureCollection(points.features.flatMap((feature): Feature<Polygon>[] => {
-    if (feature.geometry?.type !== 'Point') return [];
-    const [longitude, latitude] = feature.geometry.coordinates;
-    if (!Number.isFinite(longitude) || !Number.isFinite(latitude)) return [];
-    return [{ type: 'Feature', properties: propertiesOf(feature),
-      geometry: { type: 'Polygon', coordinates: [rectangle(longitude, latitude, 11)] } }];
-  }));
+export function points(pointsCollection: FeatureCollection | null | undefined): FeatureCollection<Point> {
+  return featureCollection(collectionFeatures(pointsCollection).flatMap((feature): Feature<Point>[] =>
+    feature.geometry?.type === 'Point' && validPosition(feature.geometry.coordinates)
+      ? [{ ...feature, geometry: feature.geometry }] as Feature<Point>[] : []));
 }
 
-function points(pointsCollection: FeatureCollection): FeatureCollection<Point> {
-  return featureCollection(pointsCollection.features.flatMap((feature): Feature<Point>[] =>
-    feature.geometry?.type === 'Point' ? [{ ...feature, geometry: feature.geometry }] as Feature<Point>[] : []));
-}
-
-function ribbons(roads: FeatureCollection): FeatureCollection<Polygon> {
+export function ribbons(roads: FeatureCollection | null | undefined): FeatureCollection<Polygon> {
   const features: Feature<Polygon>[] = [];
-  for (const feature of roads.features) {
+  for (const feature of collectionFeatures(roads)) {
     const properties = propertiesOf(feature);
     const severity = numberValue(properties.sev, 1);
     if (severity < 2 || (feature.geometry?.type !== 'LineString' && feature.geometry?.type !== 'MultiLineString')) continue;
     const halfWidth = severity >= 4 ? 6 : severity === 3 ? 4 : 3;
-    const lines = feature.geometry.type === 'LineString' ? [feature.geometry.coordinates] : feature.geometry.coordinates;
-    for (const line of lines) for (let index = 1; index < line.length; index += 1) {
-      const [x0, y0] = line[index - 1];
-      const [x1, y1] = line[index];
+    const lines = feature.geometry.type === 'LineString' ? [feature.geometry.coordinates]
+      : Array.isArray(feature.geometry.coordinates) ? feature.geometry.coordinates : [];
+    for (const line of lines) for (let index = 1; Array.isArray(line) && index < line.length; index += 1) {
+      const start = line[index - 1];
+      const end = line[index];
+      if (!validPosition(start) || !validPosition(end)) continue;
+      const [x0, y0] = start;
+      const [x1, y1] = end;
       const [kx, ky] = metres(y0, 1);
       const ex = (x1 - x0) / kx;
       const ey = (y1 - y0) / ky;
       const length = Math.hypot(ex, ey);
-      if (length < 0.5) continue;
+      if (!Number.isFinite(length) || length < 0.5) continue;
       const nx = -ey / length * halfWidth * kx;
       const ny = ex / length * halfWidth * ky;
+      const ring = [
+        [x0 + nx, y0 + ny], [x1 + nx, y1 + ny], [x1 - nx, y1 - ny], [x0 - nx, y0 - ny], [x0 + nx, y0 + ny],
+      ];
+      if (!ring.every(validPosition)) continue;
       features.push({ type: 'Feature', properties: { ...properties, lift: severity >= 4 ? 40 : severity === 3 ? 30 : 20 },
-        geometry: { type: 'Polygon', coordinates: [[
-          [x0 + nx, y0 + ny], [x1 + nx, y1 + ny], [x1 - nx, y1 - ny], [x0 - nx, y0 - ny], [x0 + nx, y0 + ny],
-        ]] } });
+        geometry: { type: 'Polygon', coordinates: [ring] } });
     }
   }
   return featureCollection(features);
 }
 
-function reportLabels(reports: FeatureCollection): FeatureCollection<Point> {
-  return featureCollection(reports.features.flatMap((feature): Feature<Point>[] => {
-    if (feature.geometry?.type !== 'Point') return [];
+export function reportLabels(reports: FeatureCollection | null | undefined): FeatureCollection<Point> {
+  return featureCollection(collectionFeatures(reports).flatMap((feature): Feature<Point>[] => {
+    if (feature.geometry?.type !== 'Point' || !validPosition(feature.geometry.coordinates)) return [];
     const properties = propertiesOf(feature);
-    const cm = Math.min(numberValue(properties.depth, numberValue(properties.cm)), 150);
+    const cm = Math.max(0, Math.min(numberValue(properties.depth, numberValue(properties.cm)), 150));
     if (!cm && !properties.closed) return [];
-    const band = cm < 35 ? 'ankle' : cm < 70 ? 'knee' : cm < 120 ? 'waist' : 'over head';
+    const band = cm < DEPTH_STOPS[0] ? 'ankle' : cm < DEPTH_STOPS[1] ? 'knee' : cm < DEPTH_STOPS[2] ? 'waist' : 'over head';
     return [{ ...feature, properties: { ...properties, cm, text: cm ? `${band} ${Math.round(cm)} cm` : 'CLOSED' }, geometry: feature.geometry }];
   }));
 }
 
 export function cameraTarget(snapshot: Snapshot): [number, number] {
-  const ranked = snapshot.flood.dangerHexes.features.map((feature) => ({
-    feature, level: numberValue(propertiesOf(feature).level), score: numberValue(propertiesOf(feature).score),
-  })).sort((left, right) => (right.level === 3 ? 1 : 0) - (left.level === 3 ? 1 : 0) || right.score - left.score);
-  const levelThree = ranked.filter((item) => item.level === 3);
-  for (const item of levelThree.length ? levelThree : ranked) {
-    const centre = featureCentre(item.feature);
-    if (centre && Number.isFinite(centre[0]) && Number.isFinite(centre[1])) return [centre[0], centre[1]];
+  let target: [number, number] | null = null;
+  let targetLevelThree = false;
+  let targetScore = Number.NEGATIVE_INFINITY;
+  for (const feature of collectionFeatures(snapshot.flood.dangerHexes)) {
+    const centre = featureCentre(feature);
+    if (!validPosition(centre)) continue;
+    const properties = propertiesOf(feature);
+    const levelThree = numberValue(properties.level) === 3;
+    const score = numberValue(properties.score);
+    if (!target || (levelThree && !targetLevelThree) || levelThree === targetLevelThree && score > targetScore) {
+      target = centre;
+      targetLevelThree = levelThree;
+      targetScore = score;
+    }
   }
-  return BANGKOK_CENTRE;
+  return target ?? BANGKOK_CENTRE;
 }
 
 const fallbackHeight = ['case', ['>', ['to-number', ['get', 'render_height'], 0], 3], ['get', 'render_height'],
@@ -126,27 +135,31 @@ export const STATIC_REPORT_GLOW_OPACITY = 0.55;
 
 function addSource(map: MapLibreMap, id: string, data: FeatureCollection, cluster = false): void {
   if (map.getSource(id)) return;
-  map.addSource(id, { type: 'geojson', data, ...(cluster ? {
+  map.addSource(id, { type: 'geojson', data: safeCollection(data), ...(cluster ? {
     cluster: true, clusterRadius: 50, clusterMaxZoom: 12,
-    clusterProperties: { maxd: ['max', ['get', 'depth']], anyClosed: ['max', ['case', ['get', 'closed'], 1, 0]] },
+    clusterProperties: {
+      maxd: ['max', ['to-number', ['get', 'depth'], 0]],
+      anyClosed: ['max', ['case', ['coalesce', ['get', 'closed'], false], 1, 0]],
+    },
   } : {}) });
 }
 
 function addLayer(map: MapLibreMap, layer: LayerSpecification, before?: string): void {
-  if (!layer.id.startsWith('c3-')) throw new Error(`3D layer id must start with c3-: ${layer.id}`);
   if (map.getLayer(layer.id)) return;
   map.addLayer(layer, before && map.getLayer(before) ? before : undefined);
 }
 
-const depthBand = ['case', ['get', 'closed'], C3.closed,
-  ['step', ['get', 'depth'], C3.ankle, 35, C3.knee, 70, C3.waist, 120, C3.head]] as ExpressionSpecification;
-const depthCap = ['case', ['get', 'closed'], '#ffffff',
-  ['step', ['get', 'depth'], '#d8f3ff', 35, '#ffe6b8', 70, '#ffc2ca', 120, '#ffc4dc']] as ExpressionSpecification;
-const roadColour = ['match', ['get', 'sedan'], 'blocked', C3.roadBlocked, 'risky', C3.roadRisky,
-  'caution', C3.roadCaution, C3.roadOk] as ExpressionSpecification;
+const optionalClosed = ['coalesce', ['get', 'closed'], false] as ExpressionSpecification;
+const numericDepth = ['to-number', ['get', 'depth'], 0] as ExpressionSpecification;
+const depthBand = ['case', optionalClosed, C.closed,
+  ['step', numericDepth, C.ankle, DEPTH_STOPS[0], C.knee, DEPTH_STOPS[1], C.waist, DEPTH_STOPS[2], C.head]] as ExpressionSpecification;
+const depthCap = ['case', optionalClosed, '#ffffff',
+  ['step', numericDepth, '#d8f3ff', DEPTH_STOPS[0], '#ffe6b8', DEPTH_STOPS[1], '#ffc2ca', DEPTH_STOPS[2], '#ffc4dc']] as ExpressionSpecification;
+const roadColour = ['match', ['get', 'sedan'], 'blocked', C.blocked, 'risky', C.risky,
+  'caution', C.caution, C.ok] as ExpressionSpecification;
 
 function addPoi(map: MapLibreMap, key: 'hospitals' | 'shelters' | 'pumping', data: FeatureCollection, color: string, glyph: string): void {
-  addSource(map, `c3-${key}`, pillars(data));
+  addSource(map, `c3-${key}`, pointSquares(data, 11));
   addSource(map, `c3-${key}-points`, points(data));
   addLayer(map, { id: `c3-${key}`, type: 'fill-extrusion', source: `c3-${key}`, minzoom: 12, layout: hidden,
     paint: { 'fill-extrusion-height': interpolate(12, 120, 16, 55), 'fill-extrusion-base': 0,
@@ -160,12 +173,6 @@ function addPoi(map: MapLibreMap, key: 'hospitals' | 'shelters' | 'pumping', dat
   }, paint: { 'text-color': '#ffffff', 'text-halo-color': color, 'text-halo-width': 0.6 } });
 }
 
-export const CITY_PACK_LAYER_IDS = ['c3-buildings', 'c3-parks'] as const;
-export const CITY_PACK_LEGEND = [
-  { shape: 'swatch' as const, color: '#2b3650', label: 'blue-grey buildings, capped at 130 m', thai: 'อาคารสีน้ำเงินเทา สูงไม่เกิน 130 ม.' },
-  { shape: 'swatch' as const, color: '#0f2a22', label: 'parks and green space', thai: 'สวนและพื้นที่สีเขียว' },
-];
-
 export function addCityLayers(map: MapLibreMap, snapshot: Snapshot): void {
   const firstSymbol = map.getStyle().layers?.find((layer) => layer.type === 'symbol')?.id;
   const hot = ['>=', ['get', 'sev'], 3] as ExpressionSpecification;
@@ -173,8 +180,8 @@ export function addCityLayers(map: MapLibreMap, snapshot: Snapshot): void {
 
   addSource(map, 'c3-roads', snapshot.flood.roads);
   addSource(map, 'c3-ribbons', ribbons(snapshot.flood.roads));
-  addSource(map, 'c3-report-columns', columns(snapshot.flood.reports));
-  addSource(map, 'c3-report-points', snapshot.flood.reports, true);
+  addSource(map, 'c3-report-columns', pointSquares(snapshot.flood.reports, 16));
+  addSource(map, 'c3-report-points', points(snapshot.flood.reports), true);
   addSource(map, 'c3-report-labels', reportLabels(snapshot.flood.reports));
   addSource(map, 'c3-danger', snapshot.flood.dangerHexes);
   addSource(map, 'c3-districts', districtsWithSignals(snapshot.osm.districts, snapshot.flood.dangerHexes));
@@ -186,18 +193,16 @@ export function addCityLayers(map: MapLibreMap, snapshot: Snapshot): void {
       paint: { 'fill-color': '#0f2a22', 'fill-opacity': 0.9 } }, firstSymbol);
     addLayer(map, { id: 'c3-buildings', type: 'fill-extrusion', source: 'openmaptiles', 'source-layer': 'building', minzoom: 14, layout: hidden,
       paint: { 'fill-extrusion-height': BUILDING_HEIGHT,
-        'fill-extrusion-height-transition': transition,
         'fill-extrusion-base': ['min', ['coalesce', ['get', 'render_min_height'], 0], BUILDING_HEIGHT],
-        'fill-extrusion-base-transition': transition,
         'fill-extrusion-color': ['interpolate', ['linear'], BUILDING_HEIGHT, 6, '#1f2838', 25, '#2b3650', 60, '#425277', 130, '#8297c8'],
         'fill-extrusion-opacity': 0.92, 'fill-extrusion-vertical-gradient': true } });
     addLayer(map, { id: 'c3-transit-osm', type: 'line', source: 'openmaptiles', 'source-layer': 'transportation', minzoom: 10,
       filter: ['in', ['get', 'class'], ['literal', ['rail', 'transit']]], layout: { ...hidden, 'line-cap': 'round' },
-      paint: { 'line-color': C3.rail, 'line-width': interpolate(10, 1, 14, 2, 17, 5), 'line-opacity': 0.82 } });
+      paint: { 'line-color': C.rail3d, 'line-width': interpolate(10, 1, 14, 2, 17, 5), 'line-opacity': 0.82 } });
     addLayer(map, { id: 'c3-transit-osm-stations', type: 'circle', source: 'openmaptiles', 'source-layer': 'poi', minzoom: 11.5,
       filter: ['all', ['==', ['get', 'class'], 'railway'],
         ['in', ['get', 'subclass'], ['literal', ['station', 'halt', 'subway', 'light_rail', 'monorail', 'tram']]]], layout: hidden,
-      paint: { 'circle-radius': interpolate(12, 3, 16, 7), 'circle-color': '#ffffff', 'circle-stroke-color': C3.metro,
+      paint: { 'circle-radius': interpolate(12, 3, 16, 7), 'circle-color': '#ffffff', 'circle-stroke-color': C.metro3d,
         'circle-stroke-width': 2, 'circle-pitch-alignment': 'map' } });
     addLayer(map, { id: 'c3-transit-osm-station-labels', type: 'symbol', source: 'openmaptiles', 'source-layer': 'poi', minzoom: 12.5,
       filter: ['all', ['==', ['get', 'class'], 'railway'],
@@ -213,8 +218,7 @@ export function addCityLayers(map: MapLibreMap, snapshot: Snapshot): void {
       'fill-extrusion-color': ['interpolate', ['linear'], ['get', 'signals'], 0, '#1b2a44', 5, '#4c2a6b', 15, '#a02050', 40, '#e8456a'],
       'fill-extrusion-opacity': interpolate(10, 0.4, 12.6, 0.3, 13.8, 0) } }, firstSymbol);
   addLayer(map, { id: 'c3-danger', type: 'fill', source: 'c3-danger', filter: ['>=', ['get', 'level'], 2], layout: hidden,
-    paint: { 'fill-color': ['match', ['get', 'level'], 3, '#b3263a', '#7a4a12'], 'fill-opacity': STATIC_DANGER_OPACITY,
-      'fill-opacity-transition': transition } }, firstSymbol);
+    paint: { 'fill-color': ['match', ['get', 'level'], 3, '#b3263a', '#7a4a12'], 'fill-opacity': STATIC_DANGER_OPACITY } }, firstSymbol);
   addLayer(map, { id: 'c3-danger-line', type: 'line', source: 'c3-danger', layout: hidden,
     paint: { 'line-color': ['match', ['get', 'level'], 3, '#ff5a6e', 2, '#f2a93b', '#2f7fe0'],
       'line-width': ['match', ['get', 'level'], 3, 1.4, 2, 1, 0.6], 'line-blur': 0.6,
@@ -224,7 +228,7 @@ export function addCityLayers(map: MapLibreMap, snapshot: Snapshot): void {
     paint: { 'line-color': '#1679ff', 'line-width': interpolate(10, 18, 14, 52, 17, 108),
       'line-blur': interpolate(10, 13, 14, 30, 17, 58), 'line-opacity': 0.18 } }, firstSymbol);
   addLayer(map, { id: 'c3-glow-plus-mid', type: 'line', source: 'c3-roads', filter: hot, layout: { ...hidden, ...cap },
-    paint: { 'line-color': ['match', ['get', 'sedan'], 'blocked', '#ff244f', 'risky', '#ff982b', C3.roadWater],
+    paint: { 'line-color': ['match', ['get', 'sedan'], 'blocked', '#ff244f', 'risky', '#ff982b', C.roadWater],
       'line-width': interpolate(10, 9, 14, 27, 17, 55), 'line-blur': interpolate(10, 7, 14, 16, 17, 30), 'line-opacity': 0.24 } }, firstSymbol);
   addLayer(map, { id: 'c3-water-sheen-fill', type: 'line', source: 'c3-roads', filter: hot, layout: { ...hidden, ...cap },
     paint: { 'line-color': '#087bd8', 'line-width': interpolate(10, 10, 14, 38, 17, 82),
@@ -233,7 +237,7 @@ export function addCityLayers(map: MapLibreMap, snapshot: Snapshot): void {
     paint: { 'line-color': '#9de8ff', 'line-width': interpolate(10, 0.8, 14, 2.2, 17, 5), 'line-blur': 0.5,
       'line-opacity': 0.62, 'line-translate': [0, -2], 'line-translate-anchor': 'viewport' } }, firstSymbol);
   addLayer(map, { id: 'c3-roads-water', type: 'line', source: 'c3-roads', filter: hot, layout: { ...hidden, ...cap },
-    paint: { 'line-color': C3.roadWater, 'line-width': interpolate(10, 8, 14, 30, 17, 60),
+    paint: { 'line-color': C.roadWater, 'line-width': interpolate(10, 8, 14, 30, 17, 60),
       'line-blur': interpolate(10, 5, 14, 16, 17, 30), 'line-opacity': 0.4 } }, firstSymbol);
   addLayer(map, { id: 'c3-roads-halo', type: 'line', source: 'c3-roads', filter: hot, layout: { ...hidden, ...cap },
     paint: { 'line-color': roadColour, 'line-width': interpolate(10, 5, 14, 16, 17, 32),
@@ -253,11 +257,12 @@ export function addCityLayers(map: MapLibreMap, snapshot: Snapshot): void {
 
   addLayer(map, { id: 'c3-glow-plus-columns', type: 'circle', source: 'c3-report-points', filter: ['!', ['has', 'point_count']], minzoom: 12.5, layout: hidden,
     paint: { 'circle-pitch-alignment': 'map', 'circle-radius': interpolate(12, 11, 14, 30, 17, 105),
-      'circle-color': ['case', ['get', 'closed'], C3.closed, '#31b9ff'], 'circle-blur': 1, 'circle-opacity': 0.28 } }, firstSymbol);
+      'circle-color': ['case', optionalClosed, C.closed, '#31b9ff'], 'circle-blur': 1, 'circle-opacity': 0.28 } }, firstSymbol);
   addLayer(map, { id: 'c3-reports-cluster', type: 'circle', source: 'c3-report-points', filter: ['has', 'point_count'], maxzoom: 13, layout: hidden,
     paint: { 'circle-radius': ['step', ['get', 'point_count'], 14, 10, 19, 40, 25], 'circle-opacity': 0.85,
       'circle-stroke-width': 2.5, 'circle-stroke-color': '#ffffff',
-      'circle-color': ['case', ['>', ['get', 'anyClosed'], 0], C3.closed, ['step', ['get', 'maxd'], C3.ankle, 35, C3.knee, 70, C3.waist, 120, C3.head]] } }, firstSymbol);
+      'circle-color': ['case', ['>', ['to-number', ['get', 'anyClosed'], 0], 0], C.closed,
+        ['step', ['to-number', ['get', 'maxd'], 0], C.ankle, DEPTH_STOPS[0], C.knee, DEPTH_STOPS[1], C.waist, DEPTH_STOPS[2], C.head]] } }, firstSymbol);
   addLayer(map, { id: 'c3-reports-cluster-count', type: 'symbol', source: 'c3-report-points', filter: ['has', 'point_count'], maxzoom: 13,
     layout: { ...hidden, 'text-field': ['get', 'point_count_abbreviated'], 'text-font': ['Noto Sans Bold'], 'text-size': 12, 'text-allow-overlap': true },
     paint: { 'text-color': '#111827' } }, firstSymbol);
@@ -265,8 +270,8 @@ export function addCityLayers(map: MapLibreMap, snapshot: Snapshot): void {
     paint: { 'circle-pitch-alignment': 'map', 'circle-radius': interpolate(12, 6, 14, 18, 17, 70), 'circle-color': 'rgba(0,0,0,0)',
       'circle-stroke-width': interpolate(12, 1.5, 16, 3), 'circle-stroke-color': depthBand, 'circle-blur': 0.3, 'circle-stroke-opacity': 0.95 } }, firstSymbol);
   addLayer(map, { id: 'c3-report-glow', type: 'circle', source: 'c3-report-points', filter: ['!', ['has', 'point_count']], minzoom: 12.5, layout: hidden,
-    paint: { 'circle-pitch-alignment': 'map', 'circle-radius': STATIC_REPORT_GLOW_RADIUS, 'circle-radius-transition': transition,
-      'circle-color': depthBand, 'circle-blur': 1, 'circle-opacity': STATIC_REPORT_GLOW_OPACITY, 'circle-opacity-transition': transition } }, firstSymbol);
+    paint: { 'circle-pitch-alignment': 'map', 'circle-radius': STATIC_REPORT_GLOW_RADIUS,
+      'circle-color': depthBand, 'circle-blur': 1, 'circle-opacity': STATIC_REPORT_GLOW_OPACITY } }, firstSymbol);
   addLayer(map, { id: 'c3-report-columns', type: 'fill-extrusion', source: 'c3-report-columns', minzoom: 12.5, layout: hidden,
     paint: { 'fill-extrusion-height': ['get', 'base'], 'fill-extrusion-base': 0, 'fill-extrusion-color': depthBand, 'fill-extrusion-opacity': 0.95 } });
   addLayer(map, { id: 'c3-report-caps', type: 'fill-extrusion', source: 'c3-report-columns', minzoom: 12.5, layout: hidden,
@@ -275,16 +280,16 @@ export function addCityLayers(map: MapLibreMap, snapshot: Snapshot): void {
   addLayer(map, { id: 'c3-depth-labels', type: 'symbol', source: 'c3-report-labels', minzoom: 12.5, layout: {
     ...hidden, 'text-field': ['get', 'text'], 'text-font': ['Noto Sans Bold'], 'text-size': interpolate(12, 10, 16, 13),
     'text-transform': 'uppercase', 'text-letter-spacing': 0.08, 'text-variable-anchor': ['bottom', 'top', 'left', 'right'],
-    'text-radial-offset': 2.2, 'text-max-width': 14, 'symbol-sort-key': ['-', 0, ['get', 'cm']], 'text-padding': 6,
+    'text-radial-offset': 2.2, 'text-max-width': 14, 'symbol-sort-key': ['-', 0, ['to-number', ['get', 'cm'], 0]], 'text-padding': 6,
     'text-allow-overlap': false, 'text-ignore-placement': false, 'text-pitch-alignment': 'viewport',
-  }, paint: { 'text-color': '#ffffff', 'text-halo-color': ['case', ['get', 'closed'], '#b30026', 'rgba(7,9,13,.9)'], 'text-halo-width': 1.8 } });
+  }, paint: { 'text-color': '#ffffff', 'text-halo-color': ['case', optionalClosed, '#b30026', 'rgba(7,9,13,.9)'], 'text-halo-width': 1.8 } });
 
   addLayer(map, { id: 'c3-transit', type: 'line', source: 'c3-transit', minzoom: 10, filter: ['in', ['geometry-type'], ['literal', ['LineString', 'MultiLineString']]],
-    layout: { ...hidden, 'line-cap': 'round' }, paint: { 'line-color': C3.metro, 'line-width': interpolate(10, 1.5, 14, 2.5, 17, 6),
+    layout: { ...hidden, 'line-cap': 'round' }, paint: { 'line-color': C.metro3d, 'line-width': interpolate(10, 1.5, 14, 2.5, 17, 6),
       'line-blur': 0.4, 'line-opacity': 0.9 } });
   addLayer(map, { id: 'c3-transit-stations', type: 'circle', source: 'c3-transit', minzoom: 11.5,
     filter: ['all', ['==', ['geometry-type'], 'Point'], ['==', ['get', 'kind'], 'station']], layout: hidden,
-    paint: { 'circle-radius': interpolate(12, 3, 16, 7), 'circle-color': '#ffffff', 'circle-stroke-color': C3.metro,
+    paint: { 'circle-radius': interpolate(12, 3, 16, 7), 'circle-color': '#ffffff', 'circle-stroke-color': C.metro3d,
       'circle-stroke-width': 2, 'circle-pitch-alignment': 'map' } });
   addLayer(map, { id: 'c3-transit-station-labels', type: 'symbol', source: 'c3-transit', minzoom: 12.5,
     filter: ['all', ['==', ['geometry-type'], 'Point'], ['==', ['get', 'kind'], 'station']], layout: {
@@ -299,14 +304,28 @@ export function addCityLayers(map: MapLibreMap, snapshot: Snapshot): void {
     'text-max-width': 40, 'text-allow-overlap': false, 'text-optional': false, 'text-pitch-alignment': 'viewport',
   }, paint: { 'text-color': '#ffffff', 'text-halo-color': '#b30026', 'text-halo-width': 2.2 } });
 
-  addPoi(map, 'hospitals', snapshot.osm.hospitals, C3.hospital, 'H');
-  addPoi(map, 'shelters', snapshot.osm.shelters, C3.shelter, 'S');
-  addPoi(map, 'pumping', snapshot.osm.pumping, C3.pump, 'P');
+  addPoi(map, 'hospitals', snapshot.osm.hospitals, C.hospital3d, 'H');
+  addPoi(map, 'shelters', snapshot.osm.shelters, C.shelter3d, 'S');
+  addPoi(map, 'pumping', snapshot.osm.pumping, C.pump3d, 'P');
 }
 
 type SavedProperty = { id: string; property: string; value: unknown };
 type BaseState = { paint: SavedProperty[]; layout: SavedProperty[]; light: LightSpecification; sky: SkySpecification | undefined; applied: boolean };
 const baseStates = new WeakMap<MapLibreMap, BaseState>();
+const DEFAULT_LIGHT: LightSpecification = {
+  anchor: 'viewport', color: '#ffffff', intensity: 0.5, position: [1.15, 210, 30],
+};
+const DEFAULT_SKY: SkySpecification = {
+  'sky-color': '#88C6FC', 'horizon-color': '#ffffff', 'fog-color': '#ffffff',
+  'sky-horizon-blend': 0.8, 'horizon-fog-blend': 0.8, 'fog-ground-blend': 0.5,
+};
+const NIGHT_LIGHT: LightSpecification = {
+  anchor: 'viewport', color: '#b4c6e6', intensity: 0.6, position: [1.2, 210, 40],
+};
+const NIGHT_SKY: SkySpecification = {
+  'sky-color': '#0b1020', 'horizon-color': '#1b2a4a', 'fog-color': '#07090d',
+  'sky-horizon-blend': 0.12, 'horizon-fog-blend': 0.6, 'fog-ground-blend': 0.6,
+};
 
 const paintChanges: [string, string, unknown][] = [
   ['background', 'background-color', '#07090d'], ['landuse_residential', 'fill-color', '#0b0e13'],
@@ -321,6 +340,7 @@ const paintChanges: [string, string, unknown][] = [
   ['highway_motorway_casing', 'line-color', '#2a303a'], ['highway_motorway_casing', 'line-width', interpolate(11, 1.3, 14, 3.6, 17, 13)],
   ['highway_motorway_casing', 'line-opacity', 1], ['highway_motorway_inner', 'line-color', '#1d232d'],
   ['highway_motorway_inner', 'line-width', interpolate(11, 0.7, 14, 2.2, 17, 10)], ['highway_motorway_inner', 'line-opacity', 1],
+  ['radar', 'raster-opacity', 0.45],
 ];
 
 function captureBase(map: MapLibreMap): BaseState {
@@ -333,34 +353,88 @@ function captureBase(map: MapLibreMap): BaseState {
       !/motorway|trunk|primary/.test(layer.id)).map((layer) => layer.id)];
   const layout = [...new Set(layoutIds)].flatMap((id): SavedProperty[] => map.getLayer(id)
     ? [{ id, property: 'visibility', value: map.getLayoutProperty(id, 'visibility') ?? 'visible' }] : []);
-  const state = { paint, layout, light: map.getLight(), sky: map.getSky(), applied: false };
+  const capturedLight = map.getLight();
+  const state = {
+    paint,
+    layout,
+    light: Object.keys(capturedLight).length ? capturedLight : DEFAULT_LIGHT,
+    sky: map.getSky(),
+    applied: false,
+  };
   baseStates.set(map, state);
   return state;
 }
 
+const setLightSafely = (map: MapLibreMap, light: LightSpecification, action: string): void => {
+  try {
+    map.setLight(light);
+  } catch (error) {
+    console.error(`[bangkok] could not ${action} map light`, error);
+  }
+};
+
+const setSkySafely = (map: MapLibreMap, sky: SkySpecification, action: string): void => {
+  try {
+    map.setSky(sky);
+  } catch (error) {
+    console.error(`[bangkok] could not ${action} map sky`, error);
+  }
+};
+
 function applyNightBase(map: MapLibreMap): void {
   const state = captureBase(map);
-  if (state.applied) return;
+  if (state.applied) {
+    if (map.getLayer('radar')) map.setPaintProperty('radar', 'raster-opacity', 0.45);
+    return;
+  }
+  state.applied = true;
   for (const [id, property, value] of paintChanges) if (map.getLayer(id)) map.setPaintProperty(id, property as never, value as never);
   for (const saved of state.layout) if (map.getLayer(saved.id)) map.setLayoutProperty(saved.id, 'visibility', 'none');
-  map.setLight({ anchor: 'viewport', color: '#b4c6e6', intensity: 0.6, position: [1.2, 210, 40] });
-  map.setSky({ 'sky-color': '#0b1020', 'horizon-color': '#1b2a4a', 'fog-color': '#07090d',
-    'sky-horizon-blend': 0.12, 'horizon-fog-blend': 0.6, 'fog-ground-blend': 0.6 });
-  state.applied = true;
+  setLightSafely(map, NIGHT_LIGHT, 'apply');
+  setSkySafely(map, NIGHT_SKY, 'apply');
 }
 
 function restoreBase(map: MapLibreMap): void {
   const state = baseStates.get(map);
   if (!state?.applied) return;
-  for (const saved of state.paint) if (map.getLayer(saved.id)) {
-    map.setPaintProperty(saved.id, saved.property as never, (saved.value ?? null) as never);
+  try {
+    for (const saved of state.paint) if (map.getLayer(saved.id)) {
+      map.setPaintProperty(saved.id, saved.property as never, (saved.value ?? null) as never);
+    }
+    if (map.getLayer('radar')) map.setPaintProperty('radar', 'raster-opacity', 0.7);
+    for (const saved of state.layout) if (map.getLayer(saved.id)) {
+      map.setLayoutProperty(saved.id, saved.property as never, saved.value as never);
+    }
+  } finally {
+    setLightSafely(map, state.light, 'restore');
+    setSkySafely(map, { ...DEFAULT_SKY, ...state.sky }, 'restore');
+    state.applied = false;
   }
-  for (const saved of state.layout) if (map.getLayer(saved.id)) {
-    map.setLayoutProperty(saved.id, saved.property as never, saved.value as never);
+}
+
+export function removeCityLayers(map: MapLibreMap): void {
+  let style: ReturnType<MapLibreMap['getStyle']>;
+  try {
+    style = map.getStyle();
+  } catch (error) {
+    console.error('[bangkok] could not inspect partial 3D style', error);
+    return;
   }
-  map.setLight(state.light);
-  (map.setSky as (sky?: SkySpecification) => MapLibreMap)(state.sky);
-  state.applied = false;
+  const layers = [...(style.layers ?? [])].reverse();
+  for (const layer of layers) if (layer.id.startsWith('c3-') && map.getLayer(layer.id)) {
+    try {
+      map.removeLayer(layer.id);
+    } catch (error) {
+      console.error(`[bangkok] could not remove 3D layer ${layer.id}`, error);
+    }
+  }
+  for (const id of Object.keys(style.sources ?? {})) if (id.startsWith('c3-') && map.getSource(id)) {
+    try {
+      map.removeSource(id);
+    } catch (error) {
+      console.error(`[bangkok] could not remove 3D source ${id}`, error);
+    }
+  }
 }
 
 export function applyView(
@@ -369,7 +443,7 @@ export function applyView(
   active: Record<LayerKey, boolean>,
   city3d: boolean,
 ): void {
-  for (const layer of LAYERS) {
+  for (const layer of LAYERS.filter(isDataLayer)) {
     const ids = new Set([...layer.ids2d, ...layer.ids3d]);
     for (const id of ids) if (map.getLayer(id)) {
       const inView = view === '2d' ? layer.ids2d.includes(id) : layer.ids3d.includes(id);

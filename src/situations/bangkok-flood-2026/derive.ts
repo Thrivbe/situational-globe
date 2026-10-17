@@ -2,7 +2,7 @@ import type { Feature, FeatureCollection, GeoJsonProperties, LineString, MultiLi
   Position } from 'geojson';
 import type { Bbox, Level } from '../types';
 const BANGKOK_CENTER: Position = [100.53, 13.75];
-const BANGKOK_BBOX: Bbox = [100.3, 13.5, 100.95, 14.05];
+export const BANGKOK_BBOX: Bbox = [100.3, 13.5, 100.95, 14.05];
 const BLOCKED_SOURCES = new Set(['news', 'social_fb']);
 const HEX = 0.02;
 const SQRT_THREE = Math.sqrt(3);

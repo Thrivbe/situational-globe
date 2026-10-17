@@ -5,7 +5,7 @@ import * as maplibregl from 'maplibre-gl';
 import type { GeoJSONSource, RasterTileSource } from 'maplibre-gl';
 import type { Snapshot } from '@/situations/types';
 import { createCityAnimation, type CityAnimation } from './animation';
-import { addCityLayers, applyView, cameraTarget } from './city3d';
+import { addCityLayers, applyView, cameraTarget, removeCityLayers } from './city3d';
 import { translate as tr } from './copy';
 import { BANGKOK_CENTRE, isRecord, numberValue, textValue } from './helpers';
 import type { LayerKey } from './layers';
@@ -18,6 +18,19 @@ import RadarTimeline, { type RadarFrame } from './RadarTimeline';
 const STYLE = 'https://tiles.openfreemap.org/styles/dark';
 const RADAR_INDEX = 'https://api.rainviewer.com/public/weather-maps.json';
 const RADAR_TILES = 'https://tilecache.rainviewer.com';
+
+const applyViewSafely = (
+  map: maplibregl.Map,
+  view: BangkokView,
+  activeLayers: Record<LayerKey, boolean>,
+  city3d: boolean,
+): void => {
+  try {
+    applyView(map, view, activeLayers, city3d);
+  } catch (error) {
+    console.error('[bangkok] could not apply map view', error);
+  }
+};
 
 type Props = {
   snapshot: Snapshot;
@@ -169,6 +182,7 @@ export default function BangkokMap({
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const markerRef = useRef<maplibregl.Marker | null>(null);
+  const popupRef = useRef<maplibregl.Popup | null>(null);
   const animationRef = useRef<CityAnimation | null>(null);
   const styleReadyRef = useRef(false);
   const activeRef = useRef(activeLayers);
@@ -179,18 +193,26 @@ export default function BangkokMap({
   const [frames, setFrames] = useState<RadarFrame[]>([]);
   const [frameIndex, setFrameIndex] = useState(0);
   const [mapError, setMapError] = useState(false);
+  const [threeDAvailable, setThreeDAvailable] = useState(true);
+  const [buildingsAvailable, setBuildingsAvailable] = useState(true);
 
   useEffect(() => {
     activeRef.current = activeLayers;
-    if (styleReadyRef.current && mapRef.current) applyView(mapRef.current, viewRef.current, activeLayers, city3dRef.current);
+    if (styleReadyRef.current && mapRef.current) {
+      applyViewSafely(mapRef.current, viewRef.current, activeLayers, city3dRef.current);
+    }
   }, [activeLayers]);
-  useEffect(() => { languageRef.current = language; }, [language]);
+  useEffect(() => {
+    languageRef.current = language;
+    popupRef.current?.remove();
+  }, [language]);
   useEffect(() => {
     const previous = viewRef.current;
     viewRef.current = view;
+    popupRef.current?.remove();
     const map = mapRef.current;
     if (!styleReadyRef.current || !map) return;
-    applyView(map, view, activeRef.current, city3dRef.current);
+    applyViewSafely(map, view, activeRef.current, city3dRef.current);
     if (previous !== view) {
       if (view === '3d') map.easeTo({ center: cameraTarget(snapshot), pitch: 60, bearing: -28, zoom: 14.1, duration: 1_200 });
       else map.easeTo({ pitch: 0, bearing: 0, duration: 900 });
@@ -199,7 +221,9 @@ export default function BangkokMap({
   }, [snapshot, view]);
   useEffect(() => {
     city3dRef.current = city3d;
-    if (styleReadyRef.current && mapRef.current) applyView(mapRef.current, viewRef.current, activeRef.current, city3d);
+    if (styleReadyRef.current && mapRef.current) {
+      applyViewSafely(mapRef.current, viewRef.current, activeRef.current, city3d);
+    }
     animationRef.current?.update({ enabled: animationEnabledRef.current, view: viewRef.current, city3d });
   }, [city3d]);
   useEffect(() => {
@@ -225,6 +249,10 @@ export default function BangkokMap({
       if (disposed || failed) return;
       failed = true;
       console.error('[bangkok] map unavailable', error);
+      styleReadyRef.current = false;
+      animationRef.current?.destroy();
+      animationRef.current = null;
+      onRadarStatus('unavailable');
       setMapError(true);
       onMapReady(null);
     };
@@ -232,12 +260,14 @@ export default function BangkokMap({
       maplibregl.setWorkerUrl(`/vendor/maplibre/${maplibregl.getVersion()}/maplibre-gl-worker.mjs`);
       map = new maplibregl.Map({
         container,
-        style: STYLE,
         center: BANGKOK_CENTRE,
         zoom: 10.6,
         maxPitch: 75,
+        fadeDuration: 0,
         attributionControl: false,
       });
+      // ponytail: Per-layer transitions are ignored for paint changes; style-level 0 keeps the 10 Hz budget.
+      map.setStyle(STYLE, { transformStyle: (_previous, next) => ({ ...next, transition: { duration: 0, delay: 0 } }) });
     } catch (error) {
       failMap(error);
       return;
@@ -246,6 +276,7 @@ export default function BangkokMap({
     const earlyMapError = (event: maplibregl.ErrorEvent) => failMap(event.error);
     map.on('error', earlyMapError);
     const popup = new maplibregl.Popup({ closeButton: false, closeOnClick: false, maxWidth: '300px', className: 'pp' });
+    popupRef.current = popup;
     try {
       map.addControl(new maplibregl.NavigationControl(), 'top-right');
     } catch (error) {
@@ -282,6 +313,8 @@ export default function BangkokMap({
           if (coordinates && Number.isFinite(clusterId) && source) {
             void source.getClusterExpansionZoom(clusterId).then((zoom) => {
               if (!disposed) map.easeTo({ center: coordinates as [number, number], zoom: Math.min(16, zoom + 0.3) });
+            }).catch((error: unknown) => {
+              if (!disposed) console.error('[bangkok] cluster expansion unavailable', error);
             });
           }
           return;
@@ -302,16 +335,33 @@ export default function BangkokMap({
       if (disposed || failed) return;
       try {
         addSnapshotLayers(map, snapshot);
-        addCityLayers(map, snapshot);
-        styleReadyRef.current = true;
-        applyView(map, viewRef.current, activeRef.current, city3dRef.current);
-        if (viewRef.current === '3d') {
+        let cityLayersReady = true;
+        try {
+          addCityLayers(map, snapshot);
+          setThreeDAvailable(true);
+          setBuildingsAvailable(Boolean(map.getLayer('c3-buildings')));
+        } catch (error) {
+          console.error('[bangkok] 3D unavailable', error);
+          removeCityLayers(map);
+          cityLayersReady = false;
+          setThreeDAvailable(false);
+          setBuildingsAvailable(false);
+          if (viewRef.current === '3d') {
+            viewRef.current = '2d';
+            onView('2d');
+          }
+        }
+        applyViewSafely(map, viewRef.current, activeRef.current, city3dRef.current);
+        if (cityLayersReady && viewRef.current === '3d') {
           map.easeTo({ center: cameraTarget(snapshot), pitch: 60, bearing: -28, zoom: 14.1, duration: 1_200 });
         }
-        animationRef.current = createCityAnimation(map);
-        animationRef.current.update({ enabled: animationEnabledRef.current, view: viewRef.current, city3d: city3dRef.current });
+        if (cityLayersReady) {
+          animationRef.current = createCityAnimation(map);
+          animationRef.current.update({ enabled: animationEnabledRef.current, view: viewRef.current, city3d: city3dRef.current });
+        }
         onMapReady(api);
         map.off('error', earlyMapError);
+        styleReadyRef.current = true;
       } catch (error) {
         failMap(error);
         return;
@@ -332,7 +382,7 @@ export default function BangkokMap({
         setFrames(loaded);
         setFrameIndex(loaded.length - 1);
         addRadarLayer(map, loaded.at(-1)?.tile ?? loaded[0].tile, activeRef.current.radar);
-        applyView(map, viewRef.current, activeRef.current, city3dRef.current);
+        applyViewSafely(map, viewRef.current, activeRef.current, city3dRef.current);
         onRadarStatus('ready');
       }).catch((error: unknown) => {
         if (disposed || radarController?.signal.aborted) return;
@@ -358,6 +408,7 @@ export default function BangkokMap({
       markerRef.current?.remove();
       markerRef.current = null;
       popup.remove();
+      popupRef.current = null;
       map.off('error', earlyMapError);
       map.off('style.load', styleLoad);
       map.off('click', click);
@@ -365,9 +416,11 @@ export default function BangkokMap({
       map.remove();
       mapRef.current = null;
     };
-  }, [onMapReady, onRadarStatus, snapshot]);
+  }, [onMapReady, onRadarStatus, onView, snapshot]);
 
   const t = (key: string, english: string) => tr(language, key, english);
+  const viewUnavailable = mapError || !threeDAvailable;
+  const cityUnavailable = !buildingsAvailable || !threeDAvailable;
   return (
     <div className="mapwrap">
       <div className="mapbox">
@@ -375,20 +428,22 @@ export default function BangkokMap({
         <div className={`city-vignette${view === '3d' ? ' on' : ''}`} aria-hidden="true" />
         <div className="viewcontrols">
           <div className="seg" role="group" aria-label={t('view', 'View')}>
-            <button type="button" className={view === '2d' ? 'on' : ''} aria-pressed={view === '2d'} onClick={() => onView('2d')}>2D</button>
-            <button type="button" className={view === '3d' ? 'on' : ''} aria-pressed={view === '3d'} onClick={() => onView('3d')}>3D</button>
+            <button type="button" disabled={viewUnavailable} className={view === '2d' ? 'on' : ''} aria-pressed={view === '2d'} onClick={() => onView('2d')}>2D</button>
+            <button type="button" disabled={viewUnavailable} className={view === '3d' ? 'on' : ''} aria-pressed={view === '3d'} onClick={() => onView('3d')}>3D</button>
           </div>
-          <label className="mapsetting" title={view === '2d' ? t('threeDOnly', 'Available in 3D view') : undefined}>
-            <input type="checkbox" checked={city3d} disabled={view !== '3d'} onChange={(event) => onCity3d(event.currentTarget.checked)} />
-            <span>{t('cityPack', '3D city')}</span>
+          {!threeDAvailable && !mapError && <span className="viewreason">{t('threeDUnavailable', '3D unavailable')}</span>}
+          <label className="mapsetting" title={view === '2d' && !cityUnavailable ? t('threeDOnly', 'Available in 3D view') : undefined}>
+            <input type="checkbox" checked={city3d} disabled={mapError || view !== '3d' || cityUnavailable} onChange={(event) => onCity3d(event.currentTarget.checked)} />
+            <span>{cityUnavailable ? t('buildingsUnavailable', 'Building data unavailable') : t('cityPack', '3D city')}</span>
           </label>
           <label className="mapsetting">
-            <input type="checkbox" checked={animation} onChange={(event) => onAnimation(event.currentTarget.checked)} />
+            <input type="checkbox" checked={animation} disabled={mapError} onChange={(event) => onAnimation(event.currentTarget.checked)} />
             <span>{t('animation', 'Animation')}</span>
           </label>
         </div>
         {mapError && <div className="maperror" role="alert">{t('mapFailed', 'Map could not load. The list still works.')}</div>}
-        <MapLegend active={activeLayers} language={language} view={view} city3d={city3d} />
+        <MapLegend active={activeLayers} language={language} view={view} city3d={city3d}
+          cityAvailable={!cityUnavailable && !mapError} />
         <MapCredit snapshot={snapshot} language={language} />
       </div>
       <RadarTimeline frames={frames} frameIndex={frameIndex} onFrame={chooseFrame} snapshot={snapshot} language={language} />

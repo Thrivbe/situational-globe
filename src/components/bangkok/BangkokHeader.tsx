@@ -10,8 +10,9 @@ import {
   SNAPSHOT_PARTS,
   snapshotPartTime,
   textValue,
+  timeAgo,
 } from './helpers';
-import { relativeTime, translate as tr } from './copy';
+import { translate as tr } from './copy';
 import type { Language } from './types';
 
 type Props = {
@@ -98,8 +99,8 @@ export default function BangkokHeader({
             : stale.length ? <span>{t('old', 'Data is old')}: {partNames(stale)}</span>
               : <span>{t('live', 'Live')}</span>}
           {stale.length > 0 && <><span className="sep" /><span className="dim">{t('dataFrom', 'data from')} <b>{bangkokTime(oldestStale)}</b></span></>}
-          <span className="sep" /><span className="dim">{t('roadsUpdated', 'Roads updated')} <b>{statuses.roads === 'missing' ? '—' : relativeTime(language, snapshot.feedsAt.roads, now)}</b></span>
-          <span className="sep" /><span className="dim">{t('latestReport', 'Latest report')} <b>{statuses.reports !== 'missing' && latestReport ? relativeTime(language, latestReport, now) : '—'}</b></span>
+          <span className="sep" /><span className="dim">{t('roadsUpdated', 'Roads updated')} <b>{statuses.roads === 'missing' ? '—' : timeAgo(language, snapshot.feedsAt.roads, now)}</b></span>
+          <span className="sep" /><span className="dim">{t('latestReport', 'Latest report')} <b>{statuses.reports !== 'missing' && latestReport ? timeAgo(language, latestReport, now) : '—'}</b></span>
         </>}
       </div>
       <div className="tools">

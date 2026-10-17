@@ -21,10 +21,11 @@ import {
   snapshotPartTime,
   stringList,
   textValue,
+  timeAgo,
   type RiverRow,
 } from './helpers';
 import { LAYERS, LAYER_GROUPS, type LayerKey } from './layers';
-import { relativeTime, translate as tr } from './copy';
+import { translate as tr } from './copy';
 import type { BangkokMapApi, BangkokView, Language, RadarStatus } from './types';
 
 type Props = {
@@ -188,7 +189,7 @@ export default function BangkokPanel({ snapshot, language, view, activeLayers, o
           return <li key={`${road.label}-${index}`} style={{ '--c': `var(--${severity})` } as React.CSSProperties}>
             <button type="button" className="roadbtn" disabled={!mapApi} title={!mapApi ? t('mapUnavailable', 'Map unavailable') : undefined}
               onClick={() => mapApi?.fitBounds(road.bounds, 16)}>
-              <span className="rk">{index + 1}</span><span className="rn"><b title={road.label}>{road.label}</b><span className="dim">{segments(road, language)}{road.depth ? ` · ${t('deepestLower', 'deepest')} ${Math.round(road.depth)} cm` : ''}{road.updated ? ` · ${relativeTime(language, road.updated, now)}` : ''}</span></span><span className={`pill ${severity}`}>{t(severity, severity)}</span>
+              <span className="rk">{index + 1}</span><span className="rn"><b title={road.label}>{road.label}</b><span className="dim">{segments(road, language)}{road.depth ? ` · ${t('deepestLower', 'deepest')} ${Math.round(road.depth)} cm` : ''}{road.updated ? ` · ${timeAgo(language, road.updated, now)}` : ''}</span></span><span className={`pill ${severity}`}>{t(severity, severity)}</span>
             </button>
           </li>;
         })}</ol></div>
@@ -214,10 +215,10 @@ export default function BangkokPanel({ snapshot, language, view, activeLayers, o
         </div>)}</div>
       </details>
 
-      <details className="flowpanel"><summary>{t('river', 'River discharge')} <span className="dim">m³/s</span></summary><RiverDischarge rows={river} now={now} unavailable={statuses.river === 'missing'} language={language} /></details>
+      {view === '2d' && <details className="flowpanel"><summary>{t('river', 'River discharge')} <span className="dim">m³/s</span></summary><RiverDischarge rows={river} now={now} unavailable={statuses.river === 'missing'} language={language} /></details>}
       <details className="freshd"><summary>{t('fresh', 'Data freshness')}</summary><dl className="fresh">
         {SNAPSHOT_PARTS.map((part) => <div className="freshrow" key={part}><dt>{t(`part_${part}`, part === 'districtRain' ? 'district rain' : part)}</dt><dd>{statuses[part] === 'missing'
-          ? t('unavailable', 'unavailable') : `${relativeTime(language, snapshotPartTime(snapshot, part), now)} · ${bangkokTime(snapshotPartTime(snapshot, part))}`}</dd></div>)}
+          ? t('unavailable', 'unavailable') : `${timeAgo(language, snapshotPartTime(snapshot, part), now)} · ${bangkokTime(snapshotPartTime(snapshot, part))}`}</dd></div>)}
       </dl></details>
     </aside>
   );

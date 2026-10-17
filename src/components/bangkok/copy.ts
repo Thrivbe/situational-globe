@@ -113,6 +113,8 @@ const TH: Record<string, string> = {
   heavy: 'หนัก',
   radarNote: 'พื้นที่สีคือฝน ไม่ใช่น้ำท่วมขัง',
   cityPack: 'เมือง 3 มิติ',
+  threeDUnavailable: '3 มิติไม่พร้อมใช้งาน',
+  buildingsUnavailable: 'ไม่มีข้อมูลอาคาร',
   view: 'มุมมอง',
   threeDOnly: 'ใช้ได้ในมุมมอง 3 มิติ',
   animation: 'ภาพเคลื่อนไหว',
@@ -189,15 +191,3 @@ const TH: Record<string, string> = {
 
 export const translate = (language: Language, key: string, english: string, thai?: string): string =>
   language === 'th' ? thai ?? TH[key] ?? english : english;
-
-export function relativeTime(language: Language, value: string | number, now = Date.now()): string {
-  const time = typeof value === 'number' ? value : Date.parse(value);
-  if (!Number.isFinite(time)) return '—';
-  const minutes = Math.max(0, Math.round((now - time) / 60_000));
-  if (minutes < 2) return translate(language, 'justNow', 'just now');
-  if (minutes < 60) return translate(language, 'minutesAgo', `${minutes} min ago`).replace('{n}', String(minutes));
-  const hours = Math.round(minutes / 60);
-  if (minutes < 2_880) return translate(language, 'hoursAgo', `${hours} h ago`).replace('{n}', String(hours));
-  const days = Math.round(minutes / 1_440);
-  return translate(language, 'daysAgo', `${days} d ago`).replace('{n}', String(days));
-}

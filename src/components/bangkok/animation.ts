@@ -1,4 +1,5 @@
 import type { ExpressionSpecification, Map as MapLibreMap } from 'maplibre-gl';
+import { BANGKOK_BBOX } from '@/situations/bangkok-flood-2026/derive';
 import {
   BUILDING_HEIGHT,
   STATIC_DANGER_OPACITY,
@@ -7,8 +8,6 @@ import {
   buildingHeightAt,
 } from './city3d';
 import type { BangkokView } from './types';
-
-export const BANGKOK_BBOX = [100.3, 13.5, 100.95, 14.0] as const;
 
 export type TickState = {
   enabled: boolean;
@@ -47,9 +46,12 @@ export function createCityAnimation(map: MapLibreMap): CityAnimation {
   let riseStarted = 0;
   let rising = false;
   let destroyed = false;
+  let containerInView = typeof IntersectionObserver === 'undefined';
 
   const setPaint = (id: string, property: string, value: unknown) => {
-    if (map.getLayer(id)) map.setPaintProperty(id, property as never, value as never);
+    if (map.getLayer(id) && map.getLayoutProperty(id, 'visibility') !== 'none') {
+      map.setPaintProperty(id, property as never, value as never);
+    }
   };
   const setBuildingHeight = (scale: number) => {
     const height = scale >= 1 ? BUILDING_HEIGHT : buildingHeightAt(scale);
@@ -63,7 +65,8 @@ export function createCityAnimation(map: MapLibreMap): CityAnimation {
     setBuildingHeight(1);
     rising = false;
   };
-  const running = () => live.enabled && live.view === '3d' && !document.hidden && intersectsBangkok(map);
+  const cityInView = () => containerInView && intersectsBangkok(map);
+  const running = () => live.enabled && live.view === '3d' && !document.hidden && cityInView();
 
   const paintFrame = (now: number) => {
     const seconds = now / 1_000;
@@ -73,8 +76,9 @@ export function createCityAnimation(map: MapLibreMap): CityAnimation {
     setPaint('c3-report-glow', 'circle-radius', interpolate(12, 4 + 6 * ring, 14, 10 + 22 * ring, 17, 36 + 60 * ring));
     setPaint('c3-report-glow', 'circle-opacity', STATIC_REPORT_GLOW_OPACITY * (1 - ring));
     if (rising) {
-      const elapsed = Math.min(1, (now - riseStarted) / 1_200);
-      setBuildingHeight(1 - (1 - elapsed) ** 3);
+      const elapsed = Math.max(0, Math.min(1, (now - riseStarted) / 1_200));
+      const scale = Math.max(0, Math.min(1, 1 - (1 - elapsed) ** 3));
+      setBuildingHeight(scale);
       if (elapsed >= 1) rising = false;
     }
   };
@@ -95,7 +99,7 @@ export function createCityAnimation(map: MapLibreMap): CityAnimation {
       return;
     }
     if (shouldTick({ enabled: live.enabled, view: live.view, documentHidden: document.hidden,
-      cityInView: true, now, lastTick })) {
+      cityInView: cityInView(), now, lastTick })) {
       paintFrame(now);
       lastTick = now;
     }
@@ -119,15 +123,27 @@ export function createCityAnimation(map: MapLibreMap): CityAnimation {
   for (const event of interactions) canvas.addEventListener(event, pauseOrbit, { passive: true });
   document.addEventListener('visibilitychange', visibility);
   map.on('moveend', moved);
+  const observer = typeof IntersectionObserver === 'undefined' ? null : new IntersectionObserver((entries) => {
+    const entry = entries.find((candidate) => candidate.target === map.getContainer()) ?? entries[0];
+    containerInView = Boolean(entry?.isIntersecting && entry.intersectionRatio > 0);
+    if (containerInView) schedule();
+    else cancel();
+  });
+  observer?.observe(map.getContainer());
 
   return {
     update(next) {
       const entering = live.view !== '3d' && next.view === '3d';
       live = next;
       if (entering && next.enabled && next.city3d) {
-        riseStarted = performance.now();
-        rising = true;
-        setBuildingHeight(0);
+        if (running()) {
+          riseStarted = performance.now();
+          rising = true;
+          setBuildingHeight(0);
+        } else {
+          rising = false;
+          setBuildingHeight(1);
+        }
       } else if (!next.enabled || next.view !== '3d' || !next.city3d) {
         staticPaint();
       }
@@ -139,6 +155,7 @@ export function createCityAnimation(map: MapLibreMap): CityAnimation {
       cancel();
       document.removeEventListener('visibilitychange', visibility);
       map.off('moveend', moved);
+      observer?.disconnect();
       for (const event of interactions) canvas.removeEventListener(event, pauseOrbit);
     },
   };

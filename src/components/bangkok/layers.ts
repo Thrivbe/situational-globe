@@ -8,7 +8,7 @@ export type LayerKey =
 export type LayerGroupKey = 'flood' | 'help' | 'city';
 export type LegendItem = { shape: 'line' | 'dot' | 'swatch'; color: string; label: string; thai: string };
 export type LayerDefinition = {
-  key: LayerKey;
+  key: LayerKey | 'cityPack';
   group: LayerGroupKey;
   label: string;
   thai: string;
@@ -24,12 +24,9 @@ export const C = {
   hospital: '#ec4899', shelter: '#14b8a6', pump: '#c2855a', fire: '#d6d3d1',
   landmark: '#c4b5fd', rail: '#e5e7eb', metro: '#60a5fa', sky: '#4ade80', airport: '#fde68a',
   canal: '#22d3ee', ferry: '#f59e0b',
-};
-
-export const C3 = {
-  roadWater: '#2f7fe0', roadBlocked: '#ef4444', roadRisky: '#fb923c', roadCaution: '#facc15', roadOk: '#4ade80',
+  roadWater: '#2f7fe0',
   ankle: '#4fc3ff', knee: '#f2a93b', waist: '#e5304a', head: '#ff3d81', closed: '#ff1744',
-  metro: '#c084fc', rail: '#94a3b8', hospital: '#2dd4bf', shelter: '#a3e635', pump: '#818cf8',
+  metro3d: '#c084fc', rail3d: '#94a3b8', hospital3d: '#2dd4bf', shelter3d: '#a3e635', pump3d: '#818cf8',
 };
 
 const n = (label: string, thai: string, color: string, shape: LegendItem['shape']): LegendItem =>
@@ -46,10 +43,10 @@ export const LAYERS: LayerDefinition[] = [
       n('no colour = no data, not dry', 'ไม่มีสี = ไม่มีข้อมูล ไม่ได้แปลว่าแห้ง', '#27313c', 'swatch'),
     ],
     legend3d: [
-      n('water glow under risky roads', 'แสงน้ำใต้ถนนเสี่ยง', C3.roadWater, 'line'),
-      n('blocked (static dash + ribbon)', 'ผ่านไม่ได้ (เส้นประคงที่ + แถบยกสูง)', C3.roadBlocked, 'line'),
-      n('risky (raised ribbon)', 'เสี่ยง (แถบยกสูง)', C3.roadRisky, 'line'),
-      n('caution', 'ระวัง', C3.roadCaution, 'line'),
+      n('water glow under risky roads', 'แสงน้ำใต้ถนนเสี่ยง', C.roadWater, 'line'),
+      n('blocked (static dash + ribbon)', 'ผ่านไม่ได้ (เส้นประคงที่ + แถบยกสูง)', C.blocked, 'line'),
+      n('risky (raised ribbon)', 'เสี่ยง (แถบยกสูง)', C.risky, 'line'),
+      n('caution', 'ระวัง', C.caution, 'line'),
     ], count: (snapshot) => snapshot.flood.roads.features.length },
   { key: 'reports', group: 'flood', label: 'Citizen reports', thai: 'รายงานประชาชน',
     ids2d: ['reports', 'reports-cluster', 'reports-cluster-count'],
@@ -61,8 +58,8 @@ export const LAYERS: LayerDefinition[] = [
       n('road closed', 'ถนนปิด', C.blocked, 'dot'),
     ],
     legend3d: [
-      n('ankle depth column', 'เสาความลึกระดับข้อเท้า', C3.ankle, 'swatch'), n('knee depth column', 'เสาความลึกระดับเข่า', C3.knee, 'swatch'),
-      n('waist depth column', 'เสาความลึกระดับเอว', C3.waist, 'swatch'), n('over-head depth column', 'เสาความลึกเหนือศีรษะ', C3.head, 'swatch'),
+      n('ankle depth column', 'เสาความลึกระดับข้อเท้า', C.ankle, 'swatch'), n('knee depth column', 'เสาความลึกระดับเข่า', C.knee, 'swatch'),
+      n('waist depth column', 'เสาความลึกระดับเอว', C.waist, 'swatch'), n('over-head depth column', 'เสาความลึกเหนือศีรษะ', C.head, 'swatch'),
       n('white cap = road closed', 'ยอดสีขาว = ถนนปิด', '#ffffff', 'swatch'),
     ], count: (snapshot) => snapshot.flood.reports.features.length },
   { key: 'radar', group: 'flood', label: 'Rain radar', thai: 'เรดาร์ฝน', ids2d: ['radar'], ids3d: ['radar'], legend2d: [
@@ -87,17 +84,17 @@ export const LAYERS: LayerDefinition[] = [
     ] },
   { key: 'hospitals', group: 'help', label: 'Hospitals', thai: 'โรงพยาบาล', ids2d: ['hospitals', 'hospitals-g'],
     ids3d: ['c3-hospitals', 'c3-hospitals-badge', 'c3-hospitals-glyph'],
-    legend2d: [n('H  hospital', 'H โรงพยาบาล', C.hospital, 'dot')], legend3d: [n('H  hospital pillar', 'H เสาโรงพยาบาล', C3.hospital, 'dot')],
+    legend2d: [n('H  hospital', 'H โรงพยาบาล', C.hospital, 'dot')], legend3d: [n('H  hospital pillar', 'H เสาโรงพยาบาล', C.hospital3d, 'dot')],
     count: (snapshot) => snapshot.osm.hospitals.features.length },
   { key: 'shelters', group: 'help', label: 'Possible gathering sites, not official', thai: 'จุดรวมพลที่เป็นไปได้ (ไม่เป็นทางการ)',
     ids2d: ['shelters', 'shelters-g'], ids3d: ['c3-shelters', 'c3-shelters-badge', 'c3-shelters-glyph'],
     legend2d: [n('S  possible gathering site', 'S จุดรวมพลที่เป็นไปได้', C.shelter, 'dot')],
-    legend3d: [n('S  possible gathering-site pillar', 'S เสาจุดรวมพลที่เป็นไปได้', C3.shelter, 'dot')],
+    legend3d: [n('S  possible gathering-site pillar', 'S เสาจุดรวมพลที่เป็นไปได้', C.shelter3d, 'dot')],
     count: (snapshot) => snapshot.osm.shelters.features.length },
   { key: 'pumping', group: 'help', label: 'Pumping stations, gates, weirs', thai: 'สถานีสูบน้ำ ประตูน้ำ และฝาย',
     ids2d: ['pumping', 'pumping-g'], ids3d: ['c3-pumping', 'c3-pumping-badge', 'c3-pumping-glyph'],
     legend2d: [n('P  pump / gate / weir', 'P ปั๊ม / ประตูน้ำ / ฝาย', C.pump, 'dot')],
-    legend3d: [n('P  flood-control pillar', 'P เสาโครงสร้างควบคุมน้ำ', C3.pump, 'dot')],
+    legend3d: [n('P  flood-control pillar', 'P เสาโครงสร้างควบคุมน้ำ', C.pump3d, 'dot')],
     count: (snapshot) => snapshot.osm.pumping.features.length },
   { key: 'fire', group: 'help', label: 'Fire / rescue stations', thai: 'สถานีดับเพลิงและกู้ภัย', ids2d: ['fire', 'fire-g'], ids3d: [],
     legend2d: [n('F  fire station', 'F สถานีดับเพลิง', C.fire, 'dot')], count: (snapshot) => snapshot.osm.fireStations.features.length },
@@ -114,7 +111,7 @@ export const LAYERS: LayerDefinition[] = [
       n('rail line (dashed)', 'ทางรถไฟ (เส้นประ)', C.rail, 'line'), n('metro / sky train', 'รถไฟฟ้า / บีทีเอส', C.metro, 'line'),
       n('station', 'สถานี', C.metro, 'dot'),
     ], legend3d: [
-      n('metro / sky train', 'รถไฟฟ้า / บีทีเอส', C3.metro, 'line'), n('heavy rail', 'รถไฟทางไกล', C3.rail, 'line'),
+      n('metro / sky train', 'รถไฟฟ้า / บีทีเอส', C.metro3d, 'line'), n('heavy rail', 'รถไฟทางไกล', C.rail3d, 'line'),
       n('station', 'สถานี', '#ffffff', 'dot'),
     ], count: (snapshot) => snapshot.osm.transit.features.length },
   { key: 'stationWater', group: 'city', label: 'Water near station', thai: 'น้ำใกล้สถานี', ids2d: ['station-water'], ids3d: ['c3-station-water'],
@@ -128,21 +125,25 @@ export const LAYERS: LayerDefinition[] = [
     legend2d: [n('airport', 'สนามบิน', C.airport, 'dot')] },
   { key: 'landmarks', group: 'city', label: 'Landmarks', thai: 'สถานที่สำคัญ', ids2d: ['landmarks', 'landmarks-g', 'landmarks-label'], ids3d: [],
     legend2d: [n('named landmark', 'สถานที่สำคัญที่มีชื่อ', C.landmark, 'dot')], count: (snapshot) => snapshot.osm.landmarks.features.length },
+  { key: 'cityPack', group: 'city', label: '3D city', thai: 'เมือง 3 มิติ', ids2d: [], ids3d: ['c3-buildings', 'c3-parks'], legend2d: [], legend3d: [
+    n('blue-grey buildings, capped at 130 m', 'อาคารสีน้ำเงินเทา สูงไม่เกิน 130 ม.', '#2b3650', 'swatch'),
+    n('parks and green space', 'สวนและพื้นที่สีเขียว', '#0f2a22', 'swatch'),
+  ] },
 ];
 
-export const TWO_D_ONLY_KEYS = LAYERS.filter((layer) => !layer.ids3d.length).map((layer) => layer.key);
+export const isDataLayer = (layer: LayerDefinition): layer is LayerDefinition & { key: LayerKey } =>
+  layer.key !== 'cityPack';
+
+export const CITY_PACK_LAYER_IDS = LAYERS.find((layer) => layer.key === 'cityPack')?.ids3d ?? [];
+
+export const TWO_D_ONLY_KEYS = LAYERS.filter(isDataLayer).filter((layer) => !layer.ids3d.length).map((layer) => layer.key);
 
 export const LAYER_GROUPS: { key: LayerGroupKey; label: string; thai: string; keys: LayerKey[] }[] = [
-  { key: 'flood', label: 'Flood', thai: 'น้ำท่วม', keys: LAYERS.filter((layer) => layer.group === 'flood').map((layer) => layer.key) },
-  { key: 'help', label: 'Help', thai: 'ความช่วยเหลือ', keys: LAYERS.filter((layer) => layer.group === 'help').map((layer) => layer.key) },
-  { key: 'city', label: 'City', thai: 'เมือง', keys: LAYERS.filter((layer) => layer.group === 'city').map((layer) => layer.key) },
+  { key: 'flood', label: 'Flood', thai: 'น้ำท่วม', keys: LAYERS.filter(isDataLayer).filter((layer) => layer.group === 'flood').map((layer) => layer.key) },
+  { key: 'help', label: 'Help', thai: 'ความช่วยเหลือ', keys: LAYERS.filter(isDataLayer).filter((layer) => layer.group === 'help').map((layer) => layer.key) },
+  { key: 'city', label: 'City', thai: 'เมือง', keys: LAYERS.filter(isDataLayer).filter((layer) => layer.group === 'city').map((layer) => layer.key) },
 ];
 
 export const INITIAL_LAYERS = Object.fromEntries(
-  LAYERS.map((layer) => [layer.key, layer.group === 'flood']),
+  LAYERS.filter(isDataLayer).map((layer) => [layer.key, layer.group === 'flood']),
 ) as Record<LayerKey, boolean>;
-
-// Kept for slice 3a callers while the single table remains the source of truth.
-export const LAYERS_2D = LAYERS.map((layer) => ({
-  key: layer.key, label: layer.label, thai: layer.thai, ids: layer.ids2d, legend: layer.legend2d,
-}));
