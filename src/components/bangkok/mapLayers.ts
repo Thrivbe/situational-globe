@@ -9,7 +9,7 @@ import {
   rainRows,
   textValue,
 } from './helpers';
-import { C, LAYERS_2D, type LayerKey } from './layers';
+import { C, LAYERS, type LayerKey } from './layers';
 
 const DG = ['', 'rgba(56,189,248,.12)', 'rgba(251,146,60,.17)', 'rgba(239,68,68,.27)'];
 const OSM_SOURCE = 'openmaptiles';
@@ -288,7 +288,7 @@ export function addSnapshotLayers(map: MapLibreMap, snapshot: Snapshot): void {
 }
 
 export function applyLayerVisibility(map: MapLibreMap, active: Record<LayerKey, boolean>): void {
-  for (const layer of LAYERS_2D) for (const id of layer.ids) {
+  for (const layer of LAYERS) for (const id of layer.ids2d) {
     if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', active[layer.key] ? 'visible' : 'none');
   }
 }

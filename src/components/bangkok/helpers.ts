@@ -3,7 +3,8 @@ import { haversine, type LngLat } from '@/lib/geo';
 import type { Snapshot } from '@/situations/types';
 
 export type Bounds = [west: number, south: number, east: number, north: number];
-export const SNAPSHOT_PARTS = ['roads', 'reports', 'forecast', 'grid', 'districtRain', 'river'] as const;
+export const BANGKOK_CENTRE: [number, number] = [100.53, 13.75];
+export const SNAPSHOT_PARTS = ['roads', 'reports', 'forecast', 'grid', 'districtRain', 'river', 'osm'] as const;
 export type SnapshotPart = typeof SNAPSHOT_PARTS[number];
 export type SnapshotPartStatus = 'ok' | 'stale' | 'missing';
 
@@ -23,14 +24,25 @@ export const stringList = (value: unknown): string[] => Array.isArray(value)
 export const propertiesOf = (feature: Feature): Record<string, unknown> =>
   isRecord(feature.properties) ? feature.properties : {};
 
+export const snapshotPartTime = (snapshot: Snapshot, part: SnapshotPart): string =>
+  part === 'osm' ? snapshot.osm.builtAt : snapshot.feedsAt[part] ?? '';
+
 export function partStatus(snapshot: Snapshot, now: Date | number): Record<SnapshotPart, SnapshotPartStatus> {
   const nowMs = typeof now === 'number' ? now : now.getTime();
   return Object.fromEntries(SNAPSHOT_PARTS.map((part) => {
-    if (!Object.hasOwn(snapshot.feedsAt, part)) return [part, 'missing'];
-    const time = Date.parse(snapshot.feedsAt[part]);
+    const time = Date.parse(snapshotPartTime(snapshot, part));
     if (!Number.isFinite(time)) return [part, 'missing'];
-    return [part, nowMs - time > 60 * 60 * 1_000 ? 'stale' : 'ok'];
+    const maxAge = part === 'osm' ? 48 * 60 * 60 * 1_000 : 60 * 60 * 1_000;
+    return [part, nowMs - time > maxAge ? 'stale' : 'ok'];
   })) as Record<SnapshotPart, SnapshotPartStatus>;
+}
+
+export function bangkokDay(now: number): string {
+  const parts = new Intl.DateTimeFormat('en', {
+    timeZone: 'Asia/Bangkok', year: 'numeric', month: '2-digit', day: '2-digit',
+  }).formatToParts(now);
+  const value = (type: Intl.DateTimeFormatPartTypes) => parts.find((part) => part.type === type)?.value ?? '';
+  return `${value('year')}-${value('month')}-${value('day')}`;
 }
 
 export function timeAgo(value: string | number, now = Date.now()): string {

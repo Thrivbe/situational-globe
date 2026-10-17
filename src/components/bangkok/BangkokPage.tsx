@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import type { Position } from 'geojson';
 import { haversine } from '@/lib/geo';
 import type { Snapshot } from '@/situations/types';
@@ -10,6 +10,7 @@ import BangkokPanel from './BangkokPanel';
 import SourcesPopover from './SourcesPopover';
 import { translate as tr } from './copy';
 import {
+  BANGKOK_CENTRE,
   districtsWithSignals,
   findDistrict,
   geometryBounds,
@@ -21,7 +22,7 @@ import {
   textValue,
 } from './helpers';
 import { INITIAL_LAYERS, type LayerKey } from './layers';
-import type { BangkokMapApi, Language, RadarStatus } from './types';
+import type { BangkokMapApi, BangkokView, Language, RadarStatus } from './types';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
 let snapshotRequest: Promise<Snapshot> | null = null;
@@ -49,11 +50,23 @@ type NearState =
   | { kind: 'message'; message: string }
   | { kind: 'result'; district: string; blocked: number; risky: number; reports: number; roads: { label: string; severity: number; km: number }[] };
 
+const reducedMotionQuery = '(prefers-reduced-motion: reduce)';
+const subscribeReducedMotion = (notify: () => void) => {
+  if (typeof window === 'undefined' || !window.matchMedia) return () => undefined;
+  const query = window.matchMedia(reducedMotionQuery);
+  query.addEventListener('change', notify);
+  return () => query.removeEventListener('change', notify);
+};
+const reducedMotionSnapshot = () => typeof window !== 'undefined' && Boolean(window.matchMedia?.(reducedMotionQuery).matches);
+
 export default function BangkokPage() {
   const [snapshot, setSnapshot] = useState<Snapshot | null>(null);
   const [error, setError] = useState(false);
   const [retry, setRetry] = useState(0);
   const [language, setLanguage] = useState<Language>('en');
+  const [view, setView] = useState<BangkokView>('2d');
+  const [city3d, setCity3d] = useState(true);
+  const [animationChoice, setAnimationChoice] = useState<boolean | null>(null);
   const [sourcesOpen, setSourcesOpen] = useState(false);
   const [search, setSearch] = useState('');
   const [searchMiss, setSearchMiss] = useState(false);
@@ -67,6 +80,8 @@ export default function BangkokPage() {
   const mapApiRef = useRef<BangkokMapApi | null>(null);
   const locationRequestRef = useRef(0);
   const mountedRef = useRef(false);
+  const reducedMotion = useSyncExternalStore(subscribeReducedMotion, reducedMotionSnapshot, () => false);
+  const animation = animationChoice ?? !reducedMotion;
 
   useEffect(() => {
     mountedRef.current = true;
@@ -163,15 +178,15 @@ export default function BangkokPage() {
     setNear({ kind: 'message', message: tr(language, 'finding', 'Finding your location…') });
     if (!navigator.geolocation) {
       setNearPending(false);
-      setNear({ kind: 'message', message: 'Location unavailable' });
+      setNear({ kind: 'message', message: tr(language, 'locationUnavailable', 'Location unavailable') });
       return;
     }
     navigator.geolocation.getCurrentPosition((position) => {
       if (!mountedRef.current || locationRequestRef.current !== request) return;
       setNearPending(false);
       const at: Position = [position.coords.longitude, position.coords.latitude];
-      if (haversine([at[0], at[1]], [100.53, 13.75]) > 60) {
-        setNear({ kind: 'message', message: 'You appear to be outside the Bangkok area. Use the district search instead.' });
+      if (haversine([at[0], at[1]], BANGKOK_CENTRE) > 60) {
+        setNear({ kind: 'message', message: tr(language, 'outsideBangkok', 'You appear to be outside the Bangkok area. Use the district search instead.') });
         return;
       }
       const roads = snapshot.flood.roads;
@@ -182,9 +197,10 @@ export default function BangkokPage() {
       const districtProperties = district ? propertiesOf(district) : {};
       const districtName = textValue(districtProperties.name);
       const signals = numberValue(districtProperties.signals);
-      const districtStatus = !districtName ? 'Not inside a known district'
-        : signals >= 12 ? `${districtName}: avoid (${Math.round(signals)} signals)`
-          : signals > 0 ? `${districtName}: watch (${Math.round(signals)} signals)` : `${districtName}: no flood signals`;
+      const districtStatus = !districtName ? tr(language, 'unknownDistrict', 'Not inside a known district')
+        : signals >= 12 ? `${districtName}: ${tr(language, 'avoid', 'avoid')} (${Math.round(signals)} ${tr(language, 'signals', 'signals')})`
+          : signals > 0 ? `${districtName}: ${tr(language, 'watch', 'watch')} (${Math.round(signals)} ${tr(language, 'signals', 'signals')})`
+            : `${districtName}: ${tr(language, 'noSignals', 'no flood signals')}`;
       setNear({
         kind: 'result',
         district: districtStatus,
@@ -197,13 +213,14 @@ export default function BangkokPage() {
     }, (locationError) => {
       if (!mountedRef.current || locationRequestRef.current !== request) return;
       setNearPending(false);
-      setNear({ kind: 'message', message: locationError.code === 1 ? 'Location permission denied' : 'Location unavailable' });
+      setNear({ kind: 'message', message: locationError.code === 1
+        ? tr(language, 'locationDenied', 'Location permission denied') : tr(language, 'locationUnavailable', 'Location unavailable') });
     }, { timeout: 10_000, maximumAge: 60_000 });
   };
 
   if (!snapshot) {
     return <div className="bangkok-root"><main id="app"><div className="loading" role={error ? undefined : 'status'}>
-      {error ? <div className="loaderror" role="alert"><p>Could not load live Bangkok data.</p><button type="button" className="tbtn" onClick={retryLoad}>{tr(language, 'retry', 'Retry')}</button></div>
+      {error ? <div className="loaderror" role="alert"><p>{tr(language, 'loadFailed', 'Could not load live Bangkok data.')}</p><button type="button" className="tbtn" onClick={retryLoad}>{tr(language, 'retry', 'Retry')}</button></div>
         : announceLoading ? tr(language, 'loading', 'Loading live Bangkok data…') : ''}
     </div></main></div>;
   }
@@ -230,17 +247,18 @@ export default function BangkokPage() {
         {near.kind === 'message' ? <p className="dsum">{near.message}</p> : <>
           <h2><span>{tr(language, 'within', 'Within 3 km of you')}</span><button type="button" className="lnk" onClick={() => setNear({ kind: 'hidden' })}>{tr(language, 'close', 'Close')}</button></h2>
           <p className="dsum"><b>{near.district}</b></p>
-          <p className="dsum"><b>{near.blocked}</b> blocked, <b>{near.risky}</b> risky roads · <b>{near.reports}</b> live reports</p>
-          <ul className="nlist">{near.roads.length ? near.roads.map((road) => <li key={road.label}><span className={`pill ${road.severity >= 4 ? 'blocked' : 'risky'}`}>{road.severity >= 4 ? 'blocked' : 'risky'}</span> {road.label} <span className="dim">{road.km.toFixed(1)} km</span></li>)
+          <p className="dsum"><b>{near.blocked}</b> {tr(language, 'blocked', 'blocked')}, <b>{near.risky}</b> {tr(language, 'riskyRoads', 'risky roads')} · <b>{near.reports}</b> {tr(language, 'liveReports', 'live reports')}</p>
+          <ul className="nlist">{near.roads.length ? near.roads.map((road) => <li key={road.label}><span className={`pill ${road.severity >= 4 ? 'blocked' : 'risky'}`}>{road.severity >= 4 ? tr(language, 'blocked', 'blocked') : tr(language, 'risky', 'risky')}</span> {road.label} <span className="dim">{road.km.toFixed(1)} km</span></li>)
             : <li className="dim">{tr(language, 'noNearby', 'No blocked or risky roads within 3 km.')}</li>}</ul>
         </>}
         {near.kind === 'message' && <button type="button" className="lnk" onClick={() => setNear({ kind: 'hidden' })}>{tr(language, 'close', 'Close')}</button>}
       </div>}
       <main id="app"><div className="a">
-        <BangkokPanel snapshot={snapshot} language={language} activeLayers={activeLayers} onToggle={toggle} mapApi={mapApi}
+        <BangkokPanel snapshot={snapshot} language={language} view={view} activeLayers={activeLayers} onToggle={toggle} mapApi={mapApi}
           radarStatus={radarStatus} onSources={() => setSourcesOpen(true)} now={now} />
         <BangkokMap snapshot={snapshot} language={language} activeLayers={activeLayers} onMapReady={mapReady}
-          onRadarStatus={setRadarStatus} now={now} />
+          onRadarStatus={setRadarStatus} view={view} onView={setView} city3d={city3d} onCity3d={setCity3d}
+          animation={animation} onAnimation={setAnimationChoice} />
       </div></main>
     </div>
   );

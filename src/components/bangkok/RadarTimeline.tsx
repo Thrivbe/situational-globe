@@ -3,10 +3,13 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { Snapshot } from '@/situations/types';
 import { bangkokTime, numberValues, stringList, textValue } from './helpers';
+import { translate as tr } from './copy';
+import type { Language } from './types';
 
 export type RadarFrame = { time: number; tile: string };
 
-function RainChart({ snapshot, frameTime }: { snapshot: Snapshot; frameTime?: number }) {
+function RainChart({ snapshot, frameTime, language }: { snapshot: Snapshot; frameTime?: number; language: Language }) {
+  const t = (key: string, english: string) => tr(language, key, english);
   const hourly = snapshot.weather.hourly;
   const time = stringList(hourly.time);
   const precipitation = numberValues(hourly.precipitation, time.length);
@@ -29,8 +32,8 @@ function RainChart({ snapshot, frameTime }: { snapshot: Snapshot; frameTime?: nu
 
   return (
     <div className="tl-chart">
-      <div className="tl-head"><b>Rain at Bangkok centre</b><span className="dim">past 12 h, next 48 h · bars: mm/h · line: chance %</span></div>
-      {time.length ? <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Hourly rain forecast" preserveAspectRatio="none">
+      <div className="tl-head"><b>{t('rainCentre', 'Rain at Bangkok centre')}</b><span className="dim">{t('rainChartKey', 'past 12 h, next 48 h · bars: mm/h · line: chance %')}</span></div>
+      {time.length ? <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label={t('hourlyRain', 'Hourly rain forecast')} preserveAspectRatio="none">
         {[0, maxRain / 2, maxRain].map((value) => <g key={value}>
           <line x1={left} x2={width - right} y1={y(value)} y2={y(value)} stroke="#2a3644" />
           <text x={left - 4} y={y(value) + 3} textAnchor="end" fill="#8b98a5" fontSize="10">{Number(value.toFixed(1))}</text>
@@ -46,7 +49,7 @@ function RainChart({ snapshot, frameTime }: { snapshot: Snapshot; frameTime?: nu
           y1={top - 4} y2={top + chartHeight} stroke="#7dd3fc" strokeWidth="2" />}
         {time.map((item, index) => item.slice(11, 13) === '00' ? <text key={item} x={left + index * barWidth}
           y={height - 7} textAnchor="middle" fill="#e6edf3" fontSize="10">{item.slice(5, 10)}</text> : null)}
-      </svg> : <div className="chartempty dim">Hourly rain forecast unavailable</div>}
+      </svg> : <div className="chartempty dim">{t('hourlyUnavailable', 'Hourly rain forecast unavailable')}</div>}
     </div>
   );
 }
@@ -56,9 +59,11 @@ type Props = {
   frameIndex: number;
   onFrame(index: number): void;
   snapshot: Snapshot;
+  language: Language;
 };
 
-export default function RadarTimeline({ frames, frameIndex, onFrame, snapshot }: Props) {
+export default function RadarTimeline({ frames, frameIndex, onFrame, snapshot, language }: Props) {
+  const t = (key: string, english: string) => tr(language, key, english);
   const [playing, setPlaying] = useState(false);
   const current = frames[frameIndex];
   const latest = Math.max(0, frames.length - 1);
@@ -75,19 +80,19 @@ export default function RadarTimeline({ frames, frameIndex, onFrame, snapshot }:
   return (
     <footer className="timeline">
       <div className="tl-radar">
-        <div className="tl-head"><b>Rain radar</b><span className="tl-time">{current ? bangkokTime(current.time * 1_000) : 'unavailable'}</span></div>
+        <div className="tl-head"><b>{t('radar', 'Rain radar')}</b><span className="tl-time">{current ? bangkokTime(current.time * 1_000) : t('unavailable', 'unavailable')}</span></div>
         <div className="tl-track"><input type="range" min="0" max={Math.max(0, latest)} value={Math.min(frameIndex, latest)}
-          disabled={!frames.length} aria-label="Radar time" aria-valuetext={current ? bangkokTime(current.time * 1_000) : 'Radar unavailable'}
+          disabled={!frames.length} aria-label={t('radarTime', 'Radar time')} aria-valuetext={current ? bangkokTime(current.time * 1_000) : t('radarUnavailable', 'Radar unavailable')}
           onChange={(event) => { setPlaying(false); onFrame(Number(event.target.value)); }} /></div>
-        <div className="tl-ends dim"><span>{endpoints.first ? `${bangkokTime(endpoints.first.time * 1_000)} observed` : ''}</span><span>{endpoints.last ? `${bangkokTime(endpoints.last.time * 1_000)} observed` : ''}</span></div>
-        <div className="tl-key dim"><span><i className="k obs" />observed</span><span className="tl-btns">
-          <button type="button" disabled={frames.length < 2} onClick={() => setPlaying((value) => !value)}>{playing ? 'Pause' : 'Play'}</button>
-          <button type="button" disabled={!frames.length} onClick={() => { setPlaying(false); onFrame(latest); }}>Latest</button>
+        <div className="tl-ends dim"><span>{endpoints.first ? `${bangkokTime(endpoints.first.time * 1_000)} ${t('observed', 'observed')}` : ''}</span><span>{endpoints.last ? `${bangkokTime(endpoints.last.time * 1_000)} ${t('observed', 'observed')}` : ''}</span></div>
+        <div className="tl-key dim"><span><i className="k obs" />{t('observed', 'observed')}</span><span className="tl-btns">
+          <button type="button" disabled={frames.length < 2} onClick={() => setPlaying((value) => !value)}>{playing ? t('pause', 'Pause') : t('play', 'Play')}</button>
+          <button type="button" disabled={!frames.length} onClick={() => { setPlaying(false); onFrame(latest); }}>{t('latest', 'Latest')}</button>
         </span></div>
-        <div className="tl-int"><span className="dim">Intensity</span><span className="ramp"><em>light</em><em>moderate</em><em>heavy</em></span></div>
-        <div className="tl-note">Coloured areas are rainfall, not standing water.</div>
+        <div className="tl-int"><span className="dim">{t('intensity', 'Intensity')}</span><span className="ramp"><em>{t('light', 'light')}</em><em>{t('moderate', 'moderate')}</em><em>{t('heavy', 'heavy')}</em></span></div>
+        <div className="tl-note">{t('radarNote', 'Coloured areas are rainfall, not standing water.')}</div>
       </div>
-      <RainChart snapshot={snapshot} frameTime={current?.time} />
+      <RainChart snapshot={snapshot} frameTime={current?.time} language={language} />
     </footer>
   );
 }
