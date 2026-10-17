@@ -1,9 +1,12 @@
 import type { Feature, FeatureCollection, Geometry, Position } from 'geojson';
 import { haversine, type LngLat } from '@/lib/geo';
 import type { Snapshot } from '@/situations/types';
+import { translate } from './copy';
+import type { Language } from './types';
 
 export type Bounds = [west: number, south: number, east: number, north: number];
-export const SNAPSHOT_PARTS = ['roads', 'reports', 'forecast', 'grid', 'districtRain', 'river'] as const;
+export const BANGKOK_CENTRE: [number, number] = [100.53, 13.75];
+export const SNAPSHOT_PARTS = ['roads', 'reports', 'forecast', 'grid', 'districtRain', 'river', 'osm'] as const;
 export type SnapshotPart = typeof SNAPSHOT_PARTS[number];
 export type SnapshotPartStatus = 'ok' | 'stale' | 'missing';
 
@@ -16,6 +19,11 @@ export const textValue = (value: unknown, fallback = ''): string =>
 export const numberValue = (value: unknown, fallback = 0): number =>
   typeof value === 'number' && Number.isFinite(value) ? value : fallback;
 
+export const validPosition = (position: unknown): position is [number, number] =>
+  Array.isArray(position) && position.length >= 2 &&
+  typeof position[0] === 'number' && Number.isFinite(position[0]) &&
+  typeof position[1] === 'number' && Number.isFinite(position[1]) && Math.abs(position[1]) <= 85;
+
 export const stringList = (value: unknown): string[] => Array.isArray(value)
   ? value.filter((item): item is string => typeof item === 'string')
   : [];
@@ -23,24 +31,34 @@ export const stringList = (value: unknown): string[] => Array.isArray(value)
 export const propertiesOf = (feature: Feature): Record<string, unknown> =>
   isRecord(feature.properties) ? feature.properties : {};
 
+export const snapshotPartTime = (snapshot: Snapshot, part: SnapshotPart): string =>
+  part === 'osm' ? textValue(snapshot.osm.builtAt) : textValue(snapshot.feedsAt[part]);
+
 export function partStatus(snapshot: Snapshot, now: Date | number): Record<SnapshotPart, SnapshotPartStatus> {
   const nowMs = typeof now === 'number' ? now : now.getTime();
   return Object.fromEntries(SNAPSHOT_PARTS.map((part) => {
-    if (!Object.hasOwn(snapshot.feedsAt, part)) return [part, 'missing'];
-    const time = Date.parse(snapshot.feedsAt[part]);
+    const time = Date.parse(snapshotPartTime(snapshot, part));
     if (!Number.isFinite(time)) return [part, 'missing'];
-    return [part, nowMs - time > 60 * 60 * 1_000 ? 'stale' : 'ok'];
+    const maxAge = part === 'osm' ? 48 * 60 * 60 * 1_000 : 60 * 60 * 1_000;
+    return [part, nowMs - time > maxAge ? 'stale' : 'ok'];
   })) as Record<SnapshotPart, SnapshotPartStatus>;
 }
 
-export function timeAgo(value: string | number, now = Date.now()): string {
+export function bangkokDay(now: number): string {
+  if (!Number.isFinite(now)) return '';
+  return new Date(now).toLocaleDateString('en-CA', { timeZone: 'Asia/Bangkok' });
+}
+
+export function timeAgo(language: Language, value: string | number, now = Date.now()): string {
   const time = typeof value === 'number' ? value : Date.parse(value);
   if (!Number.isFinite(time)) return '—';
   const minutes = Math.max(0, Math.round((now - time) / 60_000));
-  if (minutes < 2) return 'just now';
-  if (minutes < 60) return `${minutes} min ago`;
-  if (minutes < 2_880) return `${Math.round(minutes / 60)} h ago`;
-  return `${Math.round(minutes / 1_440)} d ago`;
+  if (minutes < 2) return translate(language, 'justNow', 'just now');
+  if (minutes < 60) return translate(language, 'minutesAgo', `${minutes} min ago`).replace('{n}', String(minutes));
+  const hours = Math.round(minutes / 60);
+  if (minutes < 2_880) return translate(language, 'hoursAgo', `${hours} h ago`).replace('{n}', String(hours));
+  const days = Math.round(minutes / 1_440);
+  return translate(language, 'daysAgo', `${days} d ago`).replace('{n}', String(days));
 }
 
 export function bangkokTime(value: string | number): string {
@@ -223,10 +241,12 @@ export function findDistrict(districts: FeatureCollection, query: string): Featu
 }
 
 function pointInRing(point: Position, ring: Position[]): boolean {
+  const positions = Array.isArray(ring) ? ring.filter(validPosition) : [];
+  if (!validPosition(point) || positions.length < 3) return false;
   let inside = false;
-  for (let index = 0, previous = ring.length - 1; index < ring.length; previous = index, index += 1) {
-    const [x, y] = ring[index];
-    const [previousX, previousY] = ring[previous];
+  for (let index = 0, previous = positions.length - 1; index < positions.length; previous = index, index += 1) {
+    const [x, y] = positions[index];
+    const [previousX, previousY] = positions[previous];
     if ((y > point[1]) !== (previousY > point[1]) &&
       point[0] < (previousX - x) * (point[1] - y) / (previousY - y) + x) inside = !inside;
   }
@@ -235,26 +255,34 @@ function pointInRing(point: Position, ring: Position[]): boolean {
 
 export function pointInGeometry(point: Position, geometry: Geometry | null): boolean {
   if (!geometry) return false;
-  const polygons = geometry.type === 'Polygon' ? [geometry.coordinates]
-    : geometry.type === 'MultiPolygon' ? geometry.coordinates : [];
-  return polygons.some((polygon) => Boolean(polygon[0]) && pointInRing(point, polygon[0]) &&
-    !polygon.slice(1).some((hole) => pointInRing(point, hole)));
+  const polygons: unknown[] = geometry.type === 'Polygon' ? [geometry.coordinates]
+    : geometry.type === 'MultiPolygon' && Array.isArray(geometry.coordinates) ? geometry.coordinates : [];
+  return polygons.some((candidate) => {
+    if (!Array.isArray(candidate)) return false;
+    const polygon = candidate.filter((ring): ring is Position[] => Array.isArray(ring));
+    return Boolean(polygon[0]) && pointInRing(point, polygon[0]) &&
+      !polygon.slice(1).some((hole) => pointInRing(point, hole));
+  });
 }
 
 export function districtsWithSignals(
-  districts: FeatureCollection,
-  dangerHexes: FeatureCollection,
+  districts: FeatureCollection | null | undefined,
+  dangerHexes: FeatureCollection | null | undefined,
 ): FeatureCollection {
-  const signals = districts.features.map(() => 0);
-  for (const danger of dangerHexes.features) {
+  const validFeature = (feature: unknown): feature is Feature =>
+    typeof feature === 'object' && feature !== null && !Array.isArray(feature);
+  const districtFeatures = (Array.isArray(districts?.features) ? districts.features : []).filter(validFeature);
+  const dangerFeatures = (Array.isArray(dangerHexes?.features) ? dangerHexes.features : []).filter(validFeature);
+  const signals = districtFeatures.map(() => 0);
+  for (const danger of dangerFeatures) {
     const centre = featureCentre(danger);
-    if (!centre) continue;
-    const districtIndex = districts.features.findIndex((district) => pointInGeometry(centre, district.geometry));
+    if (!validPosition(centre)) continue;
+    const districtIndex = districtFeatures.findIndex((district) => pointInGeometry(centre, district.geometry));
     if (districtIndex >= 0) signals[districtIndex] += Math.max(1, numberValue(propertiesOf(danger).score));
   }
   return {
     type: 'FeatureCollection',
-    features: districts.features.map((feature, index) => ({
+    features: districtFeatures.map((feature, index) => ({
       ...feature,
       properties: { ...propertiesOf(feature), signals: Math.round(signals[index]) },
     })),

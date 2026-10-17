@@ -29,9 +29,7 @@ export default function SourcesPopover({ snapshot, language, onClose }: {
           </li>
         ))}
       </ul>
-      <p className="warn">{language === 'th'
-        ? 'นี่ไม่ใช่คำเตือนอย่างเป็นทางการ ข้อมูลอาจไม่ครบหรือล่าช้า'
-        : 'This is not an official warning. Data may be incomplete or late.'}</p>
+      <p className="warn">{tr(language, 'sourceWarning', 'This is not an official warning. Data may be incomplete or late.')}</p>
     </div>
   );
 }

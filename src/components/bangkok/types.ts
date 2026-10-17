@@ -2,6 +2,7 @@ import type { Bounds } from './helpers';
 
 export type Language = 'en' | 'th';
 export type RadarStatus = 'loading' | 'ready' | 'unavailable';
+export type BangkokView = '2d' | '3d';
 
 export type BangkokMapApi = {
   fitBounds(bounds: Bounds, maxZoom?: number): void;

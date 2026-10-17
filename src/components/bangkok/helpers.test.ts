@@ -4,7 +4,7 @@ import type { FeatureCollection } from 'geojson';
 import { describe, expect, it } from 'vitest';
 import type { Snapshot } from '@/situations/types';
 import BangkokPanel from './BangkokPanel';
-import { isSnapshotShape, nearFlooding, partStatus } from './helpers';
+import { bangkokDay, districtsWithSignals, isSnapshotShape, nearFlooding, partStatus } from './helpers';
 
 describe('isSnapshotShape', () => {
   const ok = { credits: [], feedsAt: {}, flood: {}, weather: {}, osm: {}, stationWater: {} };
@@ -45,7 +45,7 @@ describe('Bangkok snapshot helpers', () => {
     const value = snapshot(feedsAt);
     const statuses = partStatus(value, NOW);
     const panel = renderToStaticMarkup(createElement(BangkokPanel, {
-      snapshot: value, language: 'en', activeLayers: INITIAL_LAYERS, onToggle: () => undefined,
+      snapshot: value, language: 'en', view: '2d', activeLayers: INITIAL_LAYERS, onToggle: () => undefined,
       mapApi: null, radarStatus: 'loading', onSources: () => undefined, now: NOW.getTime(),
     }));
 
@@ -65,6 +65,46 @@ describe('Bangkok snapshot helpers', () => {
 
   it('marks an unparseable feed time as missing', () => {
     expect(partStatus(snapshot({ ...freshFeeds(), roads: 'not-a-time' }), NOW).roads).toBe('missing');
+  });
+
+  it('marks OSM stale only after 48 hours', () => {
+    const fresh = snapshot(freshFeeds());
+    fresh.osm.builtAt = '2026-10-13T12:01:00.000Z';
+    expect(partStatus(fresh, NOW).osm).toBe('ok');
+    fresh.osm.builtAt = '2026-10-13T11:59:00.000Z';
+    expect(partStatus(fresh, NOW).osm).toBe('stale');
+  });
+
+  it('marks an undefined OSM build time as missing', () => {
+    const value = snapshot(freshFeeds());
+    value.osm.builtAt = undefined as unknown as string;
+    expect(partStatus(value, NOW).osm).toBe('missing');
+  });
+});
+
+describe('bangkokDay', () => {
+  it('uses the Bangkok day around UTC midnight', () => {
+    expect(bangkokDay(Date.parse('2026-10-15T16:59:59.000Z'))).toBe('2026-10-15');
+    expect(bangkokDay(Date.parse('2026-10-15T17:00:00.000Z'))).toBe('2026-10-16');
+  });
+
+  it('does not throw for a non-finite time', () => {
+    expect(() => bangkokDay(Number.NaN)).not.toThrow();
+    expect(bangkokDay(Number.NaN)).toBe('');
+  });
+});
+
+describe('district signals', () => {
+  it('treats missing collections and malformed vertices as empty or skippable', () => {
+    expect(districtsWithSignals(undefined, undefined)).toEqual({ type: 'FeatureCollection', features: [] });
+    const districts = { type: 'FeatureCollection', features: [{
+      type: 'Feature', properties: {}, geometry: { type: 'Polygon', coordinates: [[[100.4, 13.6], null, [100.6, 13.6], [100.4, 13.6]]] },
+    }] } as unknown as FeatureCollection;
+    const danger = { type: 'FeatureCollection', features: [{
+      type: 'Feature', properties: { score: 3 }, geometry: { type: 'Point', coordinates: [Number.NaN, 13.7] },
+    }] } as unknown as FeatureCollection;
+    expect(() => districtsWithSignals(districts, danger)).not.toThrow();
+    expect(districtsWithSignals(districts, danger).features[0].properties?.signals).toBe(0);
   });
 });
 
