@@ -1,15 +1,22 @@
+import type { Snapshot } from '@/situations/types';
+
 export type LayerKey =
   | 'roads' | 'reports' | 'radar' | 'danger' | 'depth' | 'raingrid'
   | 'hospitals' | 'shelters' | 'pumping' | 'fire'
   | 'districts' | 'transit' | 'stationWater' | 'waterways' | 'airports' | 'landmarks';
 
-export type LegendItem = { shape: 'line' | 'dot' | 'swatch'; color: string; label: string };
+export type LayerGroupKey = 'flood' | 'help' | 'city';
+export type LegendItem = { shape: 'line' | 'dot' | 'swatch'; color: string; label: string; thai: string };
 export type LayerDefinition = {
-  key: LayerKey;
+  key: LayerKey | 'cityPack';
+  group: LayerGroupKey;
   label: string;
   thai: string;
-  ids: string[];
-  legend: LegendItem[];
+  ids2d: string[];
+  ids3d: string[];
+  legend2d: LegendItem[];
+  legend3d?: LegendItem[];
+  count?(snapshot: Snapshot): number;
 };
 
 export const C = {
@@ -17,68 +24,126 @@ export const C = {
   hospital: '#ec4899', shelter: '#14b8a6', pump: '#c2855a', fire: '#d6d3d1',
   landmark: '#c4b5fd', rail: '#e5e7eb', metro: '#60a5fa', sky: '#4ade80', airport: '#fde68a',
   canal: '#22d3ee', ferry: '#f59e0b',
+  roadWater: '#2f7fe0',
+  ankle: '#4fc3ff', knee: '#f2a93b', waist: '#e5304a', head: '#ff3d81', closed: '#ff1744',
+  metro3d: '#c084fc', rail3d: '#94a3b8', hospital3d: '#2dd4bf', shelter3d: '#a3e635', pump3d: '#818cf8',
 };
 
-export const LAYERS_2D: LayerDefinition[] = [
-  { key: 'roads', label: 'Flooded roads (for a sedan)', thai: 'ถนนน้ำท่วม (รถเก๋ง)', ids: ['roads-ok', 'roads-glow', 'roads-risk', 'roads-blocked', 'roads-hit'], legend: [
-    { shape: 'line', color: C.blocked, label: 'blocked for a sedan' },
-    { shape: 'line', color: C.risky, label: 'risky' },
-    { shape: 'line', color: C.caution, label: 'caution' },
-    { shape: 'line', color: C.ok, label: 'passable (dim)' },
-    { shape: 'swatch', color: '#27313c', label: 'no colour = no data, not dry' },
+const n = (label: string, thai: string, color: string, shape: LegendItem['shape']): LegendItem =>
+  ({ label, thai, color, shape });
+
+export const LAYERS: LayerDefinition[] = [
+  { key: 'roads', group: 'flood', label: 'Flooded roads (for a sedan)', thai: 'ถนนน้ำท่วม (รถเก๋ง)',
+    ids2d: ['roads-ok', 'roads-glow', 'roads-risk', 'roads-blocked', 'roads-hit'],
+    ids3d: ['c3-roads-water', 'c3-water-sheen-fill', 'c3-water-sheen-edge', 'c3-glow-plus-wide', 'c3-glow-plus-mid',
+      'c3-roads-halo', 'c3-roads-glow', 'c3-roads-core', 'c3-roads-dash', 'c3-roads-ribbon'],
+    legend2d: [
+      n('blocked for a sedan', 'รถเก๋งผ่านไม่ได้', C.blocked, 'line'), n('risky', 'เสี่ยง', C.risky, 'line'),
+      n('caution', 'ระวัง', C.caution, 'line'), n('passable (dim)', 'ผ่านได้ (สีจาง)', C.ok, 'line'),
+      n('no colour = no data, not dry', 'ไม่มีสี = ไม่มีข้อมูล ไม่ได้แปลว่าแห้ง', '#27313c', 'swatch'),
+    ],
+    legend3d: [
+      n('water glow under risky roads', 'แสงน้ำใต้ถนนเสี่ยง', C.roadWater, 'line'),
+      n('blocked (static dash + ribbon)', 'ผ่านไม่ได้ (เส้นประคงที่ + แถบยกสูง)', C.blocked, 'line'),
+      n('risky (raised ribbon)', 'เสี่ยง (แถบยกสูง)', C.risky, 'line'),
+      n('caution', 'ระวัง', C.caution, 'line'),
+    ], count: (snapshot) => snapshot.flood.roads.features.length },
+  { key: 'reports', group: 'flood', label: 'Citizen reports', thai: 'รายงานประชาชน',
+    ids2d: ['reports', 'reports-cluster', 'reports-cluster-count'],
+    ids3d: ['c3-glow-plus-columns', 'c3-reports-cluster', 'c3-reports-cluster-count', 'c3-report-ring', 'c3-report-glow',
+      'c3-report-columns', 'c3-report-caps'],
+    legend2d: [
+      n('cluster of reports (click to zoom)', 'กลุ่มรายงาน (คลิกเพื่อซูม)', '#0e3a5c', 'dot'),
+      n('verified report', 'รายงานยืนยันแล้ว', C.rain, 'dot'), n('unverified report (hollow)', 'รายงานยังไม่ยืนยัน (วงกลวง)', '#7dd3fc', 'dot'),
+      n('road closed', 'ถนนปิด', C.blocked, 'dot'),
+    ],
+    legend3d: [
+      n('ankle depth column', 'เสาความลึกระดับข้อเท้า', C.ankle, 'swatch'), n('knee depth column', 'เสาความลึกระดับเข่า', C.knee, 'swatch'),
+      n('waist depth column', 'เสาความลึกระดับเอว', C.waist, 'swatch'), n('over-head depth column', 'เสาความลึกเหนือศีรษะ', C.head, 'swatch'),
+      n('white cap = road closed', 'ยอดสีขาว = ถนนปิด', '#ffffff', 'swatch'),
+    ], count: (snapshot) => snapshot.flood.reports.features.length },
+  { key: 'radar', group: 'flood', label: 'Rain radar', thai: 'เรดาร์ฝน', ids2d: ['radar'], ids3d: ['radar'], legend2d: [
+    n('light rain', 'ฝนเบา', '#88ddee', 'swatch'), n('moderate rain', 'ฝนปานกลาง', '#0077ee', 'swatch'),
+    n('heavy rain', 'ฝนหนัก', '#ffaa00', 'swatch'),
   ] },
-  { key: 'reports', label: 'Citizen reports', thai: 'รายงานประชาชน', ids: ['reports', 'reports-cluster', 'reports-cluster-count'], legend: [
-    { shape: 'dot', color: '#0e3a5c', label: 'cluster of reports (click to zoom)' },
-    { shape: 'dot', color: C.rain, label: 'verified report' },
-    { shape: 'dot', color: '#7dd3fc', label: 'unverified report (hollow)' },
-    { shape: 'dot', color: C.blocked, label: 'road closed' },
+  { key: 'danger', group: 'flood', label: 'Danger hexes', thai: 'พื้นที่อันตราย', ids2d: ['danger-grid', 'danger-grid-line'],
+    ids3d: ['c3-danger', 'c3-danger-line'], legend2d: [
+      n('danger', 'อันตราย', 'rgba(239,68,68,.55)', 'swatch'), n('warning', 'เตือน', 'rgba(251,146,60,.45)', 'swatch'),
+      n('watch', 'เฝ้าระวัง', 'rgba(56,189,248,.35)', 'swatch'),
+    ], legend3d: [
+      n('danger (pulsing)', 'อันตราย (กะพริบ)', '#b3263a', 'swatch'), n('warning', 'เตือน', '#f2a93b', 'swatch'),
+      n('watch', 'เฝ้าระวัง', '#2f7fe0', 'swatch'),
+    ], count: (snapshot) => snapshot.flood.dangerHexes.features.length },
+  { key: 'depth', group: 'flood', label: 'Depth labels', thai: 'ป้ายความลึก', ids2d: ['depth-dots', 'depth-labels'], ids3d: ['c3-depth-labels'],
+    legend2d: [n('ankle / knee / waist / over head + cm', 'ข้อเท้า / เข่า / เอว / เหนือศีรษะ + ซม.', '#e6edf3', 'swatch')],
+    legend3d: [n('deepest labels win collision placement', 'ป้ายจุดลึกที่สุดมีลำดับก่อน', '#ffffff', 'swatch')],
+    count: (snapshot) => snapshot.flood.depthPoints.features.length },
+  { key: 'raingrid', group: 'flood', label: 'Rain grid + district rain', thai: 'กริดฝนและฝนรายเขต',
+    ids2d: ['raingrid', 'raingrid-label', 'raindist-label'], ids3d: [], legend2d: [
+      n('rain soon (next 6 h)', 'ฝนเร็ว ๆ นี้ (6 ชม.)', C.rain, 'dot'), n('district rain chip', 'ชิปฝนรายเขต', '#1e293b', 'swatch'),
+    ] },
+  { key: 'hospitals', group: 'help', label: 'Hospitals', thai: 'โรงพยาบาล', ids2d: ['hospitals', 'hospitals-g'],
+    ids3d: ['c3-hospitals', 'c3-hospitals-badge', 'c3-hospitals-glyph'],
+    legend2d: [n('H  hospital', 'H โรงพยาบาล', C.hospital, 'dot')], legend3d: [n('H  hospital pillar', 'H เสาโรงพยาบาล', C.hospital3d, 'dot')],
+    count: (snapshot) => snapshot.osm.hospitals.features.length },
+  { key: 'shelters', group: 'help', label: 'Possible gathering sites, not official', thai: 'จุดรวมพลที่เป็นไปได้ (ไม่เป็นทางการ)',
+    ids2d: ['shelters', 'shelters-g'], ids3d: ['c3-shelters', 'c3-shelters-badge', 'c3-shelters-glyph'],
+    legend2d: [n('S  possible gathering site', 'S จุดรวมพลที่เป็นไปได้', C.shelter, 'dot')],
+    legend3d: [n('S  possible gathering-site pillar', 'S เสาจุดรวมพลที่เป็นไปได้', C.shelter3d, 'dot')],
+    count: (snapshot) => snapshot.osm.shelters.features.length },
+  { key: 'pumping', group: 'help', label: 'Pumping stations, gates, weirs', thai: 'สถานีสูบน้ำ ประตูน้ำ และฝาย',
+    ids2d: ['pumping', 'pumping-g'], ids3d: ['c3-pumping', 'c3-pumping-badge', 'c3-pumping-glyph'],
+    legend2d: [n('P  pump / gate / weir', 'P ปั๊ม / ประตูน้ำ / ฝาย', C.pump, 'dot')],
+    legend3d: [n('P  flood-control pillar', 'P เสาโครงสร้างควบคุมน้ำ', C.pump3d, 'dot')],
+    count: (snapshot) => snapshot.osm.pumping.features.length },
+  { key: 'fire', group: 'help', label: 'Fire / rescue stations', thai: 'สถานีดับเพลิงและกู้ภัย', ids2d: ['fire', 'fire-g'], ids3d: [],
+    legend2d: [n('F  fire station', 'F สถานีดับเพลิง', C.fire, 'dot')], count: (snapshot) => snapshot.osm.fireStations.features.length },
+  { key: 'districts', group: 'city', label: 'Districts (50 khet)', thai: 'เขต (50 เขต)', ids2d: ['districts-fill', 'districts-line', 'districts-label'],
+    ids3d: ['c3-districts'], legend2d: [
+      n('district: 1–11 flood signals', 'เขต: สัญญาณน้ำท่วม 1–11', 'rgba(250,204,21,.45)', 'swatch'),
+      n('12–39 signals', '12–39 สัญญาณ', 'rgba(251,146,60,.6)', 'swatch'), n('40+ signals', '40+ สัญญาณ', 'rgba(239,68,68,.75)', 'swatch'),
+    ], legend3d: [n('taller and redder = more signals', 'สูงและแดงขึ้น = สัญญาณมากขึ้น', '#f43f5e', 'swatch')],
+    count: (snapshot) => snapshot.osm.districts.features.length },
+  { key: 'transit', group: 'city', label: 'Metro / rail lines + stations', thai: 'รถไฟฟ้า รถไฟ และสถานี',
+    ids2d: ['rail', 'transit', 'stations', 'stations-label', 'rail-stations', 'rail-stations-label'],
+    ids3d: ['c3-transit-osm', 'c3-transit-osm-stations', 'c3-transit-osm-station-labels',
+      'c3-transit', 'c3-transit-stations', 'c3-transit-station-labels'], legend2d: [
+      n('rail line (dashed)', 'ทางรถไฟ (เส้นประ)', C.rail, 'line'), n('metro / sky train', 'รถไฟฟ้า / บีทีเอส', C.metro, 'line'),
+      n('station', 'สถานี', C.metro, 'dot'),
+    ], legend3d: [
+      n('metro / sky train', 'รถไฟฟ้า / บีทีเอส', C.metro3d, 'line'), n('heavy rail', 'รถไฟทางไกล', C.rail3d, 'line'),
+      n('station', 'สถานี', '#ffffff', 'dot'),
+    ], count: (snapshot) => snapshot.osm.transit.features.length },
+  { key: 'stationWater', group: 'city', label: 'Water near station', thai: 'น้ำใกล้สถานี', ids2d: ['station-water'], ids3d: ['c3-station-water'],
+    legend2d: [n('station with water within 500 m', 'สถานีที่มีน้ำภายใน 500 ม.', '#0c2a44', 'swatch')],
+    legend3d: [n('station water chip', 'ชิปน้ำใกล้สถานี', '#ef4444', 'swatch')], count: (snapshot) => snapshot.stationWater.features.length },
+  { key: 'waterways', group: 'city', label: 'Canals, rivers, boat lines', thai: 'คลอง แม่น้ำ และเส้นทางเรือ',
+    ids2d: ['canals', 'canals-label', 'ferry'], ids3d: [], legend2d: [
+      n('canal / river', 'คลอง / แม่น้ำ', C.canal, 'line'), n('boat line', 'เส้นทางเรือ', C.ferry, 'line'),
+    ] },
+  { key: 'airports', group: 'city', label: 'Airports', thai: 'สนามบิน', ids2d: ['airports', 'airports-label'], ids3d: [],
+    legend2d: [n('airport', 'สนามบิน', C.airport, 'dot')] },
+  { key: 'landmarks', group: 'city', label: 'Landmarks', thai: 'สถานที่สำคัญ', ids2d: ['landmarks', 'landmarks-g', 'landmarks-label'], ids3d: [],
+    legend2d: [n('named landmark', 'สถานที่สำคัญที่มีชื่อ', C.landmark, 'dot')], count: (snapshot) => snapshot.osm.landmarks.features.length },
+  { key: 'cityPack', group: 'city', label: '3D city', thai: 'เมือง 3 มิติ', ids2d: [], ids3d: ['c3-buildings', 'c3-parks'], legend2d: [], legend3d: [
+    n('blue-grey buildings, capped at 130 m', 'อาคารสีน้ำเงินเทา สูงไม่เกิน 130 ม.', '#2b3650', 'swatch'),
+    n('parks and green space', 'สวนและพื้นที่สีเขียว', '#0f2a22', 'swatch'),
   ] },
-  { key: 'radar', label: 'Rain radar', thai: 'เรดาร์ฝน', ids: ['radar'], legend: [
-    { shape: 'swatch', color: '#88ddee', label: 'light rain' },
-    { shape: 'swatch', color: '#0077ee', label: 'moderate rain' },
-    { shape: 'swatch', color: '#ffaa00', label: 'heavy rain' },
-  ] },
-  { key: 'danger', label: 'Danger hexes', thai: 'พื้นที่อันตราย', ids: ['danger-grid', 'danger-grid-line'], legend: [
-    { shape: 'swatch', color: 'rgba(239,68,68,.55)', label: 'danger' },
-    { shape: 'swatch', color: 'rgba(251,146,60,.45)', label: 'warning' },
-    { shape: 'swatch', color: 'rgba(56,189,248,.35)', label: 'watch' },
-  ] },
-  { key: 'depth', label: 'Depth labels', thai: 'ป้ายความลึก', ids: ['depth-dots', 'depth-labels'], legend: [
-    { shape: 'swatch', color: '#e6edf3', label: 'ankle / knee / waist / over head + cm' },
-  ] },
-  { key: 'raingrid', label: 'Rain grid + district rain', thai: 'กริดฝนและฝนรายเขต', ids: ['raingrid', 'raingrid-label', 'raindist-label'], legend: [
-    { shape: 'dot', color: C.rain, label: 'rain soon (next 6 h)' },
-    { shape: 'swatch', color: '#1e293b', label: 'district rain chip' },
-  ] },
-  { key: 'hospitals', label: 'Hospitals', thai: 'โรงพยาบาล', ids: ['hospitals', 'hospitals-g'], legend: [{ shape: 'dot', color: C.hospital, label: 'H  hospital' }] },
-  { key: 'shelters', label: 'Possible gathering sites, not official', thai: 'จุดรวมพลที่เป็นไปได้ (ไม่เป็นทางการ)', ids: ['shelters', 'shelters-g'], legend: [{ shape: 'dot', color: C.shelter, label: 'S  possible gathering site' }] },
-  { key: 'pumping', label: 'Pumping stations, gates, weirs', thai: 'สถานีสูบน้ำ ประตูน้ำ และฝาย', ids: ['pumping', 'pumping-g'], legend: [{ shape: 'dot', color: C.pump, label: 'P  pump / gate / weir' }] },
-  { key: 'fire', label: 'Fire / rescue stations', thai: 'สถานีดับเพลิงและกู้ภัย', ids: ['fire', 'fire-g'], legend: [{ shape: 'dot', color: C.fire, label: 'F  fire station' }] },
-  { key: 'districts', label: 'Districts (50 khet)', thai: 'เขต (50 เขต)', ids: ['districts-fill', 'districts-line', 'districts-label'], legend: [
-    { shape: 'swatch', color: 'rgba(250,204,21,.45)', label: 'district: 1–11 flood signals' },
-    { shape: 'swatch', color: 'rgba(251,146,60,.6)', label: '12–39 signals' },
-    { shape: 'swatch', color: 'rgba(239,68,68,.75)', label: '40+ signals' },
-  ] },
-  { key: 'transit', label: 'Metro / rail lines + stations', thai: 'รถไฟฟ้า รถไฟ และสถานี', ids: ['rail', 'transit', 'stations', 'stations-label', 'rail-stations', 'rail-stations-label'], legend: [
-    { shape: 'line', color: C.rail, label: 'rail line (dashed)' },
-    { shape: 'line', color: C.metro, label: 'metro / sky train' },
-    { shape: 'dot', color: C.metro, label: 'station' },
-  ] },
-  { key: 'stationWater', label: 'Water near station', thai: 'น้ำใกล้สถานี', ids: ['station-water'], legend: [{ shape: 'swatch', color: '#0c2a44', label: 'station with water within 500 m' }] },
-  { key: 'waterways', label: 'Canals, rivers, boat lines', thai: 'คลอง แม่น้ำ และเส้นทางเรือ', ids: ['canals', 'canals-label', 'ferry'], legend: [
-    { shape: 'line', color: C.canal, label: 'canal / river' },
-    { shape: 'line', color: C.ferry, label: 'boat line' },
-  ] },
-  { key: 'airports', label: 'Airports', thai: 'สนามบิน', ids: ['airports', 'airports-label'], legend: [{ shape: 'dot', color: C.airport, label: 'airport' }] },
-  { key: 'landmarks', label: 'Landmarks', thai: 'สถานที่สำคัญ', ids: ['landmarks', 'landmarks-g', 'landmarks-label'], legend: [{ shape: 'dot', color: C.landmark, label: 'named landmark' }] },
 ];
 
-export const LAYER_GROUPS: { label: string; thai: string; keys: LayerKey[] }[] = [
-  { label: 'Flood', thai: 'น้ำท่วม', keys: ['roads', 'reports', 'radar', 'danger', 'depth', 'raingrid'] },
-  { label: 'Help', thai: 'ความช่วยเหลือ', keys: ['hospitals', 'shelters', 'pumping', 'fire'] },
-  { label: 'City', thai: 'เมือง', keys: ['districts', 'transit', 'stationWater', 'waterways', 'airports', 'landmarks'] },
+export const isDataLayer = (layer: LayerDefinition): layer is LayerDefinition & { key: LayerKey } =>
+  layer.key !== 'cityPack';
+
+export const CITY_PACK_LAYER_IDS = LAYERS.find((layer) => layer.key === 'cityPack')?.ids3d ?? [];
+
+export const TWO_D_ONLY_KEYS = LAYERS.filter(isDataLayer).filter((layer) => !layer.ids3d.length).map((layer) => layer.key);
+
+export const LAYER_GROUPS: { key: LayerGroupKey; label: string; thai: string; keys: LayerKey[] }[] = [
+  { key: 'flood', label: 'Flood', thai: 'น้ำท่วม', keys: LAYERS.filter(isDataLayer).filter((layer) => layer.group === 'flood').map((layer) => layer.key) },
+  { key: 'help', label: 'Help', thai: 'ความช่วยเหลือ', keys: LAYERS.filter(isDataLayer).filter((layer) => layer.group === 'help').map((layer) => layer.key) },
+  { key: 'city', label: 'City', thai: 'เมือง', keys: LAYERS.filter(isDataLayer).filter((layer) => layer.group === 'city').map((layer) => layer.key) },
 ];
 
-export const INITIAL_LAYERS: Record<LayerKey, boolean> = Object.fromEntries(
-  LAYERS_2D.map((layer) => [layer.key, LAYER_GROUPS[0].keys.includes(layer.key)]),
+export const INITIAL_LAYERS = Object.fromEntries(
+  LAYERS.filter(isDataLayer).map((layer) => [layer.key, layer.group === 'flood']),
 ) as Record<LayerKey, boolean>;
