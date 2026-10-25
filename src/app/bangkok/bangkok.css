@@ -181,7 +181,7 @@
 .bangkok-root .maplegend .legend::-webkit-scrollbar-thumb { background:#6b7b8c; border-radius:4px; }
 .bangkok-root .mapcredit { position:absolute; right:0; bottom:0; z-index:5; max-width:min(72%,900px); padding:3px 9px; border-radius:8px 0 0 0; background:rgba(10,14,19,.88); color:var(--dim); font-size:10.5px; line-height:1.4; text-align:right; }
 .bangkok-root .mapcredit summary { display:none; }
-.bangkok-root .mapcredit:not([open]) > .mapcredit-body { display:block; }
+.bangkok-root .mapcredit::details-content { content-visibility:visible; }
 .bangkok-root .mapcredit a { color:#c3cfdb; }
 
 /* radar footer */
@@ -241,6 +241,7 @@
   .bangkok-root .mapcredit { max-width:80%; padding:4px 9px; overflow:auto; text-align:left; }
   .bangkok-root .mapcredit summary { display:list-item; cursor:pointer; color:#c3cfdb; font-weight:650; }
   .bangkok-root .mapcredit:not([open]) > .mapcredit-body { display:none; }
+  .bangkok-root .mapcredit:not([open])::details-content { content-visibility:hidden; }
   .bangkok-root .mapcredit[open] { max-height:min(45vh,180px); }
   .bangkok-root .viewcontrols { left:8px; top:8px; max-width:calc(100% - 56px); gap:4px; }
   .bangkok-root .mapsetting { min-height:32px; padding:3px 7px; }
